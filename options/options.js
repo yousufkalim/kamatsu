@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "black",
     borderBottomWidth: 1
   },
+
   container: { flex: 1, height: 100, padding: 13 },
   text: { color: "black", fontSize: 20 },
   buttonPressed: { backgroundColor: "aquamarine" },
@@ -25,5 +26,6 @@ export const modulesOptions = {
     title: "App Menu",
     copy: "Routes available!",
     styles: styles
-  }
+  },
+  undefined: { title: title, path: path, styles: styles }
 }
