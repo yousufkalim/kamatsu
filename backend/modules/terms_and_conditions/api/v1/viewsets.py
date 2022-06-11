@@ -1,6 +1,6 @@
 from rest_framework import authentication
 from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAdminUser
-from .models import TermAndCondition
+from modules.terms_and_conditions.models import TermAndCondition
 from .serializers import TermAndConditionSerializer
 from rest_framework import viewsets
 
@@ -9,9 +9,10 @@ class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         return request.method in SAFE_METHODS
 
+
 class TermAndConditionViewSet(viewsets.ModelViewSet):
     serializer_class = TermAndConditionSerializer
-    permission_classes = [IsAdminUser|ReadOnly] #Makes it Read-only unless admin
+    permission_classes = [IsAdminUser | ReadOnly]  # Makes it Read-only unless admin
     authentication_classes = (
         authentication.SessionAuthentication,
         authentication.TokenAuthentication,
