@@ -1,0 +1,629 @@
+[
+  {
+    "Name": "WA320",
+    "CycleTimeSec": 32.2,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 3.7,
+    "CostPerHr": 23.79,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400"
+    ]
+  },
+  {
+    "Name": "WA380",
+    "CycleTimeSec": 32.2,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 4.3,
+    "CostPerHr": 29.66,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325"
+    ]
+  },
+  {
+    "Name": "WA470",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 5.5,
+    "CostPerHr": 41.62,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325"
+    ]
+  },
+  {
+    "Name": "WA475",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 5.8,
+    "CostPerHr": 33.57,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325"
+    ]
+  },
+  {
+    "Name": "WA480",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 6.5,
+    "CostPerHr": 44.18,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325"
+    ]
+  },
+  {
+    "Name": "WA500",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 7.6,
+    "CostPerHr": 56.46,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325"
+    ]
+  },
+  {
+    "Name": "WA600",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 8.4,
+    "CostPerHr": 0.95,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605"
+    ]
+  },
+  {
+    "Name": "WA800",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 15.0,
+    "CostPerHr": 247,
+    "CompatibleTrucks": [
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500"
+    ]
+  },
+  {
+    "Name": "WA900",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 17.0,
+    "CostPerHr": 264,
+    "CompatibleTrucks": [
+      "hd465",
+      "hd605",
+      "hd785"
+    ]
+  },
+  {
+    "Name": "WA900 HL",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 15.0,
+    "CostPerHr": 260,
+    "CompatibleTrucks": [
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500"
+    ]
+  },
+  {
+    "Name": "WA1200",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 26.2,
+    "CostPerHr": 388,
+    "CompatibleTrucks": [
+      "730e",
+      "830e"
+    ]
+  },
+  {
+    "Name": "WA1200 HL",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 23.5,
+    "CostPerHr": 384,
+    "CompatibleTrucks": [
+      "730e",
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "P&H L-1150",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 25.0,
+    "CostPerHr": 296.3,
+    "CompatibleTrucks": [
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e"
+    ]
+  },
+  {
+    "Name": "P&H L-1150 HL",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 23.4,
+    "CostPerHr": 294.69,
+    "CompatibleTrucks": [
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e"
+    ]
+  },
+  {
+    "Name": "P&H L-1350",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 30.0,
+    "CostPerHr": 404,
+    "CompatibleTrucks": [
+      "730e",
+      "830e",
+      "930e"
+    ]
+  },
+  {
+    "Name": "P&H L-1850",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 40.0,
+    "CostPerHr": 494,
+    "CompatibleTrucks": [
+      "730e",
+      "830e",
+      "930e"
+    ]
+  },
+  {
+    "Name": "P&H L-1850 HL",
+    "CycleTimeSec": 40,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 36.6,
+    "CostPerHr": 492,
+    "CompatibleTrucks": [
+      "730e",
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "P&H L-2350",
+    "CycleTimeSec": 45,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 53.4,
+    "CostPerHr": 599,
+    "CompatibleTrucks": [
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "P&H L-2350 HL",
+    "CycleTimeSec": 45,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 50.0,
+    "CostPerHr": 597,
+    "CompatibleTrucks": [
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC210LC",
+    "CycleTimeSec": 18.4,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 1.34,
+    "CostPerHr": 27.16,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC240LC",
+    "CycleTimeSec": 18.7,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 1.57,
+    "CostPerHr": 31.19,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC290LC",
+    "CycleTimeSec": 21.7,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 1.85,
+    "CostPerHr": 33.89,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC360LC",
+    "CycleTimeSec": 30,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 2.56,
+    "CostPerHr": 50,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC390LC",
+    "CycleTimeSec": 30,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 2.91,
+    "CostPerHr": 52,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC490LC",
+    "CycleTimeSec": 30,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 3.8,
+    "CostPerHr": 59.12,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC650LC",
+    "CycleTimeSec": 30,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 5.0,
+    "CostPerHr": 82.90,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC800LC",
+    "CycleTimeSec": 30,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 5.4,
+    "CostPerHr": 100.81,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC1250LC",
+    "CycleTimeSec": 30,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 6.8,
+    "CostPerHr": 172.56,
+    "CompatibleTrucks": [
+      "hm300",
+      "hm400",
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC2000",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 15.7,
+    "CostPerHr": 291,
+    "CompatibleTrucks": [
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC3000",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 19.5,
+    "CostPerHr": 445,
+    "CompatibleTrucks": [
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC4000",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 29.0,
+    "CostPerHr": 610,
+    "CompatibleTrucks": [
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC5500",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 38.0,
+    "CostPerHr": 819,
+    "CompatibleTrucks": [
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC7000",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 47.0,
+    "CostPerHr": 1047,
+    "CompatibleTrucks": [
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "PC8000",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 55.0,
+    "CostPerHr": 1191,
+    "CompatibleTrucks": [
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "P&H 1900XPC",
+    "CycleTimeSec": 31,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 13.3,
+    "CostPerHr": 254,
+    "CompatibleTrucks": [
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e"
+    ]
+  },
+  {
+    "Name": "P&H 2300XPC",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 33.3,
+    "CostPerHr": 491,
+    "CompatibleTrucks": [
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "P&H 2800XPC",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 43.3,
+    "CostPerHr": 662,
+    "CompatibleTrucks": [
+      "hd325",
+      "hd405",
+      "hd465",
+      "hd605",
+      "hd785",
+      "hd1500",
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "P&H 4100C Boss",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 66.7,
+    "CostPerHr": 966,
+    "CompatibleTrucks": [
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "P&H 4100XPC",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 74.0,
+    "CostPerHr": 929,
+    "CompatibleTrucks": [
+      "730e",
+      "830e",
+      "930e",
+      "960e",
+      "980e"
+    ]
+  },
+  {
+    "Name": "P&H 4800XPC",
+    "CycleTimeSec": 35,
+    "BucketFill": 0.95,
+    "BucketSizeYd3": 90.0,
+    "CostPerHr": 982,
+    "CompatibleTrucks": [
+      "930e",
+      "960e",
+      "980e"
+    ]
+  }
+]
