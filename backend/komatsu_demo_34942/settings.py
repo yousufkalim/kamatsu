@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 LOCAL_APPS = [
     'home',
     'users.apps.UsersConfig',
+    'hat_app.apps.HatAppConfig',
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -81,6 +82,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'drf_yasg',
     'storages',
+    'import_export',
 ]
 MODULES_APPS = get_modules()
 
