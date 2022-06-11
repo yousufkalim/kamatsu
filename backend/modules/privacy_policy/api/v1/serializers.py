@@ -1,12 +1,10 @@
 from rest_framework import serializers
-from .models import TermAndCondition
+from modules.privacy_policy.models import PrivacyPolicy
 
 
-class TermAndConditionSerializer(serializers.ModelSerializer):
-
-
+class PrivacyPolicySerializer(serializers.ModelSerializer):
     class Meta:
-        model = TermAndCondition
+        model = PrivacyPolicy
         fields = [
             "id",
             "body",
@@ -16,6 +14,3 @@ class TermAndConditionSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
         read_only_fields = ["id"]
-
-
-

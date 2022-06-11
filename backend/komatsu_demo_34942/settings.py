@@ -41,7 +41,6 @@ try:
 except (DefaultCredentialsError, PermissionDenied):
     pass
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -53,7 +52,6 @@ SITE_ID = 1
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = env.bool("SECURE_REDIRECT", default=False)
-
 
 # Application definition
 
@@ -118,7 +116,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'komatsu_demo_34942.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -133,7 +130,6 @@ if env.str("DATABASE_URL", default=None):
     DATABASES = {
         'default': env.db()
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -153,7 +149,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -162,7 +157,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -179,6 +173,9 @@ AUTHENTICATION_BACKENDS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'web_build/static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = '/mediafiles/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 # allauth / users
 ACCOUNT_EMAIL_REQUIRED = True
@@ -197,11 +194,11 @@ SOCIALACCOUNT_ALLOW_REGISTRATION = env.bool("SOCIALACCOUNT_ALLOW_REGISTRATION", 
 
 REST_AUTH_SERIALIZERS = {
     # Replace password reset serializer to fix 500 error
-    "PASSWORD_RESET_SERIALIZER": "home.api.v1.serializers.PasswordSerializer",
+    "PASSWORD_RESET_SERIALIZER": "users.api.v1.account_serializers.PasswordSerializer",
 }
 REST_AUTH_REGISTER_SERIALIZERS = {
     # Use custom serializer that has no username and matches web signup
-    "REGISTER_SERIALIZER": "home.api.v1.serializers.SignupSerializer",
+    "REGISTER_SERIALIZER": "users.api.v1.account_serializers.SignupSerializer",
 }
 
 # Custom user model
@@ -213,7 +210,6 @@ EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
 # AWS S3 config
 AWS_ACCESS_KEY_ID = env.str("AWS_ACCESS_KEY_ID", "")
 AWS_SECRET_ACCESS_KEY = env.str("AWS_SECRET_ACCESS_KEY", "")
@@ -221,10 +217,10 @@ AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME", "")
 AWS_STORAGE_REGION = env.str("AWS_STORAGE_REGION", "")
 
 USE_S3 = (
-    AWS_ACCESS_KEY_ID and
-    AWS_SECRET_ACCESS_KEY and
-    AWS_STORAGE_BUCKET_NAME and
-    AWS_STORAGE_REGION
+        AWS_ACCESS_KEY_ID and
+        AWS_SECRET_ACCESS_KEY and
+        AWS_STORAGE_BUCKET_NAME and
+        AWS_STORAGE_REGION
 )
 
 if USE_S3:
@@ -250,10 +246,26 @@ if DEBUG or not (EMAIL_HOST_USER and EMAIL_HOST_PASSWORD):
         logging.warning("You should setup `SENDGRID_USERNAME` and `SENDGRID_PASSWORD` env vars to send emails.")
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-
-# GCP config 
+# GCP config
 GS_BUCKET_NAME = env.str("GS_BUCKET_NAME", "")
 if GS_BUCKET_NAME:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_DEFAULT_ACL = "publicRead"
+
+if DEBUG:
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+    INTERNAL_IPS = ['127.0.0.1', ]
+
+    import mimetypes
+
+    mimetypes.add_type("application/javascript", ".js", True)
+
+    DEBUG_TOOLBAR_CONFIG = {
+        'INTERCEPT_REDIRECTS': False,
+    }

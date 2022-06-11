@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic.base import TemplateView
@@ -21,18 +21,20 @@ from allauth.account.views import confirm_email
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.conf import settings
 
 urlpatterns = [
     path("", include("home.urls")),
     path("accounts/", include("allauth.urls")),
     path("modules/", include("modules.urls")),
-    path("api/v1/", include("home.api.v1.urls")),
+    # path("api/v1/", include("home.api.v1.urls")),
+    path("api/v1/", include("komatsu_demo_34942.api.v1.urls", namespace='api_v1')),
     path("admin/", admin.site.urls),
     path("users/", include("users.urls", namespace="users")),
-    path("rest-auth/", include("rest_auth.urls")),
-    # Override email confirm to use allauth's HTML view instead of rest_auth's API view
-    path("rest-auth/registration/account-confirm-email/<str:key>/", confirm_email),
-    path("rest-auth/registration/", include("rest_auth.registration.urls")),
+    # path("rest-auth/", include("rest_auth.urls")),
+    # # Override email confirm to use allauth's HTML view instead of rest_auth's API view
+    # path("rest-auth/registration/account-confirm-email/<str:key>/", confirm_email),
+    # path("rest-auth/registration/", include("rest_auth.registration.urls")),
 ]
 
 admin.site.site_header = "Komatsu"
@@ -56,7 +58,14 @@ urlpatterns += [
     path("api-docs/", schema_view.with_ui("swagger", cache_timeout=0), name="api_docs")
 ]
 
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns = [
+                      path('__debug__/', include(debug_toolbar.urls)),
+                  ] + urlpatterns
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [path("", TemplateView.as_view(template_name='index.html'))]
 urlpatterns += [re_path(r"^(?:.*)/?$",
-                TemplateView.as_view(template_name='index.html'))]
+                        TemplateView.as_view(template_name='index.html'))]
