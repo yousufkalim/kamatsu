@@ -23,6 +23,10 @@ export const styles = StyleSheet.create({
     zIndex: 2
   },
   btnSpacer: {
-    paddingVertical: 10
+    paddingVertical: 20
+  },
+  nextBtn: {
+    flex: 1,
+    alignSelf: "flex-end"
   }
 })

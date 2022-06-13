@@ -120,7 +120,6 @@ const FleetDefinition = ({ navigation }) => {
           <Button btnText="Reset Loader" />
         </View>
 
-        {/* <View style={styles.inputGroup}> */}
         <Select
           label="Loading Tool"
           items={LOADING_TOOL}
@@ -129,15 +128,13 @@ const FleetDefinition = ({ navigation }) => {
           showDefault={true}
         />
         <Input placeHolder="Nom. Payload (Tons)" />
-        {/* </View> */}
 
         <View style={styles.btnSpacer}>
           <Button btnText="Reset Truck" />
         </View>
 
-        <View style={styles.btnSpacer}>
-          <Button btnText="Next" isPrimary onPress={handleNext} />
-        </View>
+        <View style={styles.nextBtn} />
+        <Button btnText="Next" isPrimary onPress={handleNext} />
       </View>
     </Layout>
   )
