@@ -8,11 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* komatsu_demo_34942Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* komatsu_demo_34942Tests.m */; };
+		0E91237BAA7442BFB22669B1 /* NotoSans-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6656FD29EB934127B6188548 /* NotoSans-ThinItalic.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		17A47777DAA54EEB9B70BB09 /* NotoSans-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAD04AFEFA7C491EA3E8A685 /* NotoSans-BlackItalic.ttf */; };
+		210E7FEB3AE14C1E8E173D25 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B61450615102466B954F40BA /* NotoSans-Regular.ttf */; };
+		57B5DE29C14C4AB3A73C9063 /* NotoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13D880D703B94F66B22AF968 /* NotoSans-SemiBold.ttf */; };
+		59CD092DEC6D43DC97CBAC62 /* NotoSans-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E844F2E89CC4E63B649504F /* NotoSans-ExtraLightItalic.ttf */; };
 		66275F9C9814904486EE6AF4 /* libPods-komatsu_demo_34942-komatsu_demo_34942Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC5CBE6591D8EFEB166AF8C /* libPods-komatsu_demo_34942-komatsu_demo_34942Tests.a */; };
+		7B0EC7EA8EF940E89197725E /* NotoSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1217CDA5085C43CE830A4DAA /* NotoSans-Medium.ttf */; };
+		7C0E2D8195964FF78F116C76 /* NotoSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5AA5F407DDA4CF180DCF06A /* NotoSans-BoldItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8478B789867C4586B9F10FF5 /* NotoSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66D45E59CCA44E0C8162809F /* NotoSans-ExtraBoldItalic.ttf */; };
+		89AE6BCE36064965AC79512E /* NotoSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDC9134F86764DBC967070C2 /* NotoSans-LightItalic.ttf */; };
+		9E70D4D6B4AF45FC9FBB1336 /* NotoSans-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA7231F2AED045F283189BD4 /* NotoSans-Thin.ttf */; };
+		9EC89BAA404A4BA49E33C74E /* NotoSans-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6C7DDCECDB4469189F3302D /* NotoSans-Black.ttf */; };
+		9EE8DE3750CE495BBA306897 /* NotoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 720D38BC3FBE49BD9B403D64 /* NotoSans-Bold.ttf */; };
+		A6B6CBA6D71F4E018FB2F527 /* NotoSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6248A26940B548D9B8473419 /* NotoSans-ExtraBold.ttf */; };
+		B9B12E0D2942424B9BD3D954 /* NotoSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BAD527DCD940429D93B70223 /* NotoSans-SemiBoldItalic.ttf */; };
+		C68C052766AE4D6DBDF97210 /* NotoSans-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04AB330507A845238EC32A93 /* NotoSans-ExtraLight.ttf */; };
+		E625E66EC10449428146FAD3 /* NotoSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E41C73A6CE754935A1453BBC /* NotoSans-Italic.ttf */; };
+		EC7190FEE051443BADB6B818 /* NotoSans-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CAF675EF0FC540219825BCEA /* NotoSans-MediumItalic.ttf */; };
+		EEA91CAEBEF640BC9594F26E /* NotoSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D345D26B5994E68832115FB /* NotoSans-Light.ttf */; };
 		F028DB0BE89F6DCB8B879105 /* libPods-komatsu_demo_34942.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C25476C3576CD27A937CC2 /* libPods-komatsu_demo_34942.a */; };
 /* End PBXBuildFile section */
 
@@ -30,20 +48,54 @@
 		00E356EE1AD99517003FC87E /* komatsu_demo_34942Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = komatsu_demo_34942Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* komatsu_demo_34942Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = komatsu_demo_34942Tests.m; sourceTree = "<group>"; };
+		04AB330507A845238EC32A93 /* NotoSans-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-ExtraLight.ttf"; path = "../src/assets/fonts/NotoSans-ExtraLight.ttf"; sourceTree = "<group>"; };
+		07670570E59040DEB086A413 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		0ED84BAC126943208AE0EB0F /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		1217CDA5085C43CE830A4DAA /* NotoSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Medium.ttf"; path = "../src/assets/fonts/NotoSans-Medium.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* komatsu_demo_34942.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = komatsu_demo_34942.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = komatsu_demo_34942/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = komatsu_demo_34942/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = komatsu_demo_34942/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = komatsu_demo_34942/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = komatsu_demo_34942/main.m; sourceTree = "<group>"; };
+		13D880D703B94F66B22AF968 /* NotoSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-SemiBold.ttf"; path = "../src/assets/fonts/NotoSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		1E9764F4542B4AD381ABBA1F /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		3BBF91A86E784CC4BDC63187 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		3D345D26B5994E68832115FB /* NotoSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Light.ttf"; path = "../src/assets/fonts/NotoSans-Light.ttf"; sourceTree = "<group>"; };
 		3E37BE1B8C25801278B19D3D /* Pods-komatsu_demo_34942-komatsu_demo_34942Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-komatsu_demo_34942-komatsu_demo_34942Tests.release.xcconfig"; path = "Target Support Files/Pods-komatsu_demo_34942-komatsu_demo_34942Tests/Pods-komatsu_demo_34942-komatsu_demo_34942Tests.release.xcconfig"; sourceTree = "<group>"; };
+		4C25A6AD96F244B1AF04CA15 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		5DDB26933F99450188EB3982 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		6248A26940B548D9B8473419 /* NotoSans-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-ExtraBold.ttf"; path = "../src/assets/fonts/NotoSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		62DBAD95A9224E7994E4FDA1 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		6656FD29EB934127B6188548 /* NotoSans-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-ThinItalic.ttf"; path = "../src/assets/fonts/NotoSans-ThinItalic.ttf"; sourceTree = "<group>"; };
+		66D45E59CCA44E0C8162809F /* NotoSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-ExtraBoldItalic.ttf"; path = "../src/assets/fonts/NotoSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		720D38BC3FBE49BD9B403D64 /* NotoSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Bold.ttf"; path = "../src/assets/fonts/NotoSans-Bold.ttf"; sourceTree = "<group>"; };
+		730223449233476C93640F16 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = komatsu_demo_34942/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8543D05A4E2E4FD0A9BEF17C /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		8E844F2E89CC4E63B649504F /* NotoSans-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-ExtraLightItalic.ttf"; path = "../src/assets/fonts/NotoSans-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		9026394BA3DD48ACB62FCFF4 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		908609BB20312D932CA9E587 /* Pods-komatsu_demo_34942.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-komatsu_demo_34942.release.xcconfig"; path = "Target Support Files/Pods-komatsu_demo_34942/Pods-komatsu_demo_34942.release.xcconfig"; sourceTree = "<group>"; };
+		A06A8037B84045A487657DCE /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		A5AA5F407DDA4CF180DCF06A /* NotoSans-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-BoldItalic.ttf"; path = "../src/assets/fonts/NotoSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		B3C25476C3576CD27A937CC2 /* libPods-komatsu_demo_34942.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-komatsu_demo_34942.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B61450615102466B954F40BA /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Regular.ttf"; path = "../src/assets/fonts/NotoSans-Regular.ttf"; sourceTree = "<group>"; };
+		BAD527DCD940429D93B70223 /* NotoSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-SemiBoldItalic.ttf"; path = "../src/assets/fonts/NotoSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		C6803A7E73DCDBA3FD850428 /* Pods-komatsu_demo_34942-komatsu_demo_34942Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-komatsu_demo_34942-komatsu_demo_34942Tests.debug.xcconfig"; path = "Target Support Files/Pods-komatsu_demo_34942-komatsu_demo_34942Tests/Pods-komatsu_demo_34942-komatsu_demo_34942Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		CAF675EF0FC540219825BCEA /* NotoSans-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-MediumItalic.ttf"; path = "../src/assets/fonts/NotoSans-MediumItalic.ttf"; sourceTree = "<group>"; };
+		CDC9134F86764DBC967070C2 /* NotoSans-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-LightItalic.ttf"; path = "../src/assets/fonts/NotoSans-LightItalic.ttf"; sourceTree = "<group>"; };
+		D19C244AF2E54E50A05E9C84 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		D237AB33F8EE4D3FB16DD0AE /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		D3120943B2E54E4680660424 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		DDC5CBE6591D8EFEB166AF8C /* libPods-komatsu_demo_34942-komatsu_demo_34942Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-komatsu_demo_34942-komatsu_demo_34942Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E41C73A6CE754935A1453BBC /* NotoSans-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Italic.ttf"; path = "../src/assets/fonts/NotoSans-Italic.ttf"; sourceTree = "<group>"; };
+		E6C7DDCECDB4469189F3302D /* NotoSans-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Black.ttf"; path = "../src/assets/fonts/NotoSans-Black.ttf"; sourceTree = "<group>"; };
 		E86AC359293A4054110BF7BA /* Pods-komatsu_demo_34942.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-komatsu_demo_34942.debug.xcconfig"; path = "Target Support Files/Pods-komatsu_demo_34942/Pods-komatsu_demo_34942.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F36C8E01B61444D9898CB788 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		F42C8D565AAD4584BA5AB6C0 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		FA7231F2AED045F283189BD4 /* NotoSans-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Thin.ttf"; path = "../src/assets/fonts/NotoSans-Thin.ttf"; sourceTree = "<group>"; };
+		FAD04AFEFA7C491EA3E8A685 /* NotoSans-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-BlackItalic.ttf"; path = "../src/assets/fonts/NotoSans-BlackItalic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +158,47 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		39DB42C75F014DE29B31410A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E6C7DDCECDB4469189F3302D /* NotoSans-Black.ttf */,
+				FAD04AFEFA7C491EA3E8A685 /* NotoSans-BlackItalic.ttf */,
+				720D38BC3FBE49BD9B403D64 /* NotoSans-Bold.ttf */,
+				A5AA5F407DDA4CF180DCF06A /* NotoSans-BoldItalic.ttf */,
+				6248A26940B548D9B8473419 /* NotoSans-ExtraBold.ttf */,
+				66D45E59CCA44E0C8162809F /* NotoSans-ExtraBoldItalic.ttf */,
+				04AB330507A845238EC32A93 /* NotoSans-ExtraLight.ttf */,
+				8E844F2E89CC4E63B649504F /* NotoSans-ExtraLightItalic.ttf */,
+				E41C73A6CE754935A1453BBC /* NotoSans-Italic.ttf */,
+				3D345D26B5994E68832115FB /* NotoSans-Light.ttf */,
+				CDC9134F86764DBC967070C2 /* NotoSans-LightItalic.ttf */,
+				1217CDA5085C43CE830A4DAA /* NotoSans-Medium.ttf */,
+				CAF675EF0FC540219825BCEA /* NotoSans-MediumItalic.ttf */,
+				B61450615102466B954F40BA /* NotoSans-Regular.ttf */,
+				13D880D703B94F66B22AF968 /* NotoSans-SemiBold.ttf */,
+				BAD527DCD940429D93B70223 /* NotoSans-SemiBoldItalic.ttf */,
+				FA7231F2AED045F283189BD4 /* NotoSans-Thin.ttf */,
+				6656FD29EB934127B6188548 /* NotoSans-ThinItalic.ttf */,
+				D3120943B2E54E4680660424 /* AntDesign.ttf */,
+				5DDB26933F99450188EB3982 /* Entypo.ttf */,
+				8543D05A4E2E4FD0A9BEF17C /* EvilIcons.ttf */,
+				07670570E59040DEB086A413 /* Feather.ttf */,
+				F36C8E01B61444D9898CB788 /* FontAwesome.ttf */,
+				F42C8D565AAD4584BA5AB6C0 /* FontAwesome5_Brands.ttf */,
+				9026394BA3DD48ACB62FCFF4 /* FontAwesome5_Regular.ttf */,
+				4C25A6AD96F244B1AF04CA15 /* FontAwesome5_Solid.ttf */,
+				D19C244AF2E54E50A05E9C84 /* Fontisto.ttf */,
+				730223449233476C93640F16 /* Foundation.ttf */,
+				1E9764F4542B4AD381ABBA1F /* Ionicons.ttf */,
+				A06A8037B84045A487657DCE /* MaterialCommunityIcons.ttf */,
+				0ED84BAC126943208AE0EB0F /* MaterialIcons.ttf */,
+				D237AB33F8EE4D3FB16DD0AE /* Octicons.ttf */,
+				3BBF91A86E784CC4BDC63187 /* SimpleLineIcons.ttf */,
+				62DBAD95A9224E7994E4FDA1 /* Zocial.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +215,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				F56A7278274CD62333F7BA32 /* Pods */,
+				39DB42C75F014DE29B31410A /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -145,7 +239,6 @@
 				C6803A7E73DCDBA3FD850428 /* Pods-komatsu_demo_34942-komatsu_demo_34942Tests.debug.xcconfig */,
 				3E37BE1B8C25801278B19D3D /* Pods-komatsu_demo_34942-komatsu_demo_34942Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -243,6 +336,24 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				9EC89BAA404A4BA49E33C74E /* NotoSans-Black.ttf in Resources */,
+				17A47777DAA54EEB9B70BB09 /* NotoSans-BlackItalic.ttf in Resources */,
+				9EE8DE3750CE495BBA306897 /* NotoSans-Bold.ttf in Resources */,
+				7C0E2D8195964FF78F116C76 /* NotoSans-BoldItalic.ttf in Resources */,
+				A6B6CBA6D71F4E018FB2F527 /* NotoSans-ExtraBold.ttf in Resources */,
+				8478B789867C4586B9F10FF5 /* NotoSans-ExtraBoldItalic.ttf in Resources */,
+				C68C052766AE4D6DBDF97210 /* NotoSans-ExtraLight.ttf in Resources */,
+				59CD092DEC6D43DC97CBAC62 /* NotoSans-ExtraLightItalic.ttf in Resources */,
+				E625E66EC10449428146FAD3 /* NotoSans-Italic.ttf in Resources */,
+				EEA91CAEBEF640BC9594F26E /* NotoSans-Light.ttf in Resources */,
+				89AE6BCE36064965AC79512E /* NotoSans-LightItalic.ttf in Resources */,
+				7B0EC7EA8EF940E89197725E /* NotoSans-Medium.ttf in Resources */,
+				EC7190FEE051443BADB6B818 /* NotoSans-MediumItalic.ttf in Resources */,
+				210E7FEB3AE14C1E8E173D25 /* NotoSans-Regular.ttf in Resources */,
+				57B5DE29C14C4AB3A73C9063 /* NotoSans-SemiBold.ttf in Resources */,
+				B9B12E0D2942424B9BD3D954 /* NotoSans-SemiBoldItalic.ttf in Resources */,
+				9E70D4D6B4AF45FC9FBB1336 /* NotoSans-Thin.ttf in Resources */,
+				0E91237BAA7442BFB22669B1 /* NotoSans-ThinItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,7 +559,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A23X2TZT2N;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = komatsu_demo_34942/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -460,8 +574,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crowdbotics.komatsu;
 				PRODUCT_NAME = komatsu_demo_34942;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -474,7 +589,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A23X2TZT2N;
 				INFOPLIST_FILE = komatsu_demo_34942/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -485,8 +603,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crowdbotics.komatsu;
 				PRODUCT_NAME = komatsu_demo_34942;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
