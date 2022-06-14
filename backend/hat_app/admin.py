@@ -71,3 +71,18 @@ class HaulingToolAdmin(ImportExportMixin, admin.ModelAdmin):
 
     get_capacity_tonne.short_description = 'Capacity Tonne(Short Ton - Metric)'
     get_capacity_tonne.admin_order_field = 'capacity_ton'
+
+
+@admin.register(MaterialDensity)
+class MaterialDensityAdmin(admin.ModelAdmin):
+    list_display = ['title', 'density', 'get_density_metric', 'created', 'updated']
+
+    def get_density_metric(self, instance):
+        density = instance.get_metric_standard.get('density', None)
+        if density:
+            html_text = f'{density:.2f} kg/m<sup>3</sup>'
+            return mark_safe(html_text)
+        return None
+
+    get_density_metric.short_description = 'Density (Metric)'
+    get_density_metric.admin_order_field = 'density'
