@@ -12,7 +12,7 @@ class LoadingToolViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
 
     def get_queryset(self):
-        queryset = LoadingTool.objects.prefetch_related('compatible_trucks').all()
+        queryset = LoadingTool.objects.prefetch_related('compatible_trucks').all().order_by('name')
         return queryset
 
     @action(detail=True, methods=['GET'], serializer_class=HaulingToolSerializer, url_path='hauling-tools')

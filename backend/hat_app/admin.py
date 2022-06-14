@@ -5,13 +5,69 @@ from .models import *
 
 @admin.register(LoadingTool)
 class LoadingToolAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['name', 'cycle_time_second', 'bucket_fill', 'bucket_size_yd3', 'cost_per_hour',
+    list_display = ['name', 'cycle_time_second', 'get_bucket_fill', 'get_bucket_size_yd3',
+                    'get_bucket_size_m3', 'get_cost_per_hour',
                     'created', 'updated']
     search_fields = ['name']
     autocomplete_fields = ['compatible_trucks']
 
+    def get_cycle_time_second(self, instance):
+        html_text = f'{instance.cycle_time_second}/s'
+        return mark_safe(html_text)
+
+    get_cycle_time_second.short_description = 'Cycle Time Second'
+    get_cycle_time_second.admin_order_field = 'cycle_time_second'
+
+    def get_bucket_fill(self, instance):
+        html_text = f'{instance.bucket_fill} %'
+        return mark_safe(html_text)
+
+    get_bucket_fill.short_description = 'Bucket Fill'
+    get_bucket_fill.admin_order_field = 'bucket_fill'
+
+    def get_bucket_size_yd3(self, instance):
+        html_text = f'{instance.bucket_size_yd3} yd<sup>3</sup>'
+        return mark_safe(html_text)
+
+    get_bucket_size_yd3.short_description = 'Bucket Size(yd*3)'
+    get_bucket_size_yd3.admin_order_field = 'bucket_size_yd3'
+
+    def get_bucket_size_m3(self, instance):
+        bucket_size_m3 = instance.get_metric_standard.get('bucket_size_m3', None)
+        if bucket_size_m3:
+            html_text = f'{bucket_size_m3} m<sup>3</sup>'
+            return mark_safe(html_text)
+        return None
+
+    get_bucket_size_m3.short_description = 'Bucket Size(m*3)'
+    get_bucket_size_m3.admin_order_field = 'bucket_size_yd3'
+
+    def get_cost_per_hour(self, instance):
+        html_text = f'{instance.cost_per_hour}/hr'
+        return mark_safe(html_text)
+
+    get_cost_per_hour.short_description = 'Cost Per Hour'
+    get_cost_per_hour.admin_order_field = 'cost_per_hour'
+
 
 @admin.register(HaulingTool)
 class HaulingToolAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['name', 'created', 'updated']
+    list_display = ['name', 'capacity_ton', 'get_capacity_tonne', 'get_cost_per_hour', 'created', 'updated']
     search_fields = ['name']
+
+    def get_cost_per_hour(self, instance):
+        html_text = f'{instance.cost_per_hour}/hr'
+        return mark_safe(html_text)
+
+    get_cost_per_hour.short_description = 'Cost Per Hour'
+    get_cost_per_hour.admin_order_field = 'cost_per_hour'
+
+    def get_capacity_tonne(self, instance):
+        capacity_tonne = instance.get_metric_standard.get('capacity_tonne', None)
+        if capacity_tonne:
+            html_text = f'{capacity_tonne:.2f} tonne'
+            return mark_safe(html_text)
+        return None
+
+    get_capacity_tonne.short_description = 'Capacity Tonne(Short Ton - Metric)'
+    get_capacity_tonne.admin_order_field = 'capacity_ton'

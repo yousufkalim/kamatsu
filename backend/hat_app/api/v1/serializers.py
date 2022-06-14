@@ -10,21 +10,26 @@ class LoadingToolSerializer(serializers.ModelSerializer):
 
 
 class HaulingToolSerializer(serializers.ModelSerializer):
+    metric_standard = serializers.JSONField(source='get_metric_standard', read_only=True, default=dict)
+
     class Meta:
         model = HaulingTool
-        fields = '__all__'
+        fields = ['id', 'name', 'capacity_ton', 'cost_per_hour', 'metric_standard', 'created', 'updated']
 
 
 class HaulingToolSerializerInLoadingList(serializers.ModelSerializer):
+    metric_standard = serializers.JSONField(source='get_metric_standard', read_only=True, default=dict)
+
     class Meta:
         model = HaulingTool
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'capacity_ton', 'cost_per_hour', 'metric_standard']
 
 
 class LoadingToolListSerializer(serializers.ModelSerializer):
+    metric_standard = serializers.JSONField(source='get_metric_standard', read_only=True, default=dict)
     compatible_trucks = HaulingToolSerializerInLoadingList(read_only=True, many=True)
 
     class Meta:
         model = LoadingTool
         fields = ['id', 'name', 'cycle_time_second', 'bucket_fill', 'bucket_size_yd3', 'cost_per_hour',
-                  'compatible_trucks', 'created', 'updated']
+                  'metric_standard', 'compatible_trucks', 'created', 'updated']
