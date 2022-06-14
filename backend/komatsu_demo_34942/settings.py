@@ -68,6 +68,7 @@ LOCAL_APPS = [
     'home',
     'users.apps.UsersConfig',
     'hat_app.apps.HatAppConfig',
+    'feedbacks.apps.FeedbacksConfig',
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -103,7 +104,10 @@ ROOT_URLCONF = 'komatsu_demo_34942.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'web_build')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'web_build'),
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
