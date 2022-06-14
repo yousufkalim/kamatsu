@@ -9,7 +9,7 @@ import quantities as pq
 class LoadingTool(BaseTimeStampModel):
     name = models.CharField(_('Name'), max_length=120, unique=True)
     cycle_time_second = models.PositiveIntegerField(_('Cycle Time Second'), default=0)
-    bucket_fill = models.DecimalField(_('Bucket Fill'), decimal_places=2, max_length=12, max_digits=10)
+    bucket_fill = models.DecimalField(_('Bucket Fill'), decimal_places=1, max_length=12, max_digits=10)
     bucket_size_yd3 = models.DecimalField(_('Bucket Size Yd3'), decimal_places=2, max_length=12, max_digits=10)
     cost_per_hour = models.DecimalField(_('Cost Per Hour'), decimal_places=2, max_length=12, max_digits=10)
     compatible_trucks = models.ManyToManyField('hat_app.HaulingTool', help_text=_('Compatible Hauling Tools'))
@@ -73,3 +73,25 @@ class HaulingTool(BaseTimeStampModel):
             'capacity_tonne': float(f'{capacity_tonne:.6f}'),
             'capacity_tonne_text': f'{capacity_tonne:.6f} tonne'
         }
+
+
+class MaterialDensity(BaseTimeStampModel):
+    title = models.CharField(_('Title'), max_length=120, )
+    density = models.DecimalField(_('Density (US or Imperial)'), decimal_places=2, max_digits=20)
+
+    def __str__(self):
+        return '%s' % self.title
+
+    @property
+    def get_metric_standard(self):
+        density = float(self.density) * (pq.lb / pq.yd ** 3)
+        density.units = pq.kg / pq.m ** 3
+        density_metric = density.item()
+        return {
+            'density': float(f'{density_metric:.2f}')
+        }
+
+    class Meta:
+        ordering = ('title',)
+        verbose_name = _('Material Density')
+        verbose_name_plural = _('Material Densities')

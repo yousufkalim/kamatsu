@@ -6,6 +6,7 @@ from . import views, viewsets
 router = DefaultRouter()
 router.register('loading-tools', viewsets.LoadingToolViewSet)
 router.register('hauling-tools', viewsets.HaulingToolViewSet)
+router.register('material-densities', viewsets.MaterialDensityViewSet)
 
 app_name = 'hat'
 

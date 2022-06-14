@@ -33,3 +33,11 @@ class LoadingToolListSerializer(serializers.ModelSerializer):
         model = LoadingTool
         fields = ['id', 'name', 'cycle_time_second', 'bucket_fill', 'bucket_size_yd3', 'cost_per_hour',
                   'metric_standard', 'compatible_trucks', 'created', 'updated']
+
+
+class MaterialDensitySerializer(serializers.ModelSerializer):
+    metric_standard = serializers.JSONField(source='get_metric_standard', read_only=True, default=dict)
+
+    class Meta:
+        model = MaterialDensity
+        fields = '__all__'
