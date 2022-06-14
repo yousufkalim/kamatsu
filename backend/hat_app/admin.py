@@ -52,5 +52,22 @@ class LoadingToolAdmin(ImportExportMixin, admin.ModelAdmin):
 
 @admin.register(HaulingTool)
 class HaulingToolAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['name', 'created', 'updated']
+    list_display = ['name', 'capacity_ton', 'get_capacity_tonne', 'get_cost_per_hour', 'created', 'updated']
     search_fields = ['name']
+
+    def get_cost_per_hour(self, instance):
+        html_text = f'{instance.cost_per_hour}/hr'
+        return mark_safe(html_text)
+
+    get_cost_per_hour.short_description = 'Cost Per Hour'
+    get_cost_per_hour.admin_order_field = 'cost_per_hour'
+
+    def get_capacity_tonne(self, instance):
+        capacity_tonne = instance.get_metric_standard.get('capacity_tonne', None)
+        if capacity_tonne:
+            html_text = f'{capacity_tonne:.2f} tonne'
+            return mark_safe(html_text)
+        return None
+
+    get_capacity_tonne.short_description = 'Capacity Tonne(Short Ton - Metric)'
+    get_capacity_tonne.admin_order_field = 'capacity_ton'

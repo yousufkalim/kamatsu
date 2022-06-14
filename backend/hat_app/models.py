@@ -50,7 +50,7 @@ class LoadingTool(BaseTimeStampModel):
 
 class HaulingTool(BaseTimeStampModel):
     name = models.CharField(_('Name'), max_length=120, unique=True)
-    capacity_ton = models.DecimalField(_('Capacity Tons'), decimal_places=2, max_length=12, max_digits=10)
+    capacity_ton = models.DecimalField(_('Capacity Tons (US)'), decimal_places=2, max_length=12, max_digits=10)
     cost_per_hour = models.DecimalField(_('Cost Per Hour'), decimal_places=2, max_length=12, max_digits=10)
 
     def __str__(self):
