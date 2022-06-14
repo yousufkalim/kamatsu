@@ -1,18 +1,13 @@
 import { View, Text } from "react-native"
 import React from "react"
+import { NavigationContainer } from "@react-navigation/native"
+import MainNavigator from "./src/navigator/mainNavigator"
 
 const App = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "red",
-        alignItems: "center",
-        justifyContent: "center"
-      }}
-    >
-      <Text>Komatsu App</Text>
-    </View>
+    <NavigationContainer>
+      <MainNavigator />
+    </NavigationContainer>
   )
 }
 

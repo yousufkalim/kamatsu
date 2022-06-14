@@ -1,10 +1,34 @@
-import { View, Text } from "react-native"
+import { TouchableOpacity, Text } from "react-native"
 import React from "react"
 
-export const Button = () => {
+import { styles } from "./styles"
+
+export const Button = ({
+  btnText = "Button",
+  isPrimary = false,
+  onPress,
+  halfWidthBtn = false
+}) => {
+  const containerStyle = isPrimary
+    ? { ...styles.container, ...styles.containerBlue }
+    : { ...styles.container }
+
+  const halfWidthBtnStyle = halfWidthBtn ? { ...styles.containerHalf } : {}
+
   return (
-    <View>
-      <Text>Button</Text>
-    </View>
+    <TouchableOpacity
+      style={{ ...containerStyle, ...halfWidthBtnStyle }}
+      onPress={onPress}
+    >
+      <Text
+        style={
+          isPrimary
+            ? { ...styles.btnText, ...styles.btnTextWhite }
+            : { ...styles.btnText }
+        }
+      >
+        {btnText}
+      </Text>
+    </TouchableOpacity>
   )
 }
