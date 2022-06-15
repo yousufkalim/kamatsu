@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native"
+import React, { useState } from "react"
+import { Pressable, StyleSheet, Text, View } from "react-native"
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer"
 import {
   widthPercentageToDP as wp,
@@ -8,11 +8,17 @@ import {
 import { useNavigation } from "@react-navigation/native"
 
 import * as appStyles from "../utils/appStyles"
-import IIcon from "react-native-vector-icons/Ionicons"
 import LogoBlue from "../assets/svg/logo-blue.svg"
+import Modal from "../components/Modal"
+import { Button } from "../components/Button"
 
 function DrawerContainer({ props }) {
   const navigation = useNavigation()
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const handleCancelSignOut = () => {
+    setModalVisible(false)
+  }
 
   return (
     <View style={styles.container}>
@@ -33,7 +39,7 @@ function DrawerContainer({ props }) {
           <DrawerItem
             label="Home"
             onPress={() => {
-              navigation.navigate("UserRank")
+              navigation.navigate("Landing")
             }}
             labelStyle={styles.labelStyle}
             style={styles.drawerItem}
@@ -41,7 +47,7 @@ function DrawerContainer({ props }) {
           <DrawerItem
             label="Send Feedback"
             onPress={() => {
-              navigation.navigate("UserRank")
+              navigation.navigate("SendFeedback")
             }}
             labelStyle={styles.labelStyle}
             style={styles.drawerItem}
@@ -49,7 +55,7 @@ function DrawerContainer({ props }) {
           <DrawerItem
             label="Privacy Policy"
             onPress={() => {
-              navigation.navigate("UserRank")
+              navigation.navigate("PrivacyPolicy")
             }}
             labelStyle={styles.labelStyle}
             style={styles.drawerItem}
@@ -57,7 +63,7 @@ function DrawerContainer({ props }) {
           <DrawerItem
             label="Terms and Conditions"
             onPress={() => {
-              navigation.navigate("UserRank")
+              navigation.navigate("PrivacyPolicy")
             }}
             labelStyle={styles.labelStyle}
             style={styles.drawerItem}
@@ -65,7 +71,7 @@ function DrawerContainer({ props }) {
           <DrawerItem
             label="About Us"
             onPress={() => {
-              navigation.navigate("UserRank")
+              navigation.navigate("AboutUs")
             }}
             labelStyle={styles.labelStyle}
             style={styles.drawerItem}
@@ -74,11 +80,29 @@ function DrawerContainer({ props }) {
           <DrawerItem
             label="Sign out"
             onPress={() => {
-              navigation.navigate("UserRank")
+              setModalVisible(true)
             }}
             labelStyle={styles.labelStyle}
             style={styles.drawerItem}
           />
+
+          <Modal
+            modalVisible={modalVisible}
+            style={styles.modal}
+            setModalVisible={setModalVisible}
+            title=""
+            showHeader={false}
+          >
+            <View style={styles.logoutModal}>
+              <Text style={styles.logoutMsg}>
+                Are you sure you want to sign out?
+              </Text>
+              <Button btnText="Yes" isPrimary onPress={handleCancelSignOut} />
+              <Pressable onPress={handleCancelSignOut}>
+                <Text style={styles.logoutMsgCancel}>Cancel</Text>
+              </Pressable>
+            </View>
+          </Modal>
         </View>
       </DrawerContentScrollView>
     </View>
@@ -113,6 +137,22 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginVertical: 0,
     padding: 0
+  },
+  logoutModal: {
+    padding: 10
+  },
+  logoutMsg: {
+    fontFamily: appStyles.FONT_FAMILY_REGULAR,
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 10
+  },
+  logoutMsgCancel: {
+    fontFamily: appStyles.FONT_FAMILY_REGULAR,
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: "center",
+    color: appStyles.primaryColor
   }
 })
 export default DrawerContainer

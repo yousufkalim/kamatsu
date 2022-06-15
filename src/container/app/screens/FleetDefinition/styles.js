@@ -8,8 +8,7 @@ import {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    zIndex: 1
+    padding: 10
   },
   title: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
@@ -19,8 +18,7 @@ export const styles = StyleSheet.create({
   inputGroup: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 7,
-    zIndex: 2
+    paddingVertical: 7
   },
   btnSpacer: {
     paddingVertical: 20

@@ -6,16 +6,19 @@ import { styles } from "./styles"
 
 export const Input = ({
   placeHolder = "Placeholder",
+  inputLabel = "Label",
   value,
   setValue,
-  customStyle = {},
+  customContainerStyle = {},
+  customInputStyle = {},
   showLabelIcon = false,
+  multiline = false,
   onPressIcon = () => {}
 }) => {
   return (
-    <View style={{ ...styles.container, ...customStyle }}>
+    <View style={{ ...styles.container, ...customContainerStyle }}>
       <View style={styles.labelContainer}>
-        <Text style={styles.placeHolder}>{placeHolder}</Text>
+        <Text style={styles.placeHolder}>{inputLabel}</Text>
         <View>
           {showLabelIcon ? (
             <TouchableOpacity onPress={onPressIcon}>
@@ -28,9 +31,10 @@ export const Input = ({
       </View>
       <TextInput
         placeholder={placeHolder}
-        style={styles.input}
+        style={{ ...styles.input, ...customInputStyle }}
         value={value}
         onChangeText={setValue}
+        multiline={multiline}
       />
     </View>
   )

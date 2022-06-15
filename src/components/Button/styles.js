@@ -12,14 +12,14 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     height: 40,
-    borderRadius: 5,
+    borderRadius: 5
   },
   btnText: {
-    fontFamily: appStyles.FONT_FAMILY_REGULAR,
+    fontFamily: appStyles.FONT_FAMILY_MEDIUM,
     fontSize: 14
   },
   btnTextWhite: {
-    color: "#fff"
+    color: "#fff",
   },
   containerBlue: {
     backgroundColor: appStyles.primaryColor

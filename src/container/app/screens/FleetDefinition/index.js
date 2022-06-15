@@ -6,78 +6,20 @@ import { Layout } from "../../../../components/Layout"
 import { Input } from "../../../../components/Input"
 import { Select } from "../../../../components/Select"
 import { Button } from "../../../../components/Button"
+import {
+  useGetHaulingTool,
+  useGetLoadingTool
+} from "../../../../hooks/query/useFleet"
 import { styles } from "./styles"
-
-const LOADING_TOOL = [
-  {
-    label: "HM300",
-    CapacityTons: 30.9,
-    CostPerHr: 46.52
-  },
-  {
-    label: "HM400",
-    CapacityTons: 44.1,
-    CostPerHr: 62.95
-  },
-  {
-    label: "HD325",
-    CapacityTons: 40.3,
-    CostPerHr: 64.55
-  },
-  {
-    label: "HD405",
-    CapacityTons: 44.1,
-    CostPerHr: 65.98
-  },
-  {
-    label: "HD465",
-    CapacityTons: 61,
-    CostPerHr: 87.9
-  },
-  {
-    label: "HD605",
-    CapacityTons: 69.4,
-    CostPerHr: 87.85
-  },
-  {
-    label: "HD785",
-    CapacityTons: 102,
-    CostPerHr: 178
-  },
-  {
-    label: "HD1500",
-    CapacityTons: 156,
-    CostPerHr: 226
-  },
-  {
-    label: "730E",
-    CapacityTons: 200,
-    CostPerHr: 306
-  },
-  {
-    label: "830E",
-    CapacityTons: 244,
-    CostPerHr: 368
-  },
-  {
-    label: "930E",
-    CapacityTons: 320,
-    CostPerHr: 415
-  },
-  {
-    label: "960E",
-    CapacityTons: 360,
-    CostPerHr: 464
-  },
-  {
-    label: "980E",
-    CapacityTons: 407,
-    CostPerHr: 517
-  }
-]
 
 const FleetDefinition = ({ navigation }) => {
   const [unit, setUnit] = useState(null)
+  const [cycleTime, setCycleTime] = useState("")
+  const [loadingTool, setLoadingTool] = useState("")
+  const [haulingTool, setHaulingTool] = useState("")
+
+  const { loadingTools, isLoading } = useGetLoadingTool()
+  const { haulingTools } = useGetHaulingTool()
 
   const units = [
     { label: "Metric", value: "Metric" },
@@ -93,42 +35,56 @@ const FleetDefinition = ({ navigation }) => {
       <Header />
       <View style={styles.container}>
         <Text style={styles.title}>Fleet Definition</Text>
+
         <Select
           label="Unit Selection"
           items={units}
           selected={unit}
           setSelected={setUnit}
           showDefault={true}
+          labelName="label"
+          customStyle={{ zIndex: 20 }}
         />
-        <View style={styles.inputGroup}>
+
+        <View style={{ ...styles.inputGroup, zIndex: 19 }}>
           <Select
             label="Loading Tool"
-            items={units}
-            selected={unit}
-            setSelected={setUnit}
-            showDefault={true}
+            items={loadingTools}
+            selected={loadingTool}
+            setSelected={setLoadingTool}
+            labelName="name"
+            customStyle={{ zIndex: 18 }}
           />
 
-          <Input placeHolder="Cycle Time (Sec)" />
+          <Input
+            placeHolder="Cycle Time (Sec)"
+            inputLabel="Cycle Time (Sec)"
+            value={cycleTime}
+            setValue={setCycleTime}
+          />
         </View>
         <View style={styles.inputGroup}>
-          <Input placeHolder="Bucket Fill (%)" />
-          <Input placeHolder="Bucket Size (m)" />
+          <Input placeHolder="Bucket Fill (%)" inputLabel="Bucket Fill (%)" />
+          <Input placeHolder="Bucket Size (m)" inputLabel="Bucket Size (m)" />
         </View>
 
         <View style={styles.btnSpacer}>
           <Button btnText="Reset Loader" />
         </View>
 
-        <Select
-          label="Loading Tool"
-          items={LOADING_TOOL}
-          selected={unit}
-          setSelected={setUnit}
-          showDefault={true}
-        />
-        <Input placeHolder="Nom. Payload (Tons)" />
-
+        <View style={{ ...styles.inputGroup, zIndex: 17 }}>
+          <Select
+            label="Hauling Tool"
+            items={haulingTools}
+            selected={haulingTool}
+            setSelected={setHaulingTool}
+            labelName="name"
+          />
+          <Input
+            placeHolder="Nom. Payload (Tons)"
+            inputLabel="Nom. Payload (Tons)"
+          />
+        </View>
         <View style={styles.btnSpacer}>
           <Button btnText="Reset Truck" />
         </View>

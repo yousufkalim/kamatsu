@@ -6,9 +6,9 @@ import { Header } from "../../../../components/Header"
 import { Select } from "../../../../components/Select"
 import { Input } from "../../../../components/Input"
 import { Button } from "../../../../components/Button"
-import { styles } from "./styles"
 import Modal from "../../../../components/Modal"
 import { MaterialDensity } from "../../../../components/MaterialDensity"
+import { styles } from "./styles"
 
 const SiteParameters = ({ navigation }) => {
   const [unit, setUnit] = useState(null)
@@ -18,6 +18,10 @@ const SiteParameters = ({ navigation }) => {
     { label: "Metric", value: "Metric" },
     { label: "US Customary", value: "US Customary" }
   ]
+
+  const handleNext = () => {
+    navigation.navigate("Results")
+  }
 
   return (
     <Layout>
@@ -31,6 +35,7 @@ const SiteParameters = ({ navigation }) => {
           selected={unit}
           setSelected={setUnit}
           showDefault={true}
+          labelName="label"
         />
 
         <View style={styles.inputGroup}>
@@ -43,14 +48,27 @@ const SiteParameters = ({ navigation }) => {
         </View>
 
         <View style={styles.inputGroup}>
-          <Input placeHolder="Operator Efficiency (min/hr)" />
-          <Input placeHolder="Truck Spot Time (sec)" />
+          <Input
+            placeHolder="Operator Efficiency (min/hr)"
+            inputLabel="Operator Efficiency (min/hr)"
+          />
+          <Input
+            placeHolder="Truck Spot Time (sec)"
+            inputLabel="Truck Spot Time (sec)"
+          />
         </View>
         <Text style={styles.roundTripTxt}>Est. Round Trip</Text>
         <View style={styles.inputGroup}>
-          <Input placeHolder="Travel Time (min)" />
+          <Input
+            placeHolder="Travel Time (min)"
+            inputLabel="Travel Time (min)"
+          />
           <Button btnText="Default" halfWidthBtn />
         </View>
+
+        <View style={styles.nextBtn} />
+
+        <Button btnText="Next" isPrimary onPress={handleNext} />
 
         <Modal
           modalVisible={modalVisible}
@@ -58,7 +76,7 @@ const SiteParameters = ({ navigation }) => {
           setModalVisible={setModalVisible}
           title="Material Density"
         >
-          <MaterialDensity  />
+          <MaterialDensity />
         </Modal>
       </View>
     </Layout>
