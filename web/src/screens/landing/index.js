@@ -5,8 +5,7 @@ import Trolley from '../../assets/trolley.png';
 import Logo from '../../assets/logo.png';
 import Photo from '../../assets/landing-photo.png';
 import { Button } from '../../components/Button';
-
-
+import './index.css'
 
 
 const Landing =  () => {
@@ -18,7 +17,7 @@ const Landing =  () => {
                 </div>
                 <div className='mb-12'>
                     <h1 className="text-headline leading-headline font-bold">Application<br />Engineering <br/>Tools</h1>
-                    <h4 className="text-body leading-body font-normal">Creating value together with 21st century fleet studies and solutions.</h4>
+                    <h4 className="text-body leading-body font-normal">Creating value together with 21st century fleet studies<br /> and solutions.</h4>
                 </div>
                 <div className="">
                 <div className="flex mb-6 gap-x-10">
@@ -52,8 +51,9 @@ const Landing =  () => {
             </div>
             </div>
             
-            <div className="w-1/2 flex">
-                <img src={Photo}/>
+            <div className="w-1/2 flex right-landing">
+                <h4>Hii</h4>
+                {/* <img src={Photo}/> */}
             </div>
         </div>
     )

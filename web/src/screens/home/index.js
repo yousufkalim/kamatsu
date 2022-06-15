@@ -6,21 +6,11 @@ import { DashboardButton } from "../../components/Button";
 const Form = () => {
     return(
         <div>
-            <div className="flex gap-8">
-                <div className="w-1/2">
-                    <label className="block text-smaller mb-1 font-normal">Bucket Fill (%)</label>
-                    <Input
-                        onChange={(e)=>console.log(e.target.value)}
-                        placeholder="0.95"
-                    />
-                </div>
-                <div className="w-1/2">
-                    <label className="block text-smaller mb-1 font-normal">Bucket Fill (%)</label>
-                    <Input
-                        onChange={(e)=>console.log(e.target.value)}
-                        placeholder="0.95"
-                    />
-                </div>
+            <div className="w-1/2">
+            <CustomSelect >
+
+                
+            </CustomSelect>
             </div>
             <div className="flex gap-8">
                 <div className="w-1/2">
@@ -28,6 +18,25 @@ const Form = () => {
                     <Input
                         onChange={(e)=>console.log(e.target.value)}
                         placeholder="0.95"
+                        className="mb-6"
+                    />
+                </div>
+                <div className="w-1/2">
+                    <label className="block text-smaller mb-1 font-normal">Bucket Fill (%)</label>
+                    <Input
+                        onChange={(e)=>console.log(e.target.value)}
+                        placeholder="0.95"
+                        className="mb-6"
+                    />
+                </div>
+            </div>
+            <div className="flex gap-8 mb-8">
+                <div className="w-1/2">
+                    <label className="block text-smaller mb-1 font-normal">Bucket Fill (%)</label>
+                    <Input
+                        onChange={(e)=>console.log(e.target.value)}
+                        placeholder="0.95"
+                        className="mb-6"
                     />
                 </div>
                 <div className="w-1/2">
@@ -35,10 +44,12 @@ const Form = () => {
                     <Input
                         onChange={(e)=>console.log(e.target.value)}
                         placeholder="0.95"
+                        className="mb-6"
                     />
                     <DashboardButton 
                         text="Reset Loader"
                         backgroundColor = "yellow"
+                        className = "mb-6"
                     />
                 </div>
 
@@ -49,13 +60,15 @@ const Form = () => {
                     <Input
                         onChange={(e)=>console.log(e.target.value)}
                         placeholder="0.95"
+                        className="mb-6"
                     />
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 h-screen">
                     <label className="block text-sm mb-1 font-normal">Nom. Payload (Tons)</label>
                     <Input
                         onChange={(e)=>console.log(e.target.value)}
                         placeholder="0.95"
+                        className="mb-6"
                     />
                     <DashboardButton 
                         text="Reset Truck"

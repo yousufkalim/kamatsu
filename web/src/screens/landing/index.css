@@ -1,0 +1,13 @@
+.right-landing {
+    /* background-image: url('../../assets/landing-photo.png'); */
+    height: 100vh;
+    background: 
+    /* top, transparent red */ 
+    linear-gradient(
+      rgba(0, 0, 0, 0.37), 
+      rgba(0, 0, 0, 0.38)
+    ),
+    /* bottom, image */
+    url('../../assets/landing-photo.png');
+    background-size: cover;
+}
