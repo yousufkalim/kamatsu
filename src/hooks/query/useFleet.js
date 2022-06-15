@@ -1,0 +1,44 @@
+import { useQuery } from "react-query"
+import { fleetApiService } from "../../services/fleetService"
+
+export const useGetLoadingTool = () => {
+  const { data, isLoading, error } = useQuery(
+    ["useGetLoadingTool"],
+    () => fleetApiService.getLoadingTools(),
+    {
+      staleTime: 10000
+    },
+    {
+      onError: e => {
+        console.error(e)
+      },
+      refetchInterval: 5000
+    }
+  )
+  return {
+    loadingTools: data,
+    isLoading,
+    error
+  }
+}
+
+export const useGetHaulingTool = () => {
+  const { data, isLoading, error } = useQuery(
+    ["useGetHaulingTool"],
+    () => fleetApiService.getHaulingTools(),
+    {
+      staleTime: 10000
+    },
+    {
+      onError: e => {
+        console.error(e)
+      },
+      refetchInterval: 5000
+    }
+  )
+  return {
+    haulingTools: data,
+    isLoading,
+    error
+  }
+}

@@ -3,10 +3,14 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { StyleSheet } from "react-native"
 import { createDrawerNavigator } from "@react-navigation/drawer"
 
+import DrawerContainer from "./drawerContainer"
 import Landing from "../container/app/screens/Landing"
 import FleetDefinition from "../container/app/screens/FleetDefinition"
 import SiteParameters from "../container/app/screens/SiteParameters"
-import DrawerContainer from "./drawerContainer"
+import SendFeedback from "../container/app/screens/SendFeedback"
+import AboutUs from "../container/app/screens/AboutUs"
+import Results from "../container/app/screens/Results"
+import GraphicalView from "../container/app/screens/GraphicalView"
 
 const RootStack = createStackNavigator()
 const MainStack = createStackNavigator()
@@ -19,6 +23,10 @@ const MainStackScreens = () => {
       <MainStack.Screen name="Landing" component={Landing} />
       <MainStack.Screen name="FleetDefinition" component={FleetDefinition} />
       <MainStack.Screen name="SiteParameters" component={SiteParameters} />
+      <MainStack.Screen name="SendFeedback" component={SendFeedback} />
+      <MainStack.Screen name="AboutUs" component={AboutUs} />
+      <MainStack.Screen name="Results" component={Results} />
+      <MainStack.Screen name="GraphicalView" component={GraphicalView} />
     </MainStack.Navigator>
   )
 }
@@ -33,8 +41,8 @@ function DrawerStack() {
       screenOptions={{
         activeBackgroundColor: "transparent",
         activeTintColor: "white",
-        inactiveTintColor: "white"
-        // drawerPosition: "right"
+        inactiveTintColor: "white",
+        drawerPosition: "right"
       }}
       sceneContainerStyle={{ backgroundColor: "transparent" }}
       drawerContent={props => {

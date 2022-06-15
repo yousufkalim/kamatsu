@@ -7,7 +7,8 @@ export const Button = ({
   btnText = "Button",
   isPrimary = false,
   onPress,
-  halfWidthBtn = false
+  halfWidthBtn = false,
+  customStyle = {}
 }) => {
   const containerStyle = isPrimary
     ? { ...styles.container, ...styles.containerBlue }
@@ -17,7 +18,7 @@ export const Button = ({
 
   return (
     <TouchableOpacity
-      style={{ ...containerStyle, ...halfWidthBtnStyle }}
+      style={{ ...containerStyle, ...halfWidthBtnStyle, ...customStyle }}
       onPress={onPress}
     >
       <Text

@@ -20,7 +20,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: appStyles.BORDER_COLOR,
-    borderRadius: appStyles.BORDER_RADIUS
+    borderRadius: appStyles.BORDER_RADIUS,
+    paddingLeft: 10
   },
   labelContainer: {
     flexDirection: "row",

@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import { Header } from "./index"
 
 describe("Header component test", () => {
-  test("it renders with crashing", () => {
+  test("it renders without crashing", () => {
     render(
       <NavigationContainer>
         <Header />

@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native"
-import * as appStyles from "../../../../utils/appStyles"
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp
 } from "react-native-responsive-screen"
+import * as appStyles from "../../../../utils/appStyles"
 
 export const styles = StyleSheet.create({
   container: {
@@ -28,5 +28,9 @@ export const styles = StyleSheet.create({
   roundTripTxt: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
     fontSize: 12
+  },
+  nextBtn: {
+    flex: 1,
+    alignSelf: "flex-end"
   }
 })

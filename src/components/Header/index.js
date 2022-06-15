@@ -1,14 +1,17 @@
-import { View, Text, TouchableOpacity } from "react-native"
+import { View, TouchableOpacity } from "react-native"
 import React from "react"
 import { useNavigation } from "@react-navigation/native"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen"
+
 import LogoBlue from "../../assets/svg/logo-blue.svg"
 import MenuIcon from "../../assets/svg/menu.svg"
 import BackIcon from "../../assets/svg/back.svg"
+
 import { styles } from "./styles"
+
 export const Header = ({ showBack }) => {
   const navigation = useNavigation()
 

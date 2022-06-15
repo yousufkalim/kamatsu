@@ -8,7 +8,7 @@ import {
 export const styles = StyleSheet.create({
   container: {
     width: wp(45),
-    zIndex: 3
+    zIndex: 9
   },
   label: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
@@ -32,16 +32,17 @@ export const styles = StyleSheet.create({
   },
   placeHolderText: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
-    fontSize: 14
+    fontSize: 14,
+    // color: appStyles.COLOR_GRAY_1
   },
   icon: {
-    color: appStyles.COLOR_GRAY_1
+    // color: appStyles.COLOR_GRAY_1
   },
   dropdown: {
     position: "absolute",
     top: 39,
     left: 0,
-    zIndex: 3,
+    zIndex: 9,
     backgroundColor: "#fff",
     width: wp(45),
     borderWidth: 1,
@@ -61,6 +62,6 @@ export const styles = StyleSheet.create({
   itemLabel: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
     fontSize: 14,
-    color: appStyles.COLOR_GRAY_1
+    // color: appStyles.COLOR_GRAY_1
   }
 })

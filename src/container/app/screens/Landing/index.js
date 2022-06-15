@@ -1,4 +1,5 @@
-import { View, Text, ImageBackground, Image, StyleSheet } from "react-native"
+import { View, Text, Image } from "react-native"
+import Toast from "react-native-toast-message"
 import React from "react"
 import {
   heightPercentageToDP as hp,
@@ -11,12 +12,18 @@ import EquipmentSelectorTool from "../../../../assets/svg/equipment-selector-too
 import DozePro from "../../../../assets/svg/dozePro.svg"
 import TrolleyFeasibillityTool from "../../../../assets/svg/trolley-feasibillity-tool.svg"
 import LogoWhite from "../../../../assets/svg/logo-white.svg"
-
 import { IconButton } from "../../../../components/IconButton"
 
 import { styles } from "./styles"
 
 const Landing = ({ navigation }) => {
+  const showMsg = () => {
+    Toast.show({
+      type: "info",
+      text1: "Coming Soon"
+    })
+  }
+
   return (
     <>
       <View style={styles.backgroundImg}>
@@ -46,16 +53,19 @@ const Landing = ({ navigation }) => {
           btnText="Equipment Selector Tool"
           isDisabled
           BtnIcon={EquipmentSelectorTool}
+          onPress={showMsg}
         />
         <IconButton
           btnText="Haulage Analysis Tool"
           isDisabled
           BtnIcon={DozePro}
+          onPress={showMsg}
         />
         <IconButton
           btnText="Haulage Analysis Tool"
           isDisabled
           BtnIcon={TrolleyFeasibillityTool}
+          onPress={showMsg}
         />
       </View>
     </>

@@ -31,7 +31,6 @@ export const styles = StyleSheet.create({
   },
   title: {
     flexDirection: "row",
-    marginBottom: 20
   },
   titleText: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
