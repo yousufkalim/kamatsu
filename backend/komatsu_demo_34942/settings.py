@@ -69,6 +69,7 @@ LOCAL_APPS = [
     'users.apps.UsersConfig',
     'hat_app.apps.HatAppConfig',
     'feedbacks.apps.FeedbacksConfig',
+    'pages.apps.PagesConfig',
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -105,7 +106,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'web_build'),
+            # os.path.join(BASE_DIR, 'web_build'),
+            os.path.join(BASE_DIR, 'web_front_build'),
             os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
@@ -177,7 +179,11 @@ AUTHENTICATION_BACKENDS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'web_build/static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'web_front_build/static'),
+    os.path.join(BASE_DIR, 'web_build/static')
+]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/mediafiles/'

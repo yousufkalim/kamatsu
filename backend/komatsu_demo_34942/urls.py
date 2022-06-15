@@ -22,9 +22,11 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.conf import settings
+from home.views import manifest_json_view
 
 urlpatterns = [
-    path("", include("home.urls")),
+    path("home/", include("home.urls")),
+    # path("manifest_json_view/", manifest_json_view),
     path("accounts/", include("allauth.urls")),
     path("modules/", include("modules.urls")),
     # path("api/v1/", include("home.api.v1.urls")),

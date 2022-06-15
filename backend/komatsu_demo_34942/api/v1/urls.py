@@ -13,4 +13,6 @@ urlpatterns = [
     path('rest-auth/registration/account-confirm-email/<str:key>/', confirm_email),
     path('rest-auth/registration/', include("rest_auth.registration.urls")),
     path('hat/', include('hat_app.api.v1.urls', namespace='hat')),
+    path('feedbacks/', include('feedbacks.api.v1.urls', namespace='feedbacks')),
+    path('pages/', include('pages.api.v1.urls', namespace='pages')),
 ]
