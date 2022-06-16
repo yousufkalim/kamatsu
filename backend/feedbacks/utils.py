@@ -4,8 +4,9 @@ from django.core.mail import send_mail
 
 def send_feedback_reply_email(reply):
     from_email = settings.DEFAULT_FROM_EMAIL
-    to_email = reply.email
+    to_email = reply.feedback.email
     subject = 'Feedback Reply'
+    print(subject)
     try:
         send_mail(
             subject=subject,
