@@ -51,7 +51,7 @@ const Landing =  () => {
                         text = "Haulage Analysis Tool"
                         icon = {HaulIcon}
                         textColor = "black"
-                        url = "/home"
+                        url = "/fleet-definition"
 
                     />
                     <Button

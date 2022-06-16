@@ -70,9 +70,10 @@ const MobileMenuLink =({text, url}) => {
     )
 }
 
-const MobileMenu =()=> {
+const MobileMenu =({mobileMenuIsOpen, onClickOuterSpace})=> {
     return(
-        <div className='bg-white h-screen flex ml-20 justify-start px-6 z-10 rounded-2xl'>
+        <div className={mobileMenuIsOpen ? 'mobile-menu-overlay': null} onClick={onClickOuterSpace}>
+        <div className='bg-white h-screen flex ml-20 justify-start px-6 z-10 rounded-t-2xl rounded-b-2xl md:hidden'>
             <div>
                 <div>
                     <div className='mt-14 mb-8'>
@@ -83,7 +84,7 @@ const MobileMenu =()=> {
                         <p className='text-smaller leading-smaller'>johndoe@gmail.com</p>
                     </div>
                     <div className=''>
-                        <hr className="text-resultLabel"/>
+                        <hr className="text-resultLabel w-screen mr-6"/>
                     </div>
                 </div>
                 <div className='py-6'>
@@ -111,11 +112,12 @@ const MobileMenu =()=> {
             </div>
             
         </div>
+        </div>
     )
 } 
 
 const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
-    const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(true)
+    const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
     return(
         <div className="flex">
             <div className="hidden md:block md:w-1/6 md:bg-blue md:h-screen">
@@ -150,7 +152,7 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                 
             </div>
             <div className='bg-deepGray w-full md:h-screen'>
-                <div className='hidden md:flex bg-white top-bar  items-center px-12 justify-between'>
+                <div className='hidden md:flex bg-white top-bar items-center px-12 justify-between'>
                     <div>
                         {
                             displayBackButton ? 
@@ -168,7 +170,11 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                 <div>
                         {
                             mobileMenuIsOpen &&  (
-                                <MobileMenu />
+                                <MobileMenu 
+                                    mobileMenuIsOpen = {mobileMenuIsOpen}
+                                    // onClickOuterSpace = {setMobileMenuIsOpen(false)}
+                                    onClickOuterSpace = {()=>setMobileMenuIsOpen(false)}
+                                />
                             )
                         }
                     </div>
@@ -187,7 +193,7 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                         <img src={MobileLogoBlue}/>
                     </div>
                     <div className=''>
-                        <img src={Hamburger}/>
+                        <img src={Hamburger} onClick={()=>setMobileMenuIsOpen(true)}/>
                     </div>
                 </div>
                 <div className='px-4 md:px-12 py-6'>
