@@ -24,11 +24,10 @@ export const styles = StyleSheet.create({
     paddingLeft: 10
   },
   labelContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between"
+    flexDirection: "row"
   },
-  icon: {
-    color: appStyles.primaryColor,
-    fontSize: 16
+  labelIcon: {
+    fontSize: 14,
+    marginLeft: 2
   }
 })

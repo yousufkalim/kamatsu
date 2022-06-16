@@ -10,17 +10,12 @@ export const Select = ({
   selected,
   labelName,
   valueName,
-  setSelected,
+  handleChange,
   showDefault = false,
+  defaultValue = "",
   customStyle = {}
 }) => {
   const [show, setShow] = useState(false)
-
-  useEffect(() => {
-    if (showDefault && items.length > 0) {
-      setSelected(items[0])
-    }
-  }, [])
 
   return (
     <View style={{ ...styles.container, ...customStyle }}>
@@ -52,7 +47,7 @@ export const Select = ({
                     : { ...styles.item }
                 }
                 onPress={() => {
-                  setSelected(item)
+                  handleChange(item)
                   setShow(false)
                 }}
               >
