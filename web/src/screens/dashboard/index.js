@@ -2,12 +2,12 @@ import Logo from '../../assets/logo-white.png';
 import { Link, NavLink } from 'react-router-dom';
 import './index.css'
 import BackArrow from '../../assets/back-arrow.svg'
-
+import MobileLogoBlue from '../../assets/mobile-logo-blue.png'
+import Hamburger from '../../assets/hamburger.png'
+import { useState } from 'react';
 const Menu = ({text, url}) => {
     return (
         <>
-             {/* <div className='py-3 hover:bg-yellow flex justify-start'> */}
-             {/* <div className='text-white hover:text-black px-4 flex justify-center'> */}
                 <NavLink to={url} className=''
                     style={({isActive})=> isActive ? {
                         color: '#000',
@@ -37,8 +37,85 @@ const Menu = ({text, url}) => {
        
     )
 }
+const MobileMenuLink =({text, url}) => {
+    return (
+        <>
+                <NavLink to={url} className=''
+                    style={({isActive})=> isActive ? {
+                        color: '#FFC82F',
+                        width: '100%',
+                        display: 'block',
+                        lineHeight: '40px',
+                        fontSize: '18px'
+                        // paddingTop: '13px',
+                        // paddingBottom: '13px',
+                        
+                    } : {
+                        color: "#2D2F8A",
+                        width: '100%',
+                        display: 'block',
+                        lineHeight: '40px',
+                        fontSize: '18px',
+                        // paddingTop: '13px',
+                        // paddingBottom: '13px',
+                        '&:hover' : {
+                            color: '#FFC82F',
+                        }
+                    }
+                }
+                > {text}
+                </NavLink>
+        </>
+       
+    )
+}
+
+const MobileMenu =()=> {
+    return(
+        <div className='bg-white h-screen flex ml-20 justify-start px-6 z-10 rounded-2xl'>
+            <div>
+                <div>
+                    <div className='mt-14 mb-8'>
+                        <img src={MobileLogoBlue}/>
+                    </div>
+                    <div className='mb-8'>
+                        <h4 className='text-body leading-smaller font-normal'>John Doe</h4>
+                        <p className='text-smaller leading-smaller'>johndoe@gmail.com</p>
+                    </div>
+                    <div className=''>
+                        <hr className="text-resultLabel"/>
+                    </div>
+                </div>
+                <div className='py-6'>
+                    <MobileMenuLink 
+                        text = "Home"
+                        url = "/fleet-definition"
+                    />
+                    <MobileMenuLink 
+                        text = "Send Feedback"
+                        url="/feedback"
+                    />
+                    <MobileMenuLink 
+                        text = "Privacy Policy"
+                        url="/test"
+                    />
+                    <MobileMenuLink 
+                        text = "Terms and Conditions"
+                        url="/test"
+                    />
+                    <MobileMenuLink 
+                        text = "About Us"
+                        url="/about"
+                    />
+                </div>
+            </div>
+            
+        </div>
+    )
+} 
 
 const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
+    const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(true)
     return(
         <div className="flex">
             <div className="hidden md:block md:w-1/6 md:bg-blue md:h-screen">
@@ -49,7 +126,7 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                     <div className='py-6'>
                         <Menu 
                             text = "Home"
-                            url = "/home"
+                            url = "/fleet-definition"
                         />
                         <Menu 
                             text = "Send Feedback"
@@ -73,7 +150,7 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                 
             </div>
             <div className='bg-deepGray w-full md:h-screen'>
-                <div className='bg-white top-bar flex items-center px-12 justify-between'>
+                <div className='hidden md:flex bg-white top-bar  items-center px-12 justify-between'>
                     <div>
                         {
                             displayBackButton ? 
@@ -86,6 +163,31 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                     <div className=''>
                         <h4 className='text-body leading-smaller font-normal'>John Doe</h4>
                         <p className='text-smaller leading-smaller'>johndoe@gmail.com</p>
+                    </div>
+                </div>
+                <div>
+                        {
+                            mobileMenuIsOpen &&  (
+                                <MobileMenu />
+                            )
+                        }
+                    </div>
+                <div className=' md:hidden bg-white top-bar flex items-center px-4 justify-between'>
+                    <div>
+                        {
+                            displayBackButton ? 
+                            <Link to={backButtonURL}>
+                                <img src={BackArrow}/>
+                            </Link>
+                             : null
+                        }
+                    </div>
+                   
+                    <div className=''>
+                        <img src={MobileLogoBlue}/>
+                    </div>
+                    <div className=''>
+                        <img src={Hamburger}/>
                     </div>
                 </div>
                 <div className='px-4 md:px-12 py-6'>

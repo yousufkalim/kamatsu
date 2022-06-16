@@ -3,7 +3,7 @@ import './App.css';
 import {BrowserRouter, Routes, Route,} from 'react-router-dom';
 import Landing from './screens/landing';
 import DashboardFrame from './screens/dashboard';
-import Home from './screens/home';
+import FleetDefinition from './screens/home';
 import About from './screens/about';
 import Feedback from './screens/feedback';
 import Results from './screens/results';
@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element ={<Landing />} />
           <Route path="/dashboard" element ={<DashboardFrame />} />
-          <Route path="/home" element ={<Home />} />
+          <Route path="/fleet-definition" element ={<FleetDefinition />} />
           <Route path ="/about" element={<About />} />
           <Route path ="/feedback" element={<Feedback />} />
           <Route path ="/result" element={<Results />} />

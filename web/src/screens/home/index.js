@@ -27,19 +27,17 @@ const Form = () => {
                 onChange={(e)=>console.log(e.value)}
             />
 
-
             </div>
             <div className="flex gap-8">
                 <div className="w-1/2"> 
-                    <label className="block text-smaller mb-1 font-normal">Bucket Fill (%)</label>
-                    <Input
-                        onChange={(e)=>console.log(e.target.value)}
-                        placeholder="0.95"
-                        className="mb-6"
+                    <label className="block text-smaller mb-1 font-normal">Loading Tool</label>
+                    <DropDown 
+                        options={UnitOptions}
+                        onChange={(e)=>console.log(e.value)}
                     />
                 </div>
                 <div className="w-1/2">
-                    <label className="block text-smaller mb-1 font-normal">Bucket Fill (%)</label>
+                    <label className="block text-smaller mb-1 font-normal">Cycle Time (Sec)</label>
                     <Input
                         onChange={(e)=>console.log(e.target.value)}
                         placeholder="0.95"
@@ -47,57 +45,76 @@ const Form = () => {
                     />
                 </div>
             </div>
-            <div className="flex gap-8 mb-8">
-                <div className="w-1/2">
-                    <label className="block text-smaller mb-1 font-normal">Bucket Fill (%)</label>
-                    <Input
-                        onChange={(e)=>console.log(e.target.value)}
-                        placeholder="0.95"
-                        className="mb-6"
-                    />
+            <div>
+                <div className="flex gap-8 mb-8">
+                    <div className="w-1/2">
+                        <label className="block text-smaller mb-1 font-normal">Bucket Fill (%)</label>
+                        <Input
+                            onChange={(e)=>console.log(e.target.value)}
+                            placeholder="0.95"
+                            // className="mb-6"
+                        />
+                    </div>
+                    <div className="w-1/2">
+                        <label className="block text-smaller mb-1 font-normal">Bucket Size (m3)</label>
+                        <Input
+                            onChange={(e)=>console.log(e.target.value)}
+                            placeholder="0.95"
+                            // className="mb-6"
+                        />
+                    </div>
+                    
                 </div>
-                <div className="w-1/2">
-                    <label className="block text-smaller mb-1 font-normal">Bucket Size (m3)</label>
-                    <Input
-                        onChange={(e)=>console.log(e.target.value)}
-                        placeholder="0.95"
-                        className="mb-6"
-                    />
+                <div className="flex justify-center  md:justify-end mb-8">
                     <DashboardButton 
-                        text="Reset Loader"
-                        backgroundColor = "yellow"
-                        className = "mb-6"
-                    />
-                </div>
+                            text="Reset Loader"
+                            backgroundColor = "yellow"
+                            // className = "mb-6"
+                        />
+                    </div>
 
             </div>
-            <div className="flex gap-8">
-                <div className="w-1/2">
-                    <label className="block text-sm mb-1 font-normal">Hauling Tool</label>
-                    <Input
-                        onChange={(e)=>console.log(e.target.value)}
-                        placeholder="0.95"
-                        className="mb-6"
-                    />
+            <div>
+                <div className="flex gap-8 mb-8">
+                    <div className="w-1/2">
+                        <label className="block text-sm mb-1 font-normal">Hauling Tool</label>
+                        <Input
+                            onChange={(e)=>console.log(e.target.value)}
+                            placeholder="0.95"
+                            // className="mb-6"
+                        />
+                    </div>
+                    <div className="w-1/2">
+                        <label className="block text-sm mb-1 font-normal">Nom. Payload (Tons)</label>
+                        <Input
+                            onChange={(e)=>console.log(e.target.value)}
+                            placeholder="0.95"
+                            // className="mb-6"
+                        />
+                    </div>
                 </div>
-                <div className="w-1/2 h-screen">
-                    <label className="block text-sm mb-1 font-normal">Nom. Payload (Tons)</label>
-                    <Input
-                        onChange={(e)=>console.log(e.target.value)}
-                        placeholder="0.95"
-                        className="mb-6"
-                    />
+                <div className="flex justify-center md:justify-end mb-12">
                     <DashboardButton 
                         text="Reset Truck"
                         backgroundColor = "yellow"
                     />
+
+                </div>
+                <div className="flex justify-center md:justify-end mb-8">
+                    <DashboardButton 
+                        text="Next"
+                        backgroundColor = "blue"
+                        textColor="white"
+                    />
+
                 </div>
             </div>
+            
         </div>
     )
 }
 
-const Home = () => {
+const FleetDefinition = () => {
     return(
         <DashboardFrame 
             title="Fleet Definition"
@@ -108,4 +125,4 @@ const Home = () => {
 }
 
 
-export default Home;
+export default FleetDefinition;
