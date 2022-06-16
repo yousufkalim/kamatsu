@@ -56,13 +56,13 @@ const Landing = ({ navigation }) => {
           onPress={showMsg}
         />
         <IconButton
-          btnText="Haulage Analysis Tool"
+          btnText="DozePro"
           isDisabled
           BtnIcon={DozePro}
           onPress={showMsg}
         />
         <IconButton
-          btnText="Haulage Analysis Tool"
+          btnText="Trolley Feasibillity Tool"
           isDisabled
           BtnIcon={TrolleyFeasibillityTool}
           onPress={showMsg}

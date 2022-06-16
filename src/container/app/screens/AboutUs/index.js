@@ -2,25 +2,19 @@ import { View, Text, Pressable, Linking } from "react-native"
 import React from "react"
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
+import { useGetAboutUs } from "../../../../hooks/query/useAbout"
 import { styles } from "./styles"
 
 const AboutUs = () => {
+  const { data } = useGetAboutUs()
+
   return (
     <Layout>
       <Header showBack />
       <View style={styles.container}>
         <Text style={styles.title}>About Us</Text>
 
-        <Text style={styles.text}>
-          The objective of this tool is to conduct productivity and unit cost
-          analyses for mining or construction fleet configurations. The
-          parameters in this app can model a specific site for a customer as
-          well as utilize industry standard parameters in a loader-dependent or
-          truck-dependent application. All values calculated by this tool are
-          intended for preliminary planning and budgetary purposes. For
-          additional questions, please contact the Komatsu Application
-          Engineering team at{" "}
-        </Text>
+        <Text style={styles.text}>{data?.description}</Text>
         <Pressable
           onPress={() => {
             Linking.openURL(
@@ -29,7 +23,7 @@ const AboutUs = () => {
           }}
         >
           <Text style={styles.email}>
-            MiningApplicationEngineering@global.komatsu
+            {data?.contact_email}
           </Text>
         </Pressable>
       </View>
