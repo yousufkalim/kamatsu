@@ -1,3 +1,7 @@
 .top-bar {
     height: 90px;
 }
+.mobile-menu-overlay {
+    background: rgba(0,0,0, 0.6);
+    z-index: 10000;
+}

@@ -19,7 +19,7 @@ export const InputContainer = styled.div`
 `;
 export const Input = styled.input`
   padding: 1em;
-  color: rgb(85, 88, 111);
+  color: #000
   font-size: 14px;
   line-height: 23px;
   font-weight: 400;
@@ -33,7 +33,8 @@ export const Input = styled.input`
 }
 
 &::placeholder {
-    color: #A5ABAF !important;
+    // color: #A5ABAF !important;
+    color: #000;
     font-size: 14px;
     font-weight: 400;
     line-height: 23px;
