@@ -7,6 +7,7 @@ import Home from './screens/home';
 import About from './screens/about';
 import Feedback from './screens/feedback';
 import Results from './screens/results';
+import Parameters from './screens/parameters';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path ="/about" element={<About />} />
           <Route path ="/feedback" element={<Feedback />} />
           <Route path ="/result" element={<Results />} />
+          <Route path ="/parameters" element={<Parameters />} />
         </Routes>
 
     </BrowserRouter>
