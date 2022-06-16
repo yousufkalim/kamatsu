@@ -30,7 +30,11 @@ module.exports = {
         'title' : '60px',
         'about' : '26px',
 
-      }
+      },
+      screens:{
+        'mobile':'540px',
+        'xxl':'1920px',
+      },
     },
     
   },

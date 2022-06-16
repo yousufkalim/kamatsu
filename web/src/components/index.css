@@ -5,3 +5,30 @@
     border-radius: 6px;
     align-items: center;
 }
+
+@media only screen and (max-width: 767px) {
+    .home-button {
+      /* margin: 0 20px; */
+      margin-bottom: 10px;
+      width: 90vw;
+      height: 60px;
+      padding-left: 40px;
+    }
+  }
+
+  .dashboard-button {
+    height: 40px;
+    width: 247px;
+    padding: 16px 20px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .dashboard-button {
+      margin-bottom: 10px;
+      height: 40px;
+      width: 100%;
+      align-items: center;
+    }
+  }
