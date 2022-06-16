@@ -7,6 +7,7 @@ import { styles } from "./styles"
 export const Input = ({
   placeHolder = "Placeholder",
   inputLabel = "Label",
+  symbol = null,
   value,
   setValue,
   customContainerStyle = {},
@@ -19,7 +20,8 @@ export const Input = ({
     <View style={{ ...styles.container, ...customContainerStyle }}>
       <View style={styles.labelContainer}>
         <Text style={styles.placeHolder}>{inputLabel}</Text>
-        <View>
+        {symbol && <Text style={styles.labelIcon}>{symbol}</Text>}
+        <View style={styles.labelIcon}>
           {showLabelIcon ? (
             <TouchableOpacity onPress={onPressIcon}>
               <QuestionIcon height={16} width={16} />

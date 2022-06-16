@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Pressable, StyleSheet, Text, View } from "react-native"
+import { Linking, Pressable, StyleSheet, Text, View } from "react-native"
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer"
 import {
   widthPercentageToDP as wp,
@@ -18,6 +18,17 @@ function DrawerContainer({ props }) {
 
   const handleCancelSignOut = () => {
     setModalVisible(false)
+  }
+
+  const handleOpenLink = link => {
+    console.log("link", link)
+    Linking.canOpenURL(link).then(supported => {
+      if (supported) {
+        Linking.openURL(link)
+      } else {
+        console.log("Not supported:")
+      }
+    })
   }
 
   return (
@@ -54,17 +65,17 @@ function DrawerContainer({ props }) {
           />
           <DrawerItem
             label="Privacy Policy"
-            onPress={() => {
-              navigation.navigate("PrivacyPolicy")
-            }}
+            onPress={() =>
+              handleOpenLink("https://www.komatsu.com/en/privacy-statement/")
+            }
             labelStyle={styles.labelStyle}
             style={styles.drawerItem}
           />
           <DrawerItem
             label="Terms and Conditions"
-            onPress={() => {
-              navigation.navigate("PrivacyPolicy")
-            }}
+            onPress={() =>
+              handleOpenLink("https://www.komatsu.com/en/terms-of-use/")
+            }
             labelStyle={styles.labelStyle}
             style={styles.drawerItem}
           />
