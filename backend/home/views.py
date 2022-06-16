@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render
+from django.conf import settings
+import os
 
 
 def home(request):
@@ -16,6 +18,16 @@ def home(request):
 
 def manifest_json_view(request):
     # from django.contrib.staticfiles.storage import staticfiles_storage
-    # url = staticfiles_storage.url('web_front_build/manifest.json')
+    # # url = staticfiles_storage('web_front_build/manifest.json')
+    # file = staticfiles_storage('web_front_build/manifest.json')
+    # file.
     # print(url)
-    return HttpResponse('ok')
+    file_path = 'web_front_build/manifest.json'
+
+    try:
+        file_find = os.path.join(settings.BASE_DIR, file_path)
+        with open(file_find) as file:
+            content = file.read()
+            return HttpResponse(content)
+    except IOError:
+        raise Http404

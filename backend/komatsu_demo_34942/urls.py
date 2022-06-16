@@ -26,7 +26,7 @@ from home.views import manifest_json_view
 
 urlpatterns = [
     path("home/", include("home.urls")),
-    # path("manifest_json_view/", manifest_json_view),
+    path("manifest.json", manifest_json_view),
     path("accounts/", include("allauth.urls")),
     path("modules/", include("modules.urls")),
     # path("api/v1/", include("home.api.v1.urls")),

@@ -182,7 +182,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'web_front_build/static'),
-    os.path.join(BASE_DIR, 'web_build/static')
+    # os.path.join(BASE_DIR, 'web_build/static')
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -215,6 +215,8 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 # Custom user model
 AUTH_USER_MODEL = "users.User"
+
+DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 
 EMAIL_HOST = env.str("EMAIL_HOST", "smtp.sendgrid.net")
 EMAIL_HOST_USER = env.str("SENDGRID_USERNAME", "")
