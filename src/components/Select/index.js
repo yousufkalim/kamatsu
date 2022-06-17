@@ -13,7 +13,8 @@ export const Select = ({
   handleChange,
   showDefault = false,
   defaultValue = "",
-  customStyle = {}
+  customStyle = {},
+  isDisabled = false
 }) => {
   const [show, setShow] = useState(false)
 

@@ -17,10 +17,8 @@ const FleetDefinition = ({ navigation }) => {
   const unitStateValue = useSelector(state => state.unitState.unit)
 
   const [unit, setUnit] = useState(unitStateValue)
-  const [loadingTool, setLoadingTool] = useState("")
   const [selectedLoadingTool, setSelectedLoadingTool] = useState({})
   const [selectedHaulingTool, setSelectedHaulingTool] = useState({})
-  const [haulingTool, setHaulingTool] = useState("")
   const [haulingTools, setHaulingTools] = useState([])
   const [cycleTime, setCycleTime] = useState("")
   const [bucketSize, setBucketSize] = useState("")
@@ -39,6 +37,15 @@ const FleetDefinition = ({ navigation }) => {
 
   const handleUnitChange = value => {
     dispatch(setUnitAction(value))
+    setUnit(value)
+
+    if (selectedLoadingTool?.name) {
+      handleloadingToolsChange(selectedLoadingTool)
+    }
+
+    if (selectedHaulingTool?.name) {
+      handleHaulingToolsChange(selectedHaulingTool)
+    }
   }
 
   const handleloadingToolsChange = value => {
@@ -54,19 +61,21 @@ const FleetDefinition = ({ navigation }) => {
 
   const handleHaulingToolsChange = value => {
     setSelectedHaulingTool(value)
+    unitStateValue?.value === "Metric"
+      ? setPayload(value?.metric_standard?.capacity_tonne?.toString())
+      : setPayload(value?.capacity_ton?.toString())
   }
 
   const resetTruck = () => {
-    setPayload("")
-    setSelectedHaulingTool({})
+    if (selectedHaulingTool?.name) {
+      handleHaulingToolsChange(selectedHaulingTool)
+    }
   }
 
   const resetLoader = () => {
-    setSelectedLoadingTool({})
-    setSelectedHaulingTool({})
-    setCycleTime("")
-    setBucketSize("")
-    setBucketFill("")
+    if (selectedLoadingTool?.name) {
+      handleloadingToolsChange(selectedLoadingTool)
+    }
   }
 
   return (
@@ -114,7 +123,7 @@ const FleetDefinition = ({ navigation }) => {
             placeHolder="Bucket Size (&#13221;)"
             inputLabel="Bucket Size"
             symbol={
-              unitStateValue?.value === "Metric" ? `(m\u00B2)` : `(yd\u00B2)`
+              unitStateValue?.value === "Metric" ? `(m\u00B3)` : `(yd\u00B3)`
             }
             value={bucketSize}
             setValue={setBucketSize}

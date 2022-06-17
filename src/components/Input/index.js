@@ -14,7 +14,8 @@ export const Input = ({
   customInputStyle = {},
   showLabelIcon = false,
   multiline = false,
-  onPressIcon = () => {}
+  onPressIcon = () => {},
+  errorMessage = ""
 }) => {
   return (
     <View style={{ ...styles.container, ...customContainerStyle }}>
@@ -33,11 +34,16 @@ export const Input = ({
       </View>
       <TextInput
         placeholder={placeHolder}
+        placeholderTextColor="#A5ABAF"
         style={{ ...styles.input, ...customInputStyle }}
         value={value}
         onChangeText={setValue}
         multiline={multiline}
       />
+
+      {errorMessage.length > 0 && (
+        <Text style={styles.errorMessage}>{errorMessage}</Text>
+      )}
     </View>
   )
 }

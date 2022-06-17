@@ -13,13 +13,13 @@ export const styles = StyleSheet.create({
   title: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
     fontSize: 28,
-    marginBottom: 10
+    marginBottom: 10,
+    marginTop: 10
   },
   text: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
     fontSize: 14,
     lineHeight: 26,
-    marginBottom: 10
   },
   email: {
     color: appStyles.primaryColor

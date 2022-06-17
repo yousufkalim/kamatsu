@@ -32,12 +32,9 @@ export const styles = StyleSheet.create({
   },
   placeHolderText: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
-    fontSize: 14,
-    // color: appStyles.COLOR_GRAY_1
+    fontSize: 14
   },
-  icon: {
-    // color: appStyles.COLOR_GRAY_1
-  },
+  icon: {},
   dropdown: {
     position: "absolute",
     top: 39,
@@ -61,7 +58,7 @@ export const styles = StyleSheet.create({
   },
   itemLabel: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
-    fontSize: 14,
+    fontSize: 14
     // color: appStyles.COLOR_GRAY_1
   }
 })
