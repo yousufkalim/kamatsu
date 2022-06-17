@@ -1,150 +1,187 @@
 [
   {
     "title": "Basalt",
-    "density": "2870"
+    "density": "2870",
+    "position": 0
   },
   {
     "title": "Bauxite",
-    "density": "2390"
+    "density": "2390",
+    "position": 1
   },
   {
     "title": "Caliche",
-    "density": "2110"
+    "density": "2110",
+    "position": 2
   },
   {
     "title": "Clay (dry)",
-    "density": "2440"
+    "density": "2440",
+    "position": 3
   },
   {
     "title": "Clay & Gravel (dry)",
-    "density": "2440"
+    "density": "2440",
+    "position": 4
   },
   {
     "title": "Coal - Anthracite (washed)",
-    "density": "1690"
+    "density": "1690",
+    "position": 5
   },
   {
     "title": "Coal - Bituminous",
-    "density": "1500"
+    "density": "1500",
+    "position": 6
   },
   {
     "title": "Coal - Sub-bituminous",
-    "density": "1400"
+    "density": "1400",
+    "position": 7
   },
   {
     "title": "Coal - Lignite",
-    "density": "1800"
+    "density": "1800",
+    "position": 8
   },
   {
     "title": "75% Rock, 25% Earth",
-    "density": "3300"
+    "density": "3300",
+    "position": 9
   },
   {
     "title": "50% Rock, 50% Earth",
-    "density": "2900"
+    "density": "2900",
+    "position": 10
   },
   {
     "title": "25% Rock, 75% Earth",
-    "density": "2650"
+    "density": "2650",
+    "position": 11
   },
   {
     "title": "Earth - Dry",
-    "density": "2360"
+    "density": "2360",
+    "position": 12
   },
   {
     "title": "Earth - Wet",
-    "density": "2700"
+    "density": "2700",
+    "position": 13
   },
   {
     "title": "Earth - Loam",
-    "density": "2110"
+    "density": "2110",
+    "position": 14
   },
   {
     "title": "Granite",
-    "density": "2700"
+    "density": "2700",
+    "position": 15
   },
   {
     "title": "Gravel (Pitrun)",
-    "density": "3250"
+    "density": "3250",
+    "position": 16
   },
   {
     "title": "Gypsum",
-    "density": "3050"
+    "density": "3050",
+    "position": 17
   },
   {
     "title": "Hematite, Iron Ore",
-    "density": "4700"
+    "density": "4700",
+    "position": 18
   },
   {
     "title": "Limestone",
-    "density": "2700"
+    "density": "2700",
+    "position": 19
   },
   {
     "title": "Magnetite, Iron Ore",
-    "density": "4890"
+    "density": "4890",
+    "position": 20
   },
   {
     "title": "Peat - Dry",
-    "density": "760"
+    "density": "760",
+    "position": 21
   },
   {
     "title": "Peat - Wet",
-    "density": "1940"
+    "density": "1940",
+    "position": 22
   },
   {
     "title": "Pyrite, Iron Ore",
-    "density": "4400"
+    "density": "4400",
+    "position": 23
   },
   {
     "title": "Sand - Dry",
-    "density": "2390"
+    "density": "2390",
+    "position": 24
   },
   {
     "title": "Sand - Damp",
-    "density": "2850"
+    "density": "2850",
+    "position": 25
   },
   {
     "title": "Sand - Wet",
-    "density": "3100"
+    "density": "3100",
+    "position": 26
   },
   {
     "title": "Sand & Clay - Loose",
-    "density": "2700"
+    "density": "2700",
+    "position": 27
   },
   {
     "title": "Sand & Clay - Compacted",
-    "density": "4050"
+    "density": "4050",
+    "position": 28
   },
   {
     "title": "Sand & Gravel - Dry",
-    "density": "2900"
+    "density": "2900",
+    "position": 29
   },
   {
     "title": "Sand & Gravel - Wet",
-    "density": "3400"
+    "density": "3400",
+    "position": 30
   },
   {
     "title": "Sandstone",
-    "density": "2610"
+    "density": "2610",
+    "position": 31
   },
   {
     "title": "Shale",
-    "density": "2100"
+    "density": "2100",
+    "position": 32
   },
   {
     "title": "Slag",
-    "density": "2950"
+    "density": "2950",
+    "position": 33
   },
   {
     "title": "Stone",
-    "density": "2700"
+    "density": "2700",
+    "position": 34
   },
   {
     "title": "Taconite",
-    "density": "3900"
+    "density": "3900",
+    "position": 35
   },
   {
     "title": "Top Soil",
-    "density": "1600"
+    "density": "1600",
+    "position": 36
   }
 ]

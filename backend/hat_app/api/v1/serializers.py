@@ -40,7 +40,7 @@ class MaterialDensitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MaterialDensity
-        fields = '__all__'
+        fields = ['id', 'title', 'density', 'position', 'metric_standard', 'created', 'updated']
 
 
 class SiteDefaultParameterSerializer(serializers.ModelSerializer):
