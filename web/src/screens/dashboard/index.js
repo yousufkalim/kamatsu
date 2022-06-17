@@ -5,6 +5,7 @@ import BackArrow from '../../assets/back-arrow.svg'
 import MobileLogoBlue from '../../assets/mobile-logo-blue.png'
 import Hamburger from '../../assets/hamburger.png'
 import { useState } from 'react';
+
 const Menu = ({text, url}) => {
     return (
         <>
@@ -84,7 +85,7 @@ const MobileMenu =({mobileMenuIsOpen, onClickOuterSpace})=> {
                         <p className='text-smaller leading-smaller'>johndoe@gmail.com</p>
                     </div>
                     <div className=''>
-                        <hr className="text-resultLabel w-screen mr-6"/>
+                        <hr className="resultLabel w-screen mr-6"/>
                     </div>
                 </div>
                 <div className='py-6'>
@@ -96,14 +97,31 @@ const MobileMenu =({mobileMenuIsOpen, onClickOuterSpace})=> {
                         text = "Send Feedback"
                         url="/feedback"
                     />
-                    <MobileMenuLink 
+                    {/* <MobileMenuLink 
                         text = "Privacy Policy"
                         url="/test"
-                    />
-                    <MobileMenuLink 
+                    /> */}
+                    <div>
+                        <a className='mobile-menu-anchor'
+                            href="https://www.komatsu.com/en/terms-of-use/"
+                            target="_blank"
+                        >
+                            Terms and Conditions
+                        </a>
+                    </div>
+                    <div>
+                        <a className='mobile-menu-anchor'
+                            href="https://www.komatsu.com/en/terms-of-use/"
+                            target="_blank"
+                        >
+                            Privacy Policy
+                        </a>
+                    </div>
+                    
+                    {/* <MobileMenuLink 
                         text = "Terms and Conditions"
-                        url="/test"
-                    />
+                        url="https://www.komatsu.com/en/terms-of-use/"
+                    /> */}
                     <MobileMenuLink 
                         text = "About Us"
                         url="/about"
@@ -120,7 +138,7 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
     return(
         <div className="flex">
-            <div className="hidden md:block md:w-1/6 md:bg-blue md:h-screen">
+            <div className="hidden md:block md:w-1/6 blue md:h-screen">
                 <div className=''>
                     <div className='top-bar px-8 flex items-center'>
                         <img src={Logo} className=""/>
@@ -140,7 +158,7 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                         />
                         <Menu 
                             text = "Terms and Conditions"
-                            url="/test"
+                            url="https://www.komatsu.com/en/terms-of-use/"
                         />
                         <Menu 
                             text = "About Us"
@@ -151,7 +169,7 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                 
                 
             </div>
-            <div className='bg-deepGray w-full md:h-screen'>
+            <div className='deepGray w-full md:h-screen'>
                 <div className='hidden md:flex bg-white top-bar items-center px-12 justify-between'>
                     <div>
                         {

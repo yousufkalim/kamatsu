@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useContext, useEffect, useState } from "react";
 // import Fll from "../../context/ParametersContext";
 import FleetContext from "../../context/FleetContext";
+import './index.css'
 
 const Form = () => {
     const [loadingTools, setLoadingTools] = useState([])

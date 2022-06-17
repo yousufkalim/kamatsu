@@ -4,6 +4,7 @@ import { DashboardButton } from "../../components/Button";
 import DropDown from "../../components/Dropdown";
 import ParametersContext from "../../context/ParametersContext";
 import { useContext } from "react";
+import './index.css'
 
 
 const Form = () => {

@@ -1,10 +1,11 @@
 import { DashboardButton } from "../../components/Button";
 import DashboardFrame from "../dashboard";
+import './index.css'
 
 const ResultValue = ({label, value}) => {
     return(
         <div className="flex mb-6">
-            <h4 className="text-resultLabel font-normal">{label}:</h4>  
+            <h4 className="resultLabel font-normal">{label}:</h4>  
             <h4 className="ml-4">{value}</h4>
         </div>
     )
@@ -13,7 +14,7 @@ const ResultValue = ({label, value}) => {
 const Line =() => {
     return(
         <div>
-                <hr className="text-resultLabel mb-8 mt-8 "/>
+                <hr className="resultLabel mb-8 mt-8 "/>
         </div>
         
     )

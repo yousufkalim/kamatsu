@@ -58,7 +58,7 @@ export const Button =({text, icon, url, backgroundColor, textColor, comingSoon, 
                 <Link
                     to={url}
                 >
-                <button className={`bg-${backgroundColor} text-${textColor} home-button flex w-[274px] items-center pl-8`} 
+                <button className={`${backgroundColor} text-${textColor} home-button flex w-[274px] items-center pl-8`} 
                 onMouseEnter={()=>setIsShown(true)}
                 onMouseLeave={()=> setIsShown(false)}
                 onClick={()=>modal && setModalIsOpen(!modalIsOpen)}
@@ -73,13 +73,12 @@ export const Button =({text, icon, url, backgroundColor, textColor, comingSoon, 
 
 
 export const DashboardButton =({text, backgroundColor, url, textColor, onClick}) => {
-    // let color = 'blue'
     return(
         <Link
             to={url}
         >
         
-        <button className={`bg-${backgroundColor} text-${textColor} dashboard-button flex justify-center font-medium `} onClick={onClick}>{text}</button>
+        <button className={`${backgroundColor} text-${textColor} dashboard-button flex justify-center font-medium `} onClick={onClick}>{text}</button>
         </Link>
     )
 }

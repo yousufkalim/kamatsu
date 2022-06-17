@@ -5,13 +5,13 @@ module.exports = {
   theme: {
     extend: {
       colors : {
-        'email' : '#1fb6ff',
-        'yellow' : '#FFC82F',
-        'gray' : '#A5ABAF',
-        'blue' : '#2D2F8A',
-        'deepGray' : '#F6F6F6',
-        'resultLabel' : '#A1A1A1',
-        'red' : '#fff000'
+        // 'email' : '#1fb6ff',
+        // 'yellow' : '#FFC82F',
+        // 'gray' : '#A5ABAF',
+        // 'blue' : '#2D2F8A',
+        // 'deepGray' : '#F6F6F6',
+        // 'resultLabel' : '#A1A1A1',
+        // 'red' : '#fff000'
         // 'resultValue' : 
       },
       fontSize : {
