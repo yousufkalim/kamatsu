@@ -11,7 +11,7 @@ class CustomerFeedbackCreateAPIView(CreateAPIView):
         try:
             user = User.objects.get(email=self.request.data.get('email'))
         except User.DoesNotExist:
-            return None
+            user = None
 
         if user:
             serializer.save(user=user)
