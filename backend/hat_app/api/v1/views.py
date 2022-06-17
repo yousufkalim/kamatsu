@@ -1,4 +1,6 @@
 from rest_framework.generics import *
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .serializers import *
 
@@ -29,3 +31,12 @@ class SiteParametersScreenDefaultValuesAPIView(RetrieveAPIView):
         if instance is None:
             instance = SiteDefaultParameter.objects.create()
         return instance
+
+
+class PreviewResultAPIView(APIView):
+    @staticmethod
+    def post(request, *args, **kwargs):
+        serializer = FleetDefinitionSerializerPreview(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            return Response(serializer.validated_data)
+        return Response(serializer.errors)

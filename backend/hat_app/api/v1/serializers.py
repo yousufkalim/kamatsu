@@ -47,3 +47,22 @@ class SiteDefaultParameterSerializer(serializers.ModelSerializer):
     class Meta:
         model = SiteDefaultParameter
         fields = '__all__'
+
+
+class FleetDefinitionLoadingToolSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=32)
+    cycle_time_second = serializers.DecimalField(max_digits=10, decimal_places=1)
+    bucket_fill = serializers.DecimalField(max_digits=10, decimal_places=1)
+    bucket_size = serializers.DecimalField(max_digits=10, decimal_places=1)
+    cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1)
+
+
+class FleetDefinitionHaulingToolSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=32)
+    capacity_ton = serializers.DecimalField(max_digits=10, decimal_places=1)
+    cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1)
+
+
+class FleetDefinitionSerializerPreview(serializers.Serializer):
+    loading_tool = FleetDefinitionLoadingToolSerializer(required=True, many=False)
+    hauling_tool = FleetDefinitionHaulingToolSerializer(required=True, many=False)
