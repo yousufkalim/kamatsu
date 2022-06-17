@@ -92,7 +92,6 @@ const SiteParameters = ({ navigation }) => {
 
         <View style={styles.inputGroup}>
           <Input
-            placeHolder="Material Density"
             inputLabel="Material Density"
             showLabelIcon
             onPressIcon={() => setModalVisible(true)}
@@ -103,7 +102,6 @@ const SiteParameters = ({ navigation }) => {
             }
           />
           <Input
-            placeHolder="Material Swell (%)"
             inputLabel="Material Swell (%)"
             value={materialSwell}
             setValue={setMaterialSwell}
@@ -112,13 +110,11 @@ const SiteParameters = ({ navigation }) => {
 
         <View style={styles.inputGroup}>
           <Input
-            placeHolder="Operator Efficiency (min/hr)"
             inputLabel="Operator Efficiency (min/hr)"
             setValue={setOperatorEfficiency}
             value={operatorEfficiency}
           />
           <Input
-            placeHolder="Truck Spot Time (sec)"
             inputLabel="Truck Spot Time (sec)"
             setValue={setTruckSpotTime}
             value={truckSpotTime}
@@ -127,7 +123,6 @@ const SiteParameters = ({ navigation }) => {
         <Text style={styles.roundTripTxt}>Est. Round Trip</Text>
         <View style={styles.inputGroup}>
           <Input
-            placeHolder="Travel Time (min)"
             inputLabel="Travel Time (min)"
             setValue={setRoundTripTravelTime}
             value={roundTripTravelTime}

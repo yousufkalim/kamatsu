@@ -108,7 +108,6 @@ const FleetDefinition = ({ navigation }) => {
           />
 
           <Input
-            placeHolder="Cycle Time (Sec)"
             inputLabel="Cycle Time (Sec) "
             value={cycleTime}
             setValue={setCycleTime}
@@ -116,13 +115,11 @@ const FleetDefinition = ({ navigation }) => {
         </View>
         <View style={styles.inputGroup}>
           <Input
-            placeHolder="Bucket Fill (%) "
             inputLabel="Bucket Fill (%)"
             value={bucketFill}
             setValue={setBucketFill}
           />
           <Input
-            placeHolder="Bucket Size (&#13221;)"
             inputLabel="Bucket Size"
             symbol={
               unitStateValue?.value === "Metric" ? `(m\u00B3)` : `(yd\u00B3)`
@@ -145,7 +142,6 @@ const FleetDefinition = ({ navigation }) => {
             labelName="name"
           />
           <Input
-            placeHolder="Nom. Payload (Tons)"
             inputLabel="Nom. Payload"
             symbol={unitStateValue?.value === "Metric" ? `(tonnes)` : `(tons)`}
             value={payload}
