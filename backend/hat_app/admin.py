@@ -98,3 +98,15 @@ class MaterialDensityAdmin(ImportExportMixin, admin.ModelAdmin):
 
     get_density_metric.short_description = 'Density (Metric)'
     get_density_metric.admin_order_field = 'density'
+
+
+@admin.register(SiteDefaultParameter)
+class SiteDefaultParameterAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'truck_sport_time_sec', 'operator_efficiency', 'est_round_trip_travel_time',
+                    'material_swell',
+                    'created', 'updated']
+
+    # list_editable = ['truck_sport_time_sec', 'operator_efficiency', 'est_round_trip_travel_time', 'material_swell']
+
+    def has_add_permission(self, request):
+        return not SiteDefaultParameter.objects.exists()
