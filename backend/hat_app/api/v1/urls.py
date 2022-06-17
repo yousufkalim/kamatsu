@@ -13,4 +13,5 @@ app_name = 'hat'
 urlpatterns = [
     path('', include(router.urls)),
     path('defaults/screens/site-parameters/', views.SiteParametersScreenDefaultValuesAPIView.as_view()),
+    path('result-preview/', views.PreviewResultAPIView.as_view()),
 ]
