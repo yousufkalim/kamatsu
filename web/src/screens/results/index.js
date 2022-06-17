@@ -30,7 +30,7 @@ const Title = ({title}) => {
 const Body = () => {
     return(
         <div>
-        <div className="bg-white p-[40px] rounded-[10px]">
+        <div className="bg-white p-10 rounded-md">
             <div>
                 <ResultValue 
                     label="Current Loading Tool"
@@ -99,11 +99,13 @@ const Body = () => {
                     text="Graphical View"
                     backgroundColor = "red"
                     textColor="black"
+                    url =""
                 />
                 <DashboardButton 
                     text="Save Results"
                     backgroundColor = "blue"
                     textColor="white"
+                    url=""
                 />
 
             </div>

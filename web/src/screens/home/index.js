@@ -236,7 +236,7 @@ const Form = () => {
                         />
                     </div>
                     <div className="w-1/2">
-                        <label className="block text-smaller mb-1 font-normal">Bucket Size (m3)</label>
+                        <label className="block text-smaller mb-1 font-normal">Bucket Size (m<sup>3</sup>)</label>
                         <Input
                             onChange={(e)=>setBucketSize(e.target.value)}
                             //placeholder="0.95"

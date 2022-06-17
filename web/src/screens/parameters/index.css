@@ -5,3 +5,43 @@
 .blue {
     background-color: #2D2F8A;
 }
+
+.modal-body {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 26px;
+}
+
+.modal-title {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 60px;
+}
+
+.line {
+    color: #A1A1A1;
+    margin-top: 20px;
+}
+
+.density-title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 5px;
+}
+
+.density-body {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    margin-bottom: 3px;
+}
+
+.densities-container {
+    columns: 2;
+}
+
+.density-object {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
