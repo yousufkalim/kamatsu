@@ -23,7 +23,11 @@ const customStyles = {
       width: '60%',
       borderRadius: '8px',
       border: 'none',
-      backgroundColor: "#000",
+      overflow: 'scroll',
+      height: '80%',
+    //   position:'relaive',
+        
+    //   backgroundColor: "#000",
       overlay: {
         background: "#000"
     }
@@ -47,15 +51,16 @@ const Form = () => {
 
 
     const [densityPopupOpen, setDensityPopupOpen] =useState(false)
-    const [materialDensitiesResult, setMaterialDensitiesResult] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [apiDensities, setApiDensities] = useState([])
+
 
 
     const fetchMaterialDensity =() => {
         axios.get('https://komatsu-demo-34942.botics.co/api/v1/hat/material-densities/')
         .then((res)=>{
-            setMaterialDensitiesResult(res.data);
-            console.log(materialDensity);
+            setApiDensities(res.data);
+            console.log(apiDensities);
             setIsLoading(false)
         })
         // .then((res)=>{
@@ -92,18 +97,27 @@ const Form = () => {
                     
                 </div>
                 <div className="p-5 gap-24 densities-container">
+                    
                     {
-                        !isLoading && (materialDensitiesResult.map((density)=>{
-                            <div className="density-object">
-                                <h4 className="density-title">{density.title}</h4>
-                                <p className="density-body">Density</p>
-                                <p className="density-body">{density.metric_standard.density} {density.metric_standard.density.unit_text}</p>
-                                <p className="density-body">{density.density}</p>
-                            <hr className="line"/>
-                            <h1>Hi</h1>
-                            </div>
+                        !isLoading && (apiDensities.map((density)=>{
+                            return(
+                                <div className="density-object" key={density.id}>
+                                    <h4 className="density-title">{density.title}</h4>
+                                    <p className="density-body">Density</p>
+                                    <p className="density-body">{density.metric_standard.density} {density.metric_standard.density.unit_text}</p>
+                                    <p className="density-body">{density.density}</p>
+                                    <hr className="line"/>
+                                </div>
+                            )
+                            
                         }))
                     }
+
+                    {/* {
+                        apiDensities.map((test)=>{
+                            re
+                        })
+                    } */}
                     
                 </div>
             </div>
