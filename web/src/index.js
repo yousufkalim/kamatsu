@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// import ParametersProvider from '../src/context/ParametersContext'
+// import ParametersContext from '../src/context/ParametersContext';
+
+// const {setMaterialDensity} = useContext(ParametersContext)
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* <ParametersProvider value={{setMaterialDensity}}> */}
+    
     <App />
+    {/* </ParametersProvider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -32,12 +32,14 @@ const colourStyles = {
     })
   };
 
-const DropDown =({options, onChange}) => {
+const DropDown =({options, onChange, defaultValue}) => {
     return(
         <Select options={options}
             onChange={onChange}
             styles={colourStyles}
             className="basic"
+            isSearchable={false}
+            defaultValue={defaultValue}
         />
 
     )
