@@ -75,7 +75,9 @@ class HaulingToolAdmin(ImportExportMixin, admin.ModelAdmin):
 
 @admin.register(MaterialDensity)
 class MaterialDensityAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['title', 'density', 'get_density_metric', 'created', 'updated']
+    list_display = ['title', 'get_density', 'get_density_metric', 'created', 'updated']
+
+    readonly_fields = ['get_density_metric']
 
     def get_density_metric(self, instance):
         density = instance.get_metric_standard.get('density', None)
@@ -83,6 +85,16 @@ class MaterialDensityAdmin(ImportExportMixin, admin.ModelAdmin):
             html_text = f'{density:.2f} kg/m<sup>3</sup>'
             return mark_safe(html_text)
         return None
+
+    def get_density(self, instance):
+        # density = instance.get_metric_standard.get('density', None)
+        # if density:
+        #     html_text = f'{density:.2f} kg/m<sup>3</sup>'
+        #     return mark_safe(html_text)
+        return instance.get_density_with_unit_html
+
+    get_density.short_description = 'Density (US)'
+    get_density.admin_order_field = 'density'
 
     get_density_metric.short_description = 'Density (Metric)'
     get_density_metric.admin_order_field = 'density'
