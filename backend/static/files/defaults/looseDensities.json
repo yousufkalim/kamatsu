@@ -1,0 +1,150 @@
+[
+  {
+    "title": "Basalt",
+    "density": "2870"
+  },
+  {
+    "title": "Bauxite",
+    "density": "2390"
+  },
+  {
+    "title": "Caliche",
+    "density": "2110"
+  },
+  {
+    "title": "Clay (dry)",
+    "density": "2440"
+  },
+  {
+    "title": "Clay & Gravel (dry)",
+    "density": "2440"
+  },
+  {
+    "title": "Coal - Anthracite (washed)",
+    "density": "1690"
+  },
+  {
+    "title": "Coal - Bituminous",
+    "density": "1500"
+  },
+  {
+    "title": "Coal - Sub-bituminous",
+    "density": "1400"
+  },
+  {
+    "title": "Coal - Lignite",
+    "density": "1800"
+  },
+  {
+    "title": "75% Rock, 25% Earth",
+    "density": "3300"
+  },
+  {
+    "title": "50% Rock, 50% Earth",
+    "density": "2900"
+  },
+  {
+    "title": "25% Rock, 75% Earth",
+    "density": "2650"
+  },
+  {
+    "title": "Earth - Dry",
+    "density": "2360"
+  },
+  {
+    "title": "Earth - Wet",
+    "density": "2700"
+  },
+  {
+    "title": "Earth - Loam",
+    "density": "2110"
+  },
+  {
+    "title": "Granite",
+    "density": "2700"
+  },
+  {
+    "title": "Gravel (Pitrun)",
+    "density": "3250"
+  },
+  {
+    "title": "Gypsum",
+    "density": "3050"
+  },
+  {
+    "title": "Hematite, Iron Ore",
+    "density": "4700"
+  },
+  {
+    "title": "Limestone",
+    "density": "2700"
+  },
+  {
+    "title": "Magnetite, Iron Ore",
+    "density": "4890"
+  },
+  {
+    "title": "Peat - Dry",
+    "density": "760"
+  },
+  {
+    "title": "Peat - Wet",
+    "density": "1940"
+  },
+  {
+    "title": "Pyrite, Iron Ore",
+    "density": "4400"
+  },
+  {
+    "title": "Sand - Dry",
+    "density": "2390"
+  },
+  {
+    "title": "Sand - Damp",
+    "density": "2850"
+  },
+  {
+    "title": "Sand - Wet",
+    "density": "3100"
+  },
+  {
+    "title": "Sand & Clay - Loose",
+    "density": "2700"
+  },
+  {
+    "title": "Sand & Clay - Compacted",
+    "density": "4050"
+  },
+  {
+    "title": "Sand & Gravel - Dry",
+    "density": "2900"
+  },
+  {
+    "title": "Sand & Gravel - Wet",
+    "density": "3400"
+  },
+  {
+    "title": "Sandstone",
+    "density": "2610"
+  },
+  {
+    "title": "Shale",
+    "density": "2100"
+  },
+  {
+    "title": "Slag",
+    "density": "2950"
+  },
+  {
+    "title": "Stone",
+    "density": "2700"
+  },
+  {
+    "title": "Taconite",
+    "density": "3900"
+  },
+  {
+    "title": "Top Soil",
+    "density": "1600"
+  }
+]
