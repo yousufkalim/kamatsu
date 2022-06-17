@@ -36,6 +36,6 @@ class HaulingToolViewSet(viewsets.ModelViewSet):
 
 class MaterialDensityViewSet(viewsets.ModelViewSet):
     serializer_class = MaterialDensitySerializer
-    queryset = MaterialDensity.objects.all().order_by('title')
+    queryset = MaterialDensity.objects.all().order_by('position')
 
     http_method_names = ['get']

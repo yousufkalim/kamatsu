@@ -75,9 +75,11 @@ class HaulingToolAdmin(ImportExportMixin, admin.ModelAdmin):
 
 @admin.register(MaterialDensity)
 class MaterialDensityAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['title', 'get_density', 'get_density_metric', 'created', 'updated']
+    list_display = ['title', 'position', 'get_density', 'get_density_metric', 'created', 'updated']
 
     readonly_fields = ['get_density_metric']
+    list_editable = ['position']
+    search_fields = ['title', 'density']
 
     def get_density_metric(self, instance):
         density = instance.get_metric_standard.get('density', None)
