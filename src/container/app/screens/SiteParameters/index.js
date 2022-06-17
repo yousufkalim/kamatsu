@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import { Layout } from "../../../../components/Layout"
@@ -21,7 +21,9 @@ const SiteParameters = ({ navigation }) => {
   const { materialDensities, isLoading } = useGetMaterialDensities()
 
   const [unit, setUnit] = useState(unitStateValue)
-  const [materialDensity, setMaterialDensity] = useState("3000")
+  const [materialDensity, setMaterialDensity] = useState(
+    unitStateValue?.value === "Metric" ? "3000.00" : "1779.82926"
+  )
   const [materialSwell, setMaterialSwell] = useState("20")
   const [operatorEfficiency, setOperatorEfficiency] = useState("50")
   const [truckSpotTime, setTruckSpotTime] = useState("15")
@@ -42,8 +44,30 @@ const SiteParameters = ({ navigation }) => {
     setUnit(value)
   }
 
+  useEffect(() => {
+    if (materialDensity) {
+      convertLcmToLcy()
+    }
+  }, [unitStateValue])
+
+  const convertLcmToLcy = () => {
+    // pound/cubic yard in 1 kg/m3 - 1.6855549391294.
+
+    if (unitStateValue?.value === "Metric") {
+      const convert = (parseFloat(materialDensity) / 1.6855549391294).toFixed(2)
+      setMaterialDensity(convert.toString())
+      console.log(convert.toString())
+    } else {
+      const convert = (parseFloat(materialDensity) * 1.6855549391294).toFixed(2)
+      setMaterialDensity(convert.toString())
+      console.log(convert.toString())
+    }
+  }
+
   const loadDefaults = () => {
-    setMaterialDensity("3000")
+    setMaterialDensity(
+      unitStateValue?.value === "Metric" ? "3000.00" : "1779.82926"
+    )
     setMaterialSwell("20")
     setOperatorEfficiency("50")
     setTruckSpotTime("15")

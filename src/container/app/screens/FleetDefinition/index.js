@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import { useGetLoadingTool } from "../../../../hooks/query/useFleet"
@@ -38,7 +38,9 @@ const FleetDefinition = ({ navigation }) => {
   const handleUnitChange = value => {
     dispatch(setUnitAction(value))
     setUnit(value)
+  }
 
+  useEffect(() => {
     if (selectedLoadingTool?.name) {
       handleloadingToolsChange(selectedLoadingTool)
     }
@@ -46,7 +48,7 @@ const FleetDefinition = ({ navigation }) => {
     if (selectedHaulingTool?.name) {
       handleHaulingToolsChange(selectedHaulingTool)
     }
-  }
+  }, [unitStateValue])
 
   const handleloadingToolsChange = value => {
     setSelectedLoadingTool(value)
