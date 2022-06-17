@@ -12,7 +12,7 @@ import BackIcon from "../../assets/svg/back.svg"
 
 import { styles } from "./styles"
 
-export const Header = ({ showBack }) => {
+export const Header = ({ showBack, goHome = false }) => {
   const navigation = useNavigation()
 
   const openDrawer = () => {
@@ -20,7 +20,11 @@ export const Header = ({ showBack }) => {
   }
 
   const handleBack = () => {
-    navigation.goBack()
+    if (goHome) {
+      navigation.navigate("Landing")
+    } else {
+      navigation.goBack()
+    }
   }
 
   return (

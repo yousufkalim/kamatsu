@@ -10,7 +10,7 @@ const AboutUs = () => {
 
   return (
     <Layout>
-      <Header showBack />
+      <Header showBack goHome={true} />
       <View style={styles.container}>
         <Text style={styles.title}>About Us</Text>
 
@@ -22,9 +22,7 @@ const AboutUs = () => {
             )
           }}
         >
-          <Text style={styles.email}>
-            {data?.contact_email}
-          </Text>
+          <Text style={styles.email}>{data?.contact_email}</Text>
         </Pressable>
       </View>
     </Layout>

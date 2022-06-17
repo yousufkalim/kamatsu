@@ -29,5 +29,11 @@ export const styles = StyleSheet.create({
   labelIcon: {
     fontSize: 14,
     marginLeft: 2
+  },
+  errorMessage: {
+    fontFamily: appStyles.FONT_FAMILY_REGULAR,
+    fontSize: 12,
+    color: "red",
+    marginTop: 5
   }
 })

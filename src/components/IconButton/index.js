@@ -19,7 +19,13 @@ export const IconButton = ({
       onPress={onPress}
     >
       <BtnIcon height={20} width={30} />
-      <Text style={styles.btnText}>{btnText}</Text>
+      <Text
+        style={
+          isDisabled ? { ...styles.btnText, color: "#fff" } : styles.btnText
+        }
+      >
+        {btnText}
+      </Text>
     </TouchableOpacity>
   )
 }

@@ -11,27 +11,27 @@ export const styles = StyleSheet.create({
     width: wp(100),
     height: hp(60),
     borderBottomLeftRadius: 6,
-    borderBottomRightRadius: 6
+    borderBottomRightRadius: 6,
+    overflow: "hidden"
   },
   image: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    bottom: -5,
+    bottom: 5,
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6
   },
   overlay: {
-    // ...StyleSheet.absoluteFillObject,
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    bottom: -5,
+    bottom: -30,
     backgroundColor: "rgba(0,0,0,0.35)",
     borderBottomLeftRadius: 6,
-    borderBottomRightRadius: 6
+    borderBottomRightRadius: 6,
   },
   logo: {
     alignItems: "center",
