@@ -1,6 +1,6 @@
 import { View, Text } from "react-native"
 import React, { useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
@@ -8,11 +8,17 @@ import { Select } from "../../../../components/Select"
 import { Input } from "../../../../components/Input"
 import { Button } from "../../../../components/Button"
 import Modal from "../../../../components/Modal"
+import { setUnitAction } from "../../redux/unit/actions"
 import { MaterialDensity } from "../../../../components/MaterialDensity"
 import { styles } from "./styles"
+import { useGetMaterialDensities } from "../../../../hooks/query/useSiteParameter"
 
 const SiteParameters = ({ navigation }) => {
+  const dispatch = useDispatch()
+
   const unitStateValue = useSelector(state => state.unitState.unit)
+
+  const { materialDensities, isLoading } = useGetMaterialDensities()
 
   const [unit, setUnit] = useState(unitStateValue)
   const [materialDensity, setMaterialDensity] = useState("3000")
@@ -28,7 +34,12 @@ const SiteParameters = ({ navigation }) => {
   ]
 
   const handleNext = () => {
-    navigation.navigate("Results")
+    // navigation.navigate("Results")
+  }
+
+  const handleUnitChange = value => {
+    dispatch(setUnitAction(value))
+    setUnit(value)
   }
 
   const loadDefaults = () => {
@@ -39,10 +50,6 @@ const SiteParameters = ({ navigation }) => {
     setRoundTripTravelTime("10")
   }
 
-  // Material Density: 3,000 lbs/lcy, Material Swell: 20%,
-  // Operator Efficiency: 50 min/hr,
-  // Truck Spot Time: 15 sec, Est. Round Trip Travel Time: 10 min
-
   return (
     <Layout>
       <Header showBack />
@@ -52,10 +59,11 @@ const SiteParameters = ({ navigation }) => {
         <Select
           label="Unit Selection"
           items={units}
+          handleChange={handleUnitChange}
           selected={unit}
-          setSelected={setUnit}
           showDefault={true}
           labelName="label"
+          customStyle={{ zIndex: 20 }}
         />
 
         <View style={styles.inputGroup}>
@@ -113,7 +121,7 @@ const SiteParameters = ({ navigation }) => {
           setModalVisible={setModalVisible}
           title="Material Density"
         >
-          <MaterialDensity />
+          <MaterialDensity materialDensities={materialDensities} />
         </Modal>
       </View>
     </Layout>

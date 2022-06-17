@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native"
+import { View, Text, Image, ScrollView } from "react-native"
 import Toast from "react-native-toast-message"
 import React from "react"
 import {
@@ -25,9 +25,9 @@ const Landing = ({ navigation }) => {
   }
 
   return (
-    <>
+    <ScrollView>
       <View style={styles.backgroundImg}>
-        <Image source={LandingImage} alt="photo" style={styles.image}></Image>
+        <Image source={LandingImage} alt="photo" style={styles.image} />
         <View style={styles.overlay}>
           <View style={styles.logo}>
             <LogoWhite height={hp(5)} width={wp(80)} />
@@ -68,7 +68,7 @@ const Landing = ({ navigation }) => {
           onPress={showMsg}
         />
       </View>
-    </>
+    </ScrollView>
   )
 }
 

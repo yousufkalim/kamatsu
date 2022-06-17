@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text } from "react-native"
+import * as Progress from "react-native-progress"
 import React from "react"
 
 import { styles } from "./styles"
@@ -8,7 +9,8 @@ export const Button = ({
   isPrimary = false,
   onPress,
   halfWidthBtn = false,
-  customStyle = {}
+  customStyle = {},
+  isLoading
 }) => {
   const containerStyle = isPrimary
     ? { ...styles.container, ...styles.containerBlue }
@@ -19,17 +21,25 @@ export const Button = ({
   return (
     <TouchableOpacity
       style={{ ...containerStyle, ...halfWidthBtnStyle, ...customStyle }}
-      onPress={onPress}
-    >
-      <Text
-        style={
-          isPrimary
-            ? { ...styles.btnText, ...styles.btnTextWhite }
-            : { ...styles.btnText }
+      onPress={() => {
+        if (!isLoading) {
+          onPress()
         }
-      >
-        {btnText}
-      </Text>
+      }}
+    >
+      {isLoading ? (
+        <Progress.Circle size={20} indeterminate={true} color="#fff" />
+      ) : (
+        <Text
+          style={
+            isPrimary
+              ? { ...styles.btnText, ...styles.btnTextWhite }
+              : { ...styles.btnText }
+          }
+        >
+          {btnText}
+        </Text>
+      )}
     </TouchableOpacity>
   )
 }

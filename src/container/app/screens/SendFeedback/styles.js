@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
   title: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
     fontSize: 28,
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 10
   },
   inputEmailContainer: {
     width: "100%",
@@ -25,8 +26,42 @@ export const styles = StyleSheet.create({
   inputMsg: {
     height: hp(12)
   },
-  nextBtn: {
+  submitBtn: {
     flex: 1,
     alignSelf: "flex-end"
+  },
+  emailError: {
+    fontFamily: appStyles.FONT_FAMILY_REGULAR,
+    fontSize: 12,
+    color: "red"
+  },
+  successText: {
+    color: appStyles.primaryColor,
+    fontFamily: appStyles.FONT_FAMILY_MEDIUM,
+    fontSize: 21,
+    lineHeight: 28,
+    textAlign: "center"
+  },
+  text: {
+    color: appStyles.primaryColor,
+    fontFamily: appStyles.FONT_FAMILY_MEDIUM,
+    fontSize: 12,
+    lineHeight: 20,
+    textAlign: "center"
+  },
+  successContainer: {
+    padding: 20
+  },
+  successBtn: {
+    marginTop: 20,
+    borderWidth: 0.5,
+    borderColor: appStyles.primaryColor,
+    height: 48,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    paddingHorizontal: 10,
+    borderRadius: appStyles.borderRadius,
+    marginVertical: 10
   }
 })
