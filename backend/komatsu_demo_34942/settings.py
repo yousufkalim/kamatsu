@@ -287,15 +287,19 @@ if DEBUG:
     }
 
 # corsheaders settings
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = [
-    'http://komatsu-demo-34942.botics.co',
-    'https://komatsu-demo-34942.botics.co',
-]
+CORS_ALLOW_ALL_ORIGINS = env.bool('CORS_ALLOW_ALL_ORIGINS', default=False)
+CORS_ALLOWED_ORIGINS = []
+if not CORS_ALLOW_ALL_ORIGINS:
+    CORS_ALLOWED_ORIGINS += [
+        'http://komatsu-demo-34942.botics.co',
+        'https://komatsu-demo-34942.botics.co',
+    ]
 if DEBUG:
     CORS_ALLOWED_ORIGINS += [
         'http://localhost',
-        'http://127.0.0.1'
+        'http://127.0.0.1',
+        'http://localhost:3000',
+        'http://127.0.0.1:8000'
     ]
 if len(CORS_ALLOWED_ORIGINS) < 1:
     CORS_ALLOW_ALL_ORIGINS = True
