@@ -38,6 +38,6 @@ class CustomerFeedbackAdmin(admin.ModelAdmin):
         #         send_feedback_reply_email(email_instance)
 
 
-@admin.register(CustomerFeedbackReply)
-class CustomerFeedbackReplyAdmin(admin.ModelAdmin):
-    list_display = ['feedback_id', 'send_user', 'created', 'updated']
+# @admin.register(CustomerFeedbackReply)
+# class CustomerFeedbackReplyAdmin(admin.ModelAdmin):
+#     list_display = ['feedback_id', 'send_user', 'created', 'updated']

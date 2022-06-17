@@ -104,9 +104,8 @@ class MaterialDensityAdmin(ImportExportMixin, admin.ModelAdmin):
 
 @admin.register(SiteDefaultParameter)
 class SiteDefaultParameterAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'truck_sport_time_sec', 'operator_efficiency', 'est_round_trip_travel_time',
-                    'material_swell',
-                    'created', 'updated']
+    list_display = ['__str__', 'material_density', 'truck_sport_time_sec', 'operator_efficiency',
+                    'est_round_trip_travel_time', 'material_swell', 'created', 'updated']
 
     # list_editable = ['truck_sport_time_sec', 'operator_efficiency', 'est_round_trip_travel_time', 'material_swell']
 
