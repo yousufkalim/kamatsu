@@ -22,7 +22,7 @@ const Landing =  () => {
                 </div>
                 <div className='hidden md:block md:mb-12'>
                     <h1 className="text-headline leading-headline font-bold">Application<br />Engineering <br/>Tools</h1>
-                    <h4 className="body font-normal">Creating value together with 21st century fleet studies<br /> and solutions.</h4>
+                    <h4 className="body font-normal">Creating value together with 21st century fleet studies<br /> and solutions</h4>
                 </div>
                 <div className='flex justify-center align-middle mobile-header bg-black md:hidden'>
                     <div className='px-6'>
