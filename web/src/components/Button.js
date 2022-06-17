@@ -72,9 +72,14 @@ export const Button =({text, icon, url, backgroundColor, textColor, comingSoon, 
 }
 
 
-export const DashboardButton =({text, backgroundColor, textColor}) => {
+export const DashboardButton =({text, backgroundColor, url, textColor, onClick}) => {
     // let color = 'blue'
     return(
-        <button className={`bg-${backgroundColor} text-${textColor} dashboard-button flex justify-center font-medium `} >{text}</button>
+        <Link
+            to={url}
+        >
+        
+        <button className={`bg-${backgroundColor} text-${textColor} dashboard-button flex justify-center font-medium `} onClick={onClick}>{text}</button>
+        </Link>
     )
 }

@@ -8,22 +8,32 @@ import About from './screens/about';
 import Feedback from './screens/feedback';
 import Results from './screens/results';
 import Parameters from './screens/parameters';
+import {ParametersProvider} from './context/ParametersContext';
+import { FleetProvider } from './context/FleetContext';
+import { useContext } from 'react';
 
 function App() {
+  // const {materialDensity} = useContext(ParametersContext)
+  // console.log(materialDensity)
   return (
     <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element ={<Landing />} />
-          <Route path="/dashboard" element ={<DashboardFrame />} />
-          <Route path="/fleet-definition" element ={<FleetDefinition />} />
-          <Route path ="/about" element={<About />} />
-          <Route path ="/feedback" element={<Feedback />} />
-          <Route path ="/result" element={<Results />} />
-          <Route path ="/parameters" element={<Parameters />} />
-        </Routes>
-
-    </BrowserRouter>
+      
+        <BrowserRouter>
+        <FleetProvider>
+        <ParametersProvider >
+          <Routes>
+            <Route path="/" element ={<Landing />} />
+            <Route path="/dashboard" element ={<DashboardFrame />} />
+            <Route path="/fleet-definition" element ={<FleetDefinition />} />
+            <Route path ="/about" element={<About />} />
+            <Route path ="/feedback" element={<Feedback />} />
+            <Route path ="/result" element={<Results />} />
+            <Route path ="/parameters" element={<Parameters />} />
+          </Routes>
+          </ParametersProvider>
+          </FleetProvider>
+        </BrowserRouter>
+      
     </div>
   );
 }

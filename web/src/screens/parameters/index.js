@@ -2,6 +2,8 @@ import DashboardFrame from "../dashboard";
 import { Input, InputContainer, CustomSelect } from "../../components/Input";
 import { DashboardButton } from "../../components/Button";
 import DropDown from "../../components/Dropdown";
+import ParametersContext from "../../context/ParametersContext";
+import { useContext } from "react";
 
 
 const Form = () => {
@@ -15,6 +17,15 @@ const Form = () => {
             value: 'customary'
         }
     ]
+
+    const {
+        materialDensity, setMaterialDensity,
+        truckSpotTime, setTruckSpotTime,
+        operatorEfficiency, setOperatorEfficiency,
+        estRoundTripTravel, setEstRoundTripTravel,
+        materialSwell, serMaterialSwell
+    } = useContext(ParametersContext)
+    
     return(
         <div>
             <div className="hidden md:block">
@@ -29,16 +40,17 @@ const Form = () => {
                         <label className="block text-smaller mb-1 font-normal">Material Density (lbs/lcy)</label>
                         <Input
                             onChange={(e)=>console.log(e.target.value)}
-                            placeholder="0.95"
+                            value={materialDensity}
                             className="mb-6"
+
                         />
                     </div>
                     <div className="w-1/2">
                         <label className="block text-smaller mb-1 font-normal">Truck Spot Time</label>
                         <Input
                             onChange={(e)=>console.log(e.target.value)}
-                            placeholder="0.95"
                             className="mb-6"
+                            value={truckSpotTime}
                         />
                     </div>
                 </div>
@@ -47,16 +59,16 @@ const Form = () => {
                         <label className="block text-smaller mb-1 font-normal">Operator Efficiency (min/hr)</label>
                         <Input
                             onChange={(e)=>console.log(e.target.value)}
-                            placeholder="0.95"
                             className="mb-6"
+                            value={operatorEfficiency}
                         />
                     </div>
                     <div className="w-1/2">
                         <label className="block text-smaller mb-1 font-normal">Est. Round Trip Travel Time (min)</label>
                         <Input
                             onChange={(e)=>console.log(e.target.value)}
-                            placeholder="0.95"
                             className="mb-6"
+                            value={estRoundTripTravel}
                         />
                     </div>
 
@@ -66,8 +78,9 @@ const Form = () => {
                         <label className="block text-smaller mb-1 font-normal">Material Swell (%)</label>
                         <Input
                             onChange={(e)=>console.log(e.target.value)}
-                            placeholder="0.95"
                             className="mb-6"
+                            value={materialSwell}
+                            
                         />
                     </div>
                     <div className="w-1/2 flex justify-between">
@@ -75,12 +88,14 @@ const Form = () => {
                             text="Default"
                             backgroundColor = "yellow"
                             className = "mb-6"
+                            url=""
                         />
                         <DashboardButton 
                             text="Next"
                             backgroundColor = "blue"
                             className = "mb-6"
                             textColor= "white"
+                            url=""
                         />
                     </div>
                 </div>
@@ -101,16 +116,16 @@ const Form = () => {
                         <label className="block text-smaller mb-1 font-normal">Material Density (lbs/lcy)</label>
                             <Input
                                 onChange={(e)=>console.log(e.target.value)}
-                                placeholder="0.95"
                                 className="mb-6"
+                                value={materialDensity}
                             />
                     </div>
                     <div className="w-1/2">
                         <label className="block text-smaller mb-1 font-normal">Material Swell (%)</label>
                             <Input
                                 onChange={(e)=>console.log(e.target.value)}
-                                placeholder="0.95"
                                 className="mb-6"
+                                value={materialSwell}
                             />
                     </div>
                 
@@ -120,16 +135,16 @@ const Form = () => {
                         <label className="block text-smaller mb-1 font-normal">Operator Efficiency (min/hr)</label>
                             <Input
                                 onChange={(e)=>console.log(e.target.value)}
-                                placeholder="0.95"
                                 className="mb-6"
+                                value={operatorEfficiency}
                             />
                     </div>
                     <div className="w-1/2">
                         <label className="block text-smaller mb-1 font-normal">Truck Spot Time (sec)</label>
                             <Input
                                 onChange={(e)=>console.log(e.target.value)}
-                                placeholder="0.95"
                                 className="mb-6"
+                                value={truckSpotTime}
                             />
                     </div>
                     
@@ -139,8 +154,8 @@ const Form = () => {
                         <label className="block text-smaller mb-1 font-normal">Est. Round Trip<br />Travel Time (min)</label>
                             <Input
                                 onChange={(e)=>console.log(e.target.value)}
-                                placeholder="0.95"
                                 className="mb-6"
+                                value={estRoundTripTravel}
                             />
                     </div>
                     <div className="w-1/2">
@@ -149,6 +164,7 @@ const Form = () => {
                             text="Default"
                             backgroundColor = "yellow"
                             className = "mb-6"
+                            url=""
                         />
                     </div>
                 </div>
@@ -158,6 +174,7 @@ const Form = () => {
                         backgroundColor = "blue"
                         className = "mb-6"
                         textColor="white"
+                        url=""
                     />
                 </div>
                 </div>
@@ -174,7 +191,7 @@ const Parameters = () => {
             title="Site Parameters"
             body = {<Form/>}
             displayBackButton = {true}
-            backButtonURL = "/home"
+            backButtonURL = "/fleet-definition"
 
         />
     )
