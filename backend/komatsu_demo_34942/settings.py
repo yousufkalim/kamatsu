@@ -85,6 +85,7 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
     'storages',
     'import_export',
+    'corsheaders',
 ]
 MODULES_APPS = get_modules()
 
@@ -93,6 +94,7 @@ INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS + MODULES_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -283,3 +285,17 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
     }
+
+# corsheaders settings
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    'http://komatsu-demo-34942.botics.co',
+    'https://komatsu-demo-34942.botics.co',
+]
+if DEBUG:
+    CORS_ALLOWED_ORIGINS += [
+        'http://localhost',
+        'http://127.0.0.1'
+    ]
+if len(CORS_ALLOWED_ORIGINS) < 1:
+    CORS_ALLOW_ALL_ORIGINS = True
