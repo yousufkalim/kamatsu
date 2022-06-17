@@ -105,6 +105,8 @@ class MaterialDensity(BaseTimeStampModel):
 
 
 class SiteDefaultParameter(BaseTimeStampModel):
+    material_density = models.DecimalField(_('Material Density'), decimal_places=2, max_digits=20, default=0,
+                                           validators=[validators.MinValueValidator(0)])
     truck_sport_time_sec = models.DecimalField(_('Truck Spot Time (sec)'), decimal_places=1, max_digits=20, default=0,
                                                validators=[validators.MinValueValidator(0)])
     operator_efficiency = models.DecimalField(_('Operator Efficiency (min/hr)'), decimal_places=1, max_digits=20,
