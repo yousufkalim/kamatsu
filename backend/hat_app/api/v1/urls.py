@@ -11,5 +11,6 @@ router.register('material-densities', viewsets.MaterialDensityViewSet)
 app_name = 'hat'
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('defaults/screens/site-parameters/', views.SiteParametersScreenDefaultValuesAPIView.as_view()),
 ]
