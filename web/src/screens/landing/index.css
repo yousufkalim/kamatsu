@@ -45,3 +45,11 @@
     height: auto;
   }
 }
+
+.gray {
+  background-color: #A5ABAF;
+}
+.body-font {
+  font-size: 18px;
+  line-height: 36px;
+}

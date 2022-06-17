@@ -5,3 +5,22 @@
     background: rgba(0,0,0, 0.6);
     z-index: 10000;
 }
+.blue {
+    background-color: #2D2F8A;
+}
+.resultLabel {
+    color: #A1A1A1
+}
+
+.mobile-menu-anchor {
+    color: #2D2F8A;
+    width: 100%;
+    display: block;
+    line-height: 40px;
+    font-size: 18px;
+        
+}
+
+.mobile-menu-anchor:hover {
+    color: '#FFC82F',
+}
