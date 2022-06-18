@@ -1,14 +1,14 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-
+from django.core import validators
 from modules.model_mixins import BaseTimeStampModel
 import quantities as pq
 
 
 class LoadingTool(BaseTimeStampModel):
     name = models.CharField(_('Name'), max_length=120, unique=True)
-    cycle_time_second = models.PositiveIntegerField(_('Cycle Time Second'), default=0)
+    cycle_time_second = models.DecimalField(_('Cycle Time Second'), decimal_places=1, max_digits=20)
     bucket_fill = models.DecimalField(_('Bucket Fill'), decimal_places=1, max_length=12, max_digits=10)
     bucket_size_yd3 = models.DecimalField(_('Bucket Size Yd3'), decimal_places=2, max_length=12, max_digits=10)
     cost_per_hour = models.DecimalField(_('Cost Per Hour'), decimal_places=2, max_length=12, max_digits=10)
@@ -79,6 +79,7 @@ class MaterialDensity(BaseTimeStampModel):
     title = models.CharField(_('Title'), max_length=120, )
     density = models.DecimalField(_('Density (US or Imperial)'), decimal_places=2, max_digits=20,
                                   help_text=_('Unit: lb/yd**3'))
+    position = models.PositiveIntegerField(_('Ordering Position'), default=0)
 
     def __str__(self):
         return '%s' % self.title
@@ -98,6 +99,31 @@ class MaterialDensity(BaseTimeStampModel):
         }
 
     class Meta:
-        ordering = ('title',)
+        ordering = ('position',)
         verbose_name = _('Material Density')
         verbose_name_plural = _('Material Densities')
+
+
+class SiteDefaultParameter(BaseTimeStampModel):
+    material_density = models.DecimalField(_('Material Density'), decimal_places=2, max_digits=20, default=0,
+                                           validators=[validators.MinValueValidator(0)])
+    truck_sport_time_sec = models.DecimalField(_('Truck Spot Time (sec)'), decimal_places=1, max_digits=20, default=0,
+                                               validators=[validators.MinValueValidator(0)])
+    operator_efficiency = models.DecimalField(_('Operator Efficiency (min/hr)'), decimal_places=1, max_digits=20,
+                                              default=0, validators=[validators.MinValueValidator(0)])
+    est_round_trip_travel_time = models.DecimalField(_('Est. Round Trip Travel Time (min)'), decimal_places=1,
+                                                     max_digits=20, default=0,
+                                                     validators=[validators.MinValueValidator(0)])
+    material_swell = models.DecimalField(_('Material Swell (%)'), decimal_places=1, max_digits=20, default=0,
+                                         validators=[validators.MinValueValidator(0)])
+
+    def __str__(self):
+        return 'Site Params Default: %s' % self.pk
+
+    def __unicode__(self):
+        return '%s' % self.pk
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = _('Site Default Parameter')
+        verbose_name_plural = _('Site Default Parameter')

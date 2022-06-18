@@ -5,7 +5,7 @@ import QuestionIcon from "../../assets/svg/question.svg"
 import { styles } from "./styles"
 
 export const Input = ({
-  placeHolder = "Placeholder",
+  placeHolder = "",
   inputLabel = "Label",
   symbol = null,
   value,

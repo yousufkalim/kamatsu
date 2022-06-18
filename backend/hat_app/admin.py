@@ -75,9 +75,11 @@ class HaulingToolAdmin(ImportExportMixin, admin.ModelAdmin):
 
 @admin.register(MaterialDensity)
 class MaterialDensityAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['title', 'get_density', 'get_density_metric', 'created', 'updated']
+    list_display = ['title', 'position', 'get_density', 'get_density_metric', 'created', 'updated']
 
     readonly_fields = ['get_density_metric']
+    list_editable = ['position']
+    search_fields = ['title', 'density']
 
     def get_density_metric(self, instance):
         density = instance.get_metric_standard.get('density', None)
@@ -98,3 +100,14 @@ class MaterialDensityAdmin(ImportExportMixin, admin.ModelAdmin):
 
     get_density_metric.short_description = 'Density (Metric)'
     get_density_metric.admin_order_field = 'density'
+
+
+@admin.register(SiteDefaultParameter)
+class SiteDefaultParameterAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'material_density', 'truck_sport_time_sec', 'operator_efficiency',
+                    'est_round_trip_travel_time', 'material_swell', 'created', 'updated']
+
+    # list_editable = ['truck_sport_time_sec', 'operator_efficiency', 'est_round_trip_travel_time', 'material_swell']
+
+    def has_add_permission(self, request):
+        return not SiteDefaultParameter.objects.exists()
