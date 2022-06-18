@@ -14,7 +14,7 @@ import { styles } from "./styles"
 const FleetDefinition = ({ navigation }) => {
   const dispatch = useDispatch()
 
-  const unitStateValue = useSelector(state => state.unitState.unit)
+  const unitStateValue = useSelector(state => state?.unitState?.unit)
 
   const [unit, setUnit] = useState(unitStateValue)
   const [selectedLoadingTool, setSelectedLoadingTool] = useState({})
@@ -59,6 +59,8 @@ const FleetDefinition = ({ navigation }) => {
     unitStateValue?.value === "Metric"
       ? setBucketSize(value?.metric_standard?.bucket_size_m3?.toString())
       : setBucketSize(value?.bucket_size_yd3?.toString())
+    setSelectedHaulingTool({})
+    setPayload("")
   }
 
   const handleHaulingToolsChange = value => {
@@ -93,10 +95,10 @@ const FleetDefinition = ({ navigation }) => {
           selected={unit}
           showDefault={true}
           labelName="label"
-          customStyle={{ zIndex: 20 }}
+          valueName="value"
         />
 
-        <View style={{ ...styles.inputGroup, zIndex: 19 }}>
+        <View style={styles.inputGroup}>
           <Select
             label="Loading Tool"
             items={loadingTools}
@@ -104,7 +106,7 @@ const FleetDefinition = ({ navigation }) => {
             setSelected={setSelectedLoadingTool}
             handleChange={handleloadingToolsChange}
             labelName="name"
-            customStyle={{ zIndex: 18 }}
+            valueName="name"
           />
 
           <Input
@@ -133,13 +135,14 @@ const FleetDefinition = ({ navigation }) => {
           <Button btnText="Reset Loader" onPress={resetLoader} />
         </View>
 
-        <View style={{ ...styles.inputGroup, zIndex: 17 }}>
+        <View style={styles.inputGroup}>
           <Select
             label="Hauling Tool"
             items={haulingTools}
             selected={selectedHaulingTool}
             handleChange={handleHaulingToolsChange}
             labelName="name"
+            valueName="name"
           />
           <Input
             inputLabel="Nom. Payload"

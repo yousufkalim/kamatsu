@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp
@@ -20,7 +20,6 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 7,
     alignItems: "flex-end",
-    zIndex: 2
   },
   btnSpacer: {
     paddingVertical: 10

@@ -10,8 +10,8 @@ import { Button } from "../../../../components/Button"
 import Modal from "../../../../components/Modal"
 import { setUnitAction } from "../../redux/unit/actions"
 import { MaterialDensity } from "../../../../components/MaterialDensity"
-import { styles } from "./styles"
 import { useGetMaterialDensities } from "../../../../hooks/query/useSiteParameter"
+import { styles } from "./styles"
 
 const SiteParameters = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -22,7 +22,7 @@ const SiteParameters = ({ navigation }) => {
 
   const [unit, setUnit] = useState(unitStateValue)
   const [materialDensity, setMaterialDensity] = useState(
-    unitStateValue?.value === "Metric" ? "3000.00" : "1779.82926"
+    unitStateValue?.value === "Metric" ? "3000.00" : "1779.83"
   )
   const [materialSwell, setMaterialSwell] = useState("20")
   const [operatorEfficiency, setOperatorEfficiency] = useState("50")
@@ -66,7 +66,7 @@ const SiteParameters = ({ navigation }) => {
 
   const loadDefaults = () => {
     setMaterialDensity(
-      unitStateValue?.value === "Metric" ? "3000.00" : "1779.82926"
+      unitStateValue?.value === "Metric" ? "1779.83" : "3000.00"
     )
     setMaterialSwell("20")
     setOperatorEfficiency("50")
@@ -87,7 +87,7 @@ const SiteParameters = ({ navigation }) => {
           selected={unit}
           showDefault={true}
           labelName="label"
-          customStyle={{ zIndex: 20 }}
+          valueName="value"
         />
 
         <View style={styles.inputGroup}>
@@ -120,7 +120,9 @@ const SiteParameters = ({ navigation }) => {
             value={truckSpotTime}
           />
         </View>
-        <Text style={styles.roundTripTxt}>Est. Round Trip</Text>
+        <Text style={{ ...styles.roundTripTxt, marginBottom: -10 }}>
+          Est. Round Trip
+        </Text>
         <View style={styles.inputGroup}>
           <Input
             inputLabel="Travel Time (min)"

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
 import * as appStyles from "../../utils/appStyles"
 import {
   heightPercentageToDP as hp,
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 4,
+    elevation: Platform.OS === "android" ? 4 : 0,
     padding: 10
   },
   modalView: {
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     paddingRight: 10
   },
   title: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
   titleText: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
