@@ -20,8 +20,9 @@
 
 .line {
     color: #A1A1A1;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border-top-width: 2px
 }
 
 .density-title {
@@ -39,10 +40,34 @@
 }
 
 .densities-container {
-    columns: 2;
+    /* columns: 2 auto; */
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+@media screen {
+    max-width: 767px;
+}
+
+@media only screen and (max-width: 767px) {
+    .densities-container {
+        /* columns: 2 auto; */
+        display: block;
+        /* grid-template-columns: 50% 50%; */
+    }
 }
 
 .density-object {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.modal-class {
+    width: 60%;
+}
+
+@media only screen and (max-width: 767px) {
+    .modal-class {
+        width: 80%;
+    }
 }
