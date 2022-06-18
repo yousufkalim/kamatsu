@@ -89,7 +89,7 @@ function DrawerContainer({ props }) {
           />
 
           <DrawerItem
-            label="Sign out"
+            label="Sign Out"
             onPress={() => {
               setModalVisible(true)
             }}

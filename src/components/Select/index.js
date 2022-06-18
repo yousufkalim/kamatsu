@@ -1,63 +1,63 @@
-import React, { useEffect, useState } from "react"
-import { Text, View, TouchableOpacity, ScrollView } from "react-native"
+import React, { useState } from "react"
+import { Text, View } from "react-native"
 import EIcon from "react-native-vector-icons/Entypo"
+import { Dropdown } from "react-native-element-dropdown"
 
 import { styles } from "./styles"
 
 export const Select = ({
-  label = "place holder",
+  label = "label",
+  placeholder = "Select",
   items = [],
   selected,
   labelName,
   valueName,
-  handleChange,
-  showDefault = false,
-  defaultValue = "",
-  customStyle = {},
-  isDisabled = false
+  handleChange
 }) => {
-  const [show, setShow] = useState(false)
+  const [isFocus, setIsFocus] = useState(false)
 
   return (
-    <View style={{ ...styles.container, ...customStyle }}>
+    <View style={{ ...styles.container }}>
       <Text style={styles.label}>{label}</Text>
-      <TouchableOpacity style={styles.input}>
-        <TouchableOpacity
-          onPress={() => setShow(!show)}
-          style={styles.placeHolder}
-        >
-          <Text style={styles.placeHolderText}>{selected?.[labelName]}</Text>
-          {show ? (
-            <EIcon name="chevron-thin-up" size={16} style={styles.icon} />
-          ) : (
-            <EIcon name="chevron-thin-down" size={16} style={styles.icon} />
-          )}
-        </TouchableOpacity>
-
-        {show && (
-          <ScrollView
-            style={styles.dropdown}
-            scrollIndicatorInsets={{ right: 2 }}
+      <Dropdown
+        style={[styles.dropdown]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        selectedStyle={{ backgroundColor: "red" }}
+        containerStyle={{}}
+        iconStyle={styles.iconStyle}
+        data={items}
+        maxHeight={250}
+        placeholder={placeholder}
+        labelField={[labelName]}
+        valueField={[valueName]}
+        renderItem={item => (
+          <View
+            style={[
+              styles.item,
+              selected?.[valueName] === item?.[labelName] && styles.itemActive
+            ]}
           >
-            {items.map((item, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={
-                  selected?.[labelName] === item?.[labelName]
-                    ? { ...styles.item, ...styles.itemActive }
-                    : { ...styles.item }
-                }
-                onPress={() => {
-                  handleChange(item)
-                  setShow(false)
-                }}
-              >
-                <Text style={styles.itemLabel}>{item?.[labelName]}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+            <Text style={styles.itemLabel}>{item?.[labelName]}</Text>
+          </View>
         )}
-      </TouchableOpacity>
+        value={selected?.[valueName]}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={item => {
+          handleChange(item)
+          setIsFocus(false)
+        }}
+        renderRightIcon={() => (
+          <>
+            {isFocus ? (
+              <EIcon name="chevron-thin-up" size={16} style={styles.icon} />
+            ) : (
+              <EIcon name="chevron-thin-down" size={16} style={styles.icon} />
+            )}
+          </>
+        )}
+      />
     </View>
   )
 }
