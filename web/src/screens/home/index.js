@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 // import Fll from "../../context/ParametersContext";
 import FleetContext from "../../context/FleetContext";
 import './index.css'
+import { baseURL } from "../../api";
 
 const Form = () => {
     const [loadingTools, setLoadingTools] = useState([])
@@ -27,7 +28,7 @@ const Form = () => {
 
 
     const fetchLoadingTools =() =>{
-        axios.get('https://komatsu-demo-34942.botics.co/api/v1/hat/loading-tools/')
+        axios.get(`${baseURL}hat/loading-tools/`)
         .then((res)=>setLoadingTools(res.data))
         .then(setLoadingToolsIsLoading(false))
         
@@ -35,7 +36,7 @@ const Form = () => {
 
     const fetchHaulingTools =() =>{
         setHaulingToolsIsLoading(true)
-        axios.get(`https://komatsu-demo-34942.botics.co/api/v1/hat/loading-tools/${loadingTool}/hauling-tools/`)
+        axios.get(`${baseURL}hat/loading-tools/${loadingTool}/hauling-tools/`)
         .then((res)=>{
             setHaulingTools(res.data);
             console.log(haulingTools);
@@ -54,28 +55,11 @@ const Form = () => {
 
             }
             })
-        // .then(setHaulingToolsIsLoading(false))
-        // .then(setNomPayload(res.data.))
-        // .then((res)=>console.log(res.data))
-        // .then((res)=> {
-        //     // const {id} = res.data
-        //     // console.log({id}=res.data[0])
-        // })
-        
     }
 
-    // const resetLoader = () =>{
-
-    // }
 
     const fetchAssociatedLoading = async () => {
-        // const {data: response} = await axios.get(`https://komatsu-demo-34942.botics.co/api/v1/hat/loading-tools/${e.value}/`);
-        // await setBucketFill(response.bucketFill)
-        // console.log(response.bucket_fill)
-
-        // fetchHaulingTools()
-        // setIsLoading("yes")
-        await axios.get(`https://komatsu-demo-34942.botics.co/api/v1/hat/loading-tools/${loadingTool}/`)
+        await axios.get(`${baseURL}hat/loading-tools/${loadingTool}/`)
         .then((res)=>{
             console.log(res.data.bucket_fill);
             setBucketFill(res.data.bucket_fill);
@@ -88,57 +72,10 @@ const Form = () => {
         .catch((err)=>{
             console.log(err)
         })
-        // .then(setIsLoading(false))
-        // .then((res)=>{
-        //     if (!isLoading) {
-        //         setBucketFill(res.data.bucket_fill)
-        //     }
-        // })
-        // .then((res)=>setBucketFill(res.data.bucket_fill))
-        
-        // console.log(isLoading)
-        // .then(console.log(isLoading))
-        // .then(console.log("Hiiiii"))
-        // .then(console.log("Loaded"))
-        // .then((res)=>{
-        //     if (res) {
-        //         console.log("Chai")
-        //     }
-        // })
-        // .then(setIsLoading(false))
-        // if (!isLoading) {
-        //     console.log("Help me")
-        // }
-        // .then((res)=>{
-        //     if (res) {
-        //         setIsLoading(false)
-        //         console.log(res)
-        //         // setBucketFill(res.data.bucket_fill)
-        //     } else {
-        //         console.log("Error")
-        //     }
-        // })
-        // .then(setIsLoading(false))
-
-        // .then(console.log(isLoading))
-        // .then((res)=>{setBucketFill(res.data.bucket_fill)})
-        // .then(console.log(bucketFill))
-        // .then(setIsLoading(false))
-        // .then((res)=>{
-        //     if (!isLoading) {
-        //     //    setBucketFill(res)
-        //         console.log("not loadign aga")
-        //         console.log(res.data)
-        //         // console.log(res.data.bucket_fill)
-        //     }
-        // })
-        // .catch((err)=>{
-        //     console.log(err)
-        // })
     }
 
     const fetchAssociatedHaulingToolDetail = async () => {
-        await axios.get(`https://komatsu-demo-34942.botics.co/api/v1/hat/loading-tools/${loadingTool}/`)
+        await axios.get(`${baseURL}hat/loading-tools/${loadingTool}/`)
         .then((res)=>{
             console.log(res.data.bucket_fill);
             setNomPayload(res.data.capacity_ton)
@@ -153,8 +90,6 @@ const Form = () => {
         fetchLoadingTools()
     }, [])
 
-    // console.log(loadingTools)
-
     let loadingOptions = []
     if (!loadingToolsIsLoading) {
         loadingTools.map((tool) => {
@@ -165,18 +100,6 @@ const Form = () => {
         })
 
     }
-
-    // let haulingOptions = []
-    // if (!HaulingToolsIsLoading) {
-    //     // console.log(loadingTools)
-    //     haulingTools.map((tool) => {
-    //         let toolData ={}
-    //         toolData.value = tool.name
-    //         toolData.label = tool.name
-    //         haulingOptions.push(toolData)
-    //     })
-
-    // }
 
 
 

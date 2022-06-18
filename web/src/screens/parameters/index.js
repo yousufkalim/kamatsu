@@ -10,6 +10,7 @@ import  DensityPopupIcon from "../../assets/density-popup.svg"
 import Modal from 'react-modal';
 import CloseModal from '../../assets/close-modal.svg';
 import axios from 'axios';
+import { baseURL } from "../../api";
 
 
 const customStyles = {
@@ -20,11 +21,11 @@ const customStyles = {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: '60%',
       borderRadius: '8px',
       border: 'none',
       overflow: 'scroll',
       height: '80%',
+      className:"modal-class",
     //   position:'relaive',
         
     //   backgroundColor: "#000",
@@ -57,7 +58,7 @@ const Form = () => {
 
 
     const fetchMaterialDensity =() => {
-        axios.get('https://komatsu-demo-34942.botics.co/api/v1/hat/material-densities/')
+        axios.get(`${baseURL}hat/material-densities/`)
         .then((res)=>{
             setApiDensities(res.data);
             console.log(apiDensities);
@@ -96,7 +97,8 @@ const Form = () => {
                     </div>
                     
                 </div>
-                <div className="p-5 gap-24 densities-container">
+                <div>
+                <div className="p-5 gap-x-10 densities-container">
                     
                     {
                         !isLoading && (apiDensities.map((density)=>{
@@ -119,6 +121,7 @@ const Form = () => {
                         })
                     } */}
                     
+                </div>
                 </div>
             </div>
         )
@@ -224,7 +227,7 @@ const Form = () => {
                 </div>
                 <div className="flex gap-8">
                     <div className="w-1/2">
-                        <label className="block text-smaller mb-1 font-normal">Material Density (lbs/lcy)</label>
+                        <label className="block text-smaller mb-1 font-normal">Material Density (lbs/lcy) <img className="inline" src={DensityPopupIcon} onClick={()=>setDensityPopupOpen(true)}/></label>
                             <Input
                                 onChange={(e)=>console.log(e.target.value)}
                                 className="mb-6"

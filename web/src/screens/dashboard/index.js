@@ -101,22 +101,22 @@ const MobileMenu =({mobileMenuIsOpen, onClickOuterSpace})=> {
                         text = "Privacy Policy"
                         url="/test"
                     /> */}
-                    <div>
+                    {/* <div> */}
                         <a className='mobile-menu-anchor'
                             href="https://www.komatsu.com/en/terms-of-use/"
                             target="_blank"
                         >
                             Terms and Conditions
                         </a>
-                    </div>
-                    <div>
+                    {/* </div> */}
+                    {/* <div> */}
                         <a className='mobile-menu-anchor'
                             href="https://www.komatsu.com/en/terms-of-use/"
                             target="_blank"
                         >
                             Privacy Policy
                         </a>
-                    </div>
+                    {/* </div> */}
                     
                     {/* <MobileMenuLink 
                         text = "Terms and Conditions"
@@ -152,14 +152,22 @@ const DashboardFrame = ({title, body, displayBackButton, backButtonURL}) => {
                             text = "Send Feedback"
                             url="/feedback"
                         />
-                        <Menu 
-                            text = "Privacy Policy"
-                            url="/test"
-                        />
-                        <Menu 
-                            text = "Terms and Conditions"
-                            url="https://www.komatsu.com/en/terms-of-use/"
-                        />
+                       <div>
+                        <a className='web-menu-anchor'
+                            href="https://www.komatsu.com/en/terms-of-use/"
+                            target="_blank"
+                        >
+                            Terms and Conditions
+                        </a>
+                    </div>
+                    <div>
+                        <a className='web-menu-anchor'
+                            href="https://www.komatsu.com/en/terms-of-use/"
+                            target="_blank"
+                        >
+                            Privacy Policy
+                        </a>
+                    </div>
                         <Menu 
                             text = "About Us"
                             url="/about"

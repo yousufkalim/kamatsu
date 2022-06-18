@@ -2,21 +2,43 @@ import DashboardFrame from "../dashboard";
 import { Input, TextArea } from "../../components/Input";
 import { DashboardButton } from "../../components/Button";
 import './index.css'
+import { useState } from "react";
+import axios from "axios";
+import { baseURL } from "../../api";
+import toast from 'react-hot-toast';
 
 
 const Body = () => {
+    const [email, setEmail] = useState("")
+    const [message, setMessage] = useState("")
+
+    const sendFeedback =()=>{
+        axios.post(`${baseURL}feedbacks/customer-feedbacks/`,
+            {
+                email:email,
+                body: message,
+                user: 1
+            }
+        ).then((res)=>toast.success('Feedback sent succesfully'))
+        .catch((err)=>console.log(err))
+    }
+
     return(
         <div className="w-1/1 md:w-2/5">
             <div className="mb-10">
                 <label className="block text-smaller mb-1 font-normal">Email Address</label>
                 <Input 
                 placeholder="johndoe@gmail.com"
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
             />
             </div>
            <div>
             <label className="block text-smaller mb-1 font-normal">Message</label>
                 <TextArea 
                     placeholder="Text here"
+                    value={message}
+                    onChange={(e)=>setMessage(e.target.value)}
                 />
            </div>
            <div className="mt-10 flex justify-end">
@@ -25,6 +47,7 @@ const Body = () => {
                 backgroundColor="blue"
                 textColor = "white"
                 url=""
+                onClick={()=>sendFeedback()}
                />
            </div>
            

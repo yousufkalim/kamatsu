@@ -32,9 +32,8 @@ export const Input = styled.input`
 
 }
 
-&::placeholder {
-    // color: #A5ABAF !important;
-    color: #000;
+  &::placeholder {
+    color: #A5ABAF !important;
     font-size: 14px;
     font-weight: 400;
     line-height: 23px;
@@ -176,7 +175,7 @@ export const Button = styled.button`
 `
 export const TextArea = styled.textarea`
   padding: 1em;
-  color: rgb(85, 88, 111);
+  color: #000;
   font-size: 14px;
   font-weight: 400;
   line-height: 23px;
