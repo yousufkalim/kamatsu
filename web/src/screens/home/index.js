@@ -39,26 +39,18 @@ const Form = () => {
       .then(setLoadingToolsIsLoading(false))
   }
 
-  const fetchHaulingTools = () => {
+  const fetchHaulingTools = e => {
     setHaulingToolsIsLoading(true)
     axios
-      .get(`${baseURL}hat/loading-tools/${loadingTool}/hauling-tools/`)
+      .get(`${baseURL}hat/loading-tools/${e || loadingTool}/hauling-tools/`)
       .then(res => {
         setHaulingTools(res.data)
         console.log(haulingTools)
         setHaulingToolsIsLoading(false)
 
-        var haulingOptions = []
-        if (!HaulingToolsIsLoading) {
-          // console.log(loadingTools)
-          haulingTools.map(tool => {
-            let toolData = {}
-            toolData.value = tool.name
-            toolData.label = tool.name
-            haulingOptions.push(toolData)
-          })
-          setBigLHaulingOptions(haulingOptions)
-        }
+        setBigLHaulingOptions(
+          res.data.map(tool => ({ value: tool.name, label: tool.name }))
+        )
       })
   }
 
@@ -72,7 +64,7 @@ const Form = () => {
         setCycleTime(res.data.cycle_time_second)
         setBucketSize(res.data.bucket_size_yd3)
         console.log(nomPayload)
-        fetchHaulingTools()
+        fetchHaulingTools(e)
       })
       .catch(err => {
         console.log(err)
@@ -134,7 +126,7 @@ const Form = () => {
             // onChange={(e)=>fetchAssociatedLoading(e)}
             onChange={e => {
               setLoadingTool(e.value)
-              fetchAssociatedLoading()
+              fetchAssociatedLoading(e.value)
             }}
           />
         </div>
