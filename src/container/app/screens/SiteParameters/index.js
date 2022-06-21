@@ -1,6 +1,7 @@
 import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
@@ -54,30 +55,41 @@ const SiteParameters = ({ navigation }) => {
     // pound/cubic yard in 1 kg/m3 - 1.6855549391294.
 
     if (unitStateValue?.value === "Metric") {
-      const convert = (parseFloat(materialDensity) / 1.6855549391294).toFixed(2)
+      const convert = (parseFloat(materialDensity) / 1.6855549391294).toFixed(1)
       setMaterialDensity(convert.toString())
       console.log(convert.toString())
     } else {
-      const convert = (parseFloat(materialDensity) * 1.6855549391294).toFixed(2)
+      const convert = (parseFloat(materialDensity) * 1.6855549391294).toFixed(1)
       setMaterialDensity(convert.toString())
       console.log(convert.toString())
     }
   }
 
   const loadDefaults = () => {
-    setMaterialDensity(
-      unitStateValue?.value === "Metric" ? "1779.83" : "3000.00"
-    )
+    setMaterialDensity(unitStateValue?.value === "Metric" ? "1779.8" : "3000.0")
     setMaterialSwell("20")
     setOperatorEfficiency("50")
     setTruckSpotTime("15")
     setRoundTripTravelTime("10")
   }
 
+  const handleChangeInputFloat = (value, setValue) => {
+    var res = value.split(".")
+
+    if (res.length > 1 && res[1]) {
+      setValue(Number(value).toFixed(1))
+    } else {
+      setValue(value)
+    }
+  }
+  
   return (
     <Layout>
       <Header showBack />
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{ flex: 1 }}
+        style={styles.container}
+      >
         <Text style={styles.title}>Site Parameters</Text>
 
         <Select
@@ -96,7 +108,9 @@ const SiteParameters = ({ navigation }) => {
             showLabelIcon
             onPressIcon={() => setModalVisible(true)}
             value={materialDensity}
-            setValue={setMaterialDensity}
+            setValue={value =>
+              handleChangeInputFloat(value, setMaterialDensity)
+            }
             symbol={
               unitStateValue?.value === "Metric" ? "(kg/lcm)" : "(lbs/lcy)"
             }
@@ -104,19 +118,21 @@ const SiteParameters = ({ navigation }) => {
           <Input
             inputLabel="Material Swell (%)"
             value={materialSwell}
-            setValue={setMaterialSwell}
+            setValue={value => handleChangeInputFloat(value, setMaterialSwell)}
           />
         </View>
 
         <View style={styles.inputGroup}>
           <Input
             inputLabel="Operator Efficiency (min/hr)"
-            setValue={setOperatorEfficiency}
+            setValue={value =>
+              handleChangeInputFloat(value, setOperatorEfficiency)
+            }
             value={operatorEfficiency}
           />
           <Input
             inputLabel="Truck Spot Time (sec)"
-            setValue={setTruckSpotTime}
+            setValue={value => handleChangeInputFloat(value, setTruckSpotTime)}
             value={truckSpotTime}
           />
         </View>
@@ -126,7 +142,9 @@ const SiteParameters = ({ navigation }) => {
         <View style={styles.inputGroup}>
           <Input
             inputLabel="Travel Time (min)"
-            setValue={setRoundTripTravelTime}
+            setValue={value =>
+              handleChangeInputFloat(value, setRoundTripTravelTime)
+            }
             value={roundTripTravelTime}
           />
           <Button btnText="Default" halfWidthBtn onPress={loadDefaults} />
@@ -144,7 +162,7 @@ const SiteParameters = ({ navigation }) => {
         >
           <MaterialDensity materialDensities={materialDensities} />
         </Modal>
-      </View>
+      </KeyboardAwareScrollView>
     </Layout>
   )
 }
