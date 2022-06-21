@@ -1,6 +1,7 @@
 import { View, Text } from "react-native"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 import { useGetLoadingTool } from "../../../../hooks/query/useFleet"
 import { Header } from "../../../../components/Header"
@@ -53,12 +54,12 @@ const FleetDefinition = ({ navigation }) => {
   const handleloadingToolsChange = value => {
     setSelectedLoadingTool(value)
     setHaulingTools(value?.compatible_trucks)
-    setCycleTime(value?.cycle_time_second?.toString())
-    setBucketFill(value?.bucket_fill)
+    setCycleTime(Number(value?.cycle_time_second).toFixed(1))
+    setBucketFill(Number(value?.bucket_fill).toFixed(1))
 
     unitStateValue?.value === "Metric"
-      ? setBucketSize(value?.metric_standard?.bucket_size_m3?.toString())
-      : setBucketSize(value?.bucket_size_yd3?.toString())
+      ? setBucketSize(Number(value?.metric_standard?.bucket_size_m3).toFixed(1))
+      : setBucketSize(Number(value?.bucket_size_yd3).toFixed(1))
     setSelectedHaulingTool({})
     setPayload("")
   }
@@ -66,8 +67,8 @@ const FleetDefinition = ({ navigation }) => {
   const handleHaulingToolsChange = value => {
     setSelectedHaulingTool(value)
     unitStateValue?.value === "Metric"
-      ? setPayload(value?.metric_standard?.capacity_tonne?.toString())
-      : setPayload(value?.capacity_ton?.toString())
+      ? setPayload(Number(value?.metric_standard?.capacity_tonne).toFixed(1))
+      : setPayload(Number(value?.capacity_ton).toFixed(1))
   }
 
   const resetTruck = () => {
@@ -82,10 +83,23 @@ const FleetDefinition = ({ navigation }) => {
     }
   }
 
+  const handleChangeInputFloat = (value, setValue) => {
+    var res = value.split(".")
+
+    if (res.length > 1 && res[1]) {
+      setValue(Number(value).toFixed(1))
+    } else {
+      setValue(value)
+    }
+  }
+
   return (
     <Layout>
       <Header />
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{ flex: 1 }}
+        style={styles.container}
+      >
         <Text style={styles.title}>Fleet Definition</Text>
 
         <Select
@@ -108,18 +122,17 @@ const FleetDefinition = ({ navigation }) => {
             labelName="name"
             valueName="name"
           />
-
           <Input
             inputLabel="Cycle Time (Sec) "
             value={cycleTime}
-            setValue={setCycleTime}
+            setValue={value => handleChangeInputFloat(value, setCycleTime)}
           />
         </View>
         <View style={styles.inputGroup}>
           <Input
             inputLabel="Bucket Fill (%)"
             value={bucketFill}
-            setValue={setBucketFill}
+            setValue={value => handleChangeInputFloat(value, setBucketFill)}
           />
           <Input
             inputLabel="Bucket Size"
@@ -127,7 +140,7 @@ const FleetDefinition = ({ navigation }) => {
               unitStateValue?.value === "Metric" ? `(m\u00B3)` : `(yd\u00B3)`
             }
             value={bucketSize}
-            setValue={setBucketSize}
+            setValue={value => handleChangeInputFloat(value, setBucketSize)}
           />
         </View>
 
@@ -148,7 +161,7 @@ const FleetDefinition = ({ navigation }) => {
             inputLabel="Nom. Payload"
             symbol={unitStateValue?.value === "Metric" ? `(tonnes)` : `(tons)`}
             value={payload}
-            setValue={setPayload}
+            setValue={value => handleChangeInputFloat(value, setPayload)}
           />
         </View>
         <View style={styles.btnSpacer}>
@@ -157,7 +170,7 @@ const FleetDefinition = ({ navigation }) => {
 
         <View style={styles.nextBtn} />
         <Button btnText="Next" isPrimary onPress={handleNext} />
-      </View>
+      </KeyboardAwareScrollView>
     </Layout>
   )
 }
