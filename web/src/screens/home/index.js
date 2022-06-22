@@ -210,7 +210,13 @@ const Form = () => {
             </label>
             <DropDown
               options={bigHaulingOptions}
-              onChange={e => setHaulingTool(e.value)}
+              onChange={e => {
+                setNomPayload(
+                  haulingTools.filter(tool => tool.name === e.value)[0]
+                    .capacity_ton
+                )
+                setHaulingTool(e.value)
+              }}
             />
           </div>
           <div className="w-1/2">
@@ -220,8 +226,8 @@ const Form = () => {
             <Input
               onChange={e => {
                 setNomPayload(e.target.value)
-                console.log(nomPayload)
               }}
+              type="text"
               //placeholder="0.95"
               // className="mb-6"
               value={nomPayload}
