@@ -5,11 +5,20 @@ import DropDown from "../../components/Dropdown"
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 // import Fll from "../../context/ParametersContext";
-import FleetContext from "../../context/FleetContext"
 import "./index.css"
 import { baseURL } from "../../api"
+import { Store, UpdateStore } from "../../StoreContext"
 
 const Form = () => {
+  const {
+    loadingTool,
+    cycleTime,
+    bucketFill,
+    bucketSize,
+    haulingTool,
+    nomPayload
+  } = Store()
+  const updateStore = UpdateStore()
   const [loadingTools, setLoadingTools] = useState([])
   const [loadingToolsIsLoading, setLoadingToolsIsLoading] = useState(true)
   const [haulingTools, setHaulingTools] = useState([])
@@ -17,21 +26,6 @@ const Form = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [bigHaulingOptions, setBigLHaulingOptions] = useState([])
   const [unit, setUnit] = useState("metric")
-
-  const {
-    loadingTool,
-    setLoadingTool,
-    cycleTime,
-    setCycleTime,
-    bucketFill,
-    setBucketFill,
-    bucketSize,
-    setBucketSize,
-    haulingTool,
-    setHaulingTool,
-    nomPayload,
-    setNomPayload
-  } = useContext(FleetContext)
 
   const fetchLoadingTools = () => {
     axios
@@ -46,7 +40,6 @@ const Form = () => {
       .get(`${baseURL}hat/loading-tools/${e || loadingTool}/hauling-tools/`)
       .then(res => {
         setHaulingTools(res.data)
-        console.log(haulingTools)
         setHaulingToolsIsLoading(false)
 
         setBigLHaulingOptions(
@@ -59,14 +52,18 @@ const Form = () => {
     await axios
       .get(`${baseURL}hat/loading-tools/${e || loadingTool}/`)
       .then(res => {
-        setBucketFill(res.data.bucket_fill)
-        setCycleTime(res.data.cycle_time_second)
+        updateStore({ bucketFill: res.data.bucket_fill })
+        updateStore({ cycleTime: res.data.cycle_time_second })
         if (unit === "metric") {
-          setBucketSize(
-            parseInt(res.data.metric_standard.bucket_size_m3).toFixed(1)
-          )
+          updateStore({
+            bucketSize: parseInt(
+              res.data.metric_standard.bucket_size_m3
+            ).toFixed(1)
+          })
         } else {
-          setBucketSize(parseInt(res.data.bucket_size_yd3).toFixed(1))
+          updateStore({
+            bucketSize: parseInt(res.data.bucket_size_yd3).toFixed(1)
+          })
         }
 
         fetchHaulingTools(e)
@@ -80,8 +77,7 @@ const Form = () => {
     await axios
       .get(`${baseURL}hat/loading-tools/${loadingTool}/`)
       .then(res => {
-        console.log(res.data.bucket_fill)
-        setNomPayload(res.data.capacity_ton)
+        updateStore({ nomPayload: res.data.capacity_ton })
       })
       .catch(err => {
         console.log(err)
@@ -96,9 +92,9 @@ const Form = () => {
     setUnit(e)
 
     if (bucketSize && e === "customary") {
-      setBucketSize((bucketSize * 1.308).toFixed(1))
+      updateStore({ bucketSize: (bucketSize * 1.308).toFixed(1) })
     } else if (bucketSize && e === "metric") {
-      setBucketSize((bucketSize / 1.308).toFixed(1))
+      updateStore({ bucketSize: (bucketSize / 1.308).toFixed(1) })
     }
   }
 
@@ -142,9 +138,12 @@ const Form = () => {
           </label>
           <DropDown
             options={loadingOptions}
+            defaultValue={
+              loadingOptions.filter(a => a.value === loadingTool)[0]
+            }
             // onChange={(e)=>fetchAssociatedLoading(e)}
             onChange={e => {
-              setLoadingTool(e.value)
+              updateStore({ loadingTool: e.value })
               fetchAssociatedLoading(e.value)
             }}
           />
@@ -154,7 +153,7 @@ const Form = () => {
             Cycle Time (Sec)
           </label>
           <Input
-            onChange={e => setCycleTime(e.target.value)}
+            onChange={e => updateStore({ cycleTime: e.target.value })}
             type="text"
             maxLength="4"
             //placeholder="0.95"
@@ -171,7 +170,7 @@ const Form = () => {
             </label>
             <Input
               onChange={e => {
-                setBucketFill(e.target.value)
+                updateStore({ bucketFill: e.target.value })
               }}
               type="text"
               maxLength="4"
@@ -185,7 +184,7 @@ const Form = () => {
               Bucket Size (m<sup>3</sup>)
             </label>
             <Input
-              onChange={e => setBucketSize(e.target.value)}
+              onChange={e => updateStore({ bucketSize: e.target.value })}
               //placeholder="0.95"
               value={bucketSize}
               type="text"
@@ -211,11 +210,12 @@ const Form = () => {
             <DropDown
               options={bigHaulingOptions}
               onChange={e => {
-                setNomPayload(
-                  haulingTools.filter(tool => tool.name === e.value)[0]
-                    .capacity_ton
-                )
-                setHaulingTool(e.value)
+                updateStore({
+                  nomPayload: haulingTools.filter(
+                    tool => tool.name === e.value
+                  )[0].capacity_ton
+                })
+                updateStore({ haulingTool: e.value })
               }}
             />
           </div>
@@ -225,7 +225,7 @@ const Form = () => {
             </label>
             <Input
               onChange={e => {
-                setNomPayload(e.target.value)
+                updateStore({ nomPayload: e.target.value })
               }}
               type="text"
               //placeholder="0.95"
@@ -240,10 +240,11 @@ const Form = () => {
             backgroundColor="yellow"
             url=""
             onClick={() => {
-              setNomPayload(
-                haulingTools.filter(tool => tool.name === haulingTool)[0]
-                  .capacity_ton
-              )
+              updateStore({
+                nomPayload: haulingTools.filter(
+                  tool => tool.name === haulingTool
+                )[0].capacity_ton
+              })
             }}
           />
         </div>

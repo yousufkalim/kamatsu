@@ -3,6 +3,8 @@ import ReactDOM from "react-dom"
 import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
+import { StoreProvider } from "./StoreContext"
+
 // import ParametersProvider from '../src/context/ParametersContext'
 // import ParametersContext from '../src/context/ParametersContext';
 
@@ -12,7 +14,9 @@ ReactDOM.render(
   <React.StrictMode>
     {/* <ParametersProvider value={{setMaterialDensity}}> */}
 
-    <App />
+    <StoreProvider>
+      <App />
+    </StoreProvider>
     {/* </ParametersProvider> */}
   </React.StrictMode>,
   document.getElementById("root")
