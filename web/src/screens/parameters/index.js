@@ -115,10 +115,10 @@ const Form = () => {
                     <h4 className="density-title">{density.title}</h4>
                     <p className="density-body">Density</p>
                     <p className="density-body">
-                      {density.metric_standard.density}{" "}
-                      {density.metric_standard.density.unit_text}
+                      {density.metric_standard.density} (kgs/lcm)
+                      {/* {density.metric_standard.density.unit_text} */}
                     </p>
-                    <p className="density-body">{density.density}</p>
+                    <p className="density-body">{density.density} (lbs/lcy)</p>
                     <hr className="line" />
                   </div>
                 )
@@ -159,7 +159,7 @@ const Form = () => {
         <div className="flex gap-8">
           <div className="w-1/2">
             <label className="block text-smaller mb-1 font-normal">
-              Material Density {unit === "metric" ? "(kg/lcm)" : "(lbs/lcy)"}
+              Material Density {unit === "metric" ? "(kgs/lcm)" : "(lbs/lcy)"}
               <img
                 className="inline"
                 src={DensityPopupIcon}
