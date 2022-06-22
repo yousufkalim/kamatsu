@@ -12,13 +12,25 @@ const Body = () => {
   const [message, setMessage] = useState("")
 
   const sendFeedback = () => {
+    if (!email || !message) {
+      return toast.error("Please fill out all fields")
+    }
+    // Email validation
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return toast.error("Please enter a valid email address")
+    }
+
     axios
       .post(`${baseURL}feedbacks/customer-feedbacks/`, {
         email: email,
         body: message,
         user: 1
       })
-      .then(res => toast.success("Feedback sent succesfully"))
+      .then(res => {
+        toast.success("Feedback sent successfully")
+        setEmail("")
+        setMessage("")
+      })
       .catch(err => console.log(err))
   }
 

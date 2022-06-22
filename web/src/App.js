@@ -11,12 +11,14 @@ import Parameters from "./screens/parameters"
 import { ParametersProvider } from "./context/ParametersContext"
 import { FleetProvider } from "./context/FleetContext"
 import { useContext } from "react"
+import { Toaster } from "react-hot-toast"
 
 function App() {
   // const {materialDensity} = useContext(ParametersContext)
   // console.log(materialDensity)
   return (
     <div>
+      <Toaster />
       <BrowserRouter>
         <FleetProvider>
           <ParametersProvider>
