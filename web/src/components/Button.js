@@ -68,12 +68,12 @@ export const Button = ({
           className={`${backgroundColor} text-${textColor} home-button flex w-[274px] items-center pl-8`}
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={() => setIsShown(false)}
-          onClick={() => {
-            if (modal) setModalIsOpen(!modalIsOpen)
-            setTimeout(() => {
-              setModalIsOpen(false)
-            }, 2000)
-          }}
+          //   onClick={() => {
+          //     if (modal) setModalIsOpen(!modalIsOpen)
+          //     setTimeout(() => {
+          //       setModalIsOpen(false)
+          //     }, 2000)
+          //   }}
         >
           <img className="mr-4" src={icon} />
           {isShown && comingSoon ? "Coming Soon" : text}
