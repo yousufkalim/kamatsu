@@ -97,7 +97,7 @@ export const DashboardButton = ({
       <button
         className={`${backgroundColor} text-${textColor} dashboard-button flex justify-center font-medium `}
         onClick={onClick}
-        style={{ opacity: disabled ? 0.5 : 1 }}
+        style={{ opacity: disabled ? 0.5 : 1, color: textColor }}
         disabled={disabled}
       >
         {text}

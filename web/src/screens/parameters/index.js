@@ -65,7 +65,6 @@ const Form = () => {
   const fetchMaterialDensity = () => {
     axios.get(`${baseURL}hat/material-densities/`).then(res => {
       setApiDensities(res.data)
-      console.log(apiDensities)
       setIsLoading(false)
     })
     // .then((res)=>{
