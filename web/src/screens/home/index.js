@@ -216,7 +216,8 @@ const Form = () => {
           </div>
           <div className="w-1/2">
             <label className="block text-smaller mb-1 font-normal">
-              Bucket Size (m<sup>3</sup>)
+              Bucket Size ({unit === "metric" ? "m" : "y"}
+              <sup>3</sup>)
             </label>
             <Input
               onChange={e => updateStore({ bucketSize: e.target.value })}
@@ -255,7 +256,7 @@ const Form = () => {
           </div>
           <div className="w-1/2">
             <label className="block text-sm mb-1 font-normal">
-              Nom. Payload (Tons)
+              Nom. Payload {unit === "metric" ? "(tonne)" : "(ton)"}
             </label>
             <Input
               onChange={e => {
