@@ -98,7 +98,7 @@ const Form = () => {
     }
 
     updateStore({
-      nomPayload: parseInt(weight).toFixed(2)
+      nomPayload: parseInt(weight).toFixed(1)
     })
   }
 
@@ -127,7 +127,7 @@ const Form = () => {
         ).toFixed(1),
         nomPayload: parseInt(
           haulingTools.filter(a => a.name === haulingTool)[0]?.capacity_ton
-        ).toFixed(2)
+        ).toFixed(1)
       })
     } else if (bucketSize && e === "metric") {
       updateStore({
@@ -138,7 +138,7 @@ const Form = () => {
         nomPayload: parseInt(
           haulingTools.filter(a => a.name === haulingTool)[0]?.metric_standard
             .capacity_tonne
-        ).toFixed(2)
+        ).toFixed(1)
       })
     }
   }
@@ -263,6 +263,7 @@ const Form = () => {
                 updateStore({ nomPayload: e.target.value })
               }}
               type="text"
+              maxLength={5}
               //placeholder="0.95"
               // className="mb-6"
               value={nomPayload}
