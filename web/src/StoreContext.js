@@ -27,7 +27,8 @@ export function StoreProvider({ children }) {
     unit: "metric",
     loadingTools: [],
     haulingTools: [],
-    haulingToolOptions: []
+    haulingToolOptions: [],
+    loadingToolOptions: []
   })
 
   const updateStore = data => {

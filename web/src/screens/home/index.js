@@ -20,7 +20,8 @@ const Form = () => {
     unit,
     loadingTools,
     haulingTools,
-    haulingToolOptions
+    haulingToolOptions,
+    loadingToolOptions
   } = Store()
   const updateStore = UpdateStore()
   const [loadingToolsIsLoading, setLoadingToolsIsLoading] = useState(true)
@@ -33,7 +34,11 @@ const Form = () => {
       .get(`${baseURL}hat/loading-tools/`)
       .then(res =>
         updateStore({
-          loadingTools: res.data?.map(a => ({ value: a.id, label: a.name }))
+          loadingToolOptions: res.data?.map(a => ({
+            value: a.id,
+            label: a.name
+          })),
+          loadingTools: res.data
         })
       )
       .then(setLoadingToolsIsLoading(false))
@@ -80,6 +85,23 @@ const Form = () => {
       })
   }
 
+  //   On hauling tool change
+  const onHaulingToolChange = e => {
+    let weight
+
+    if (unit === "metric") {
+      weight = haulingTools.filter(a => a.name === e)[0]?.metric_standard
+        .capacity_tonne
+    } else {
+      // convert to tonne
+      weight = haulingTools.filter(a => a.name === e)[0]?.capacity_ton
+    }
+
+    updateStore({
+      nomPayload: parseInt(weight).toFixed(2)
+    })
+  }
+
   const fetchAssociatedHaulingToolDetail = async () => {
     await axios
       .get(`${baseURL}hat/loading-tools/${loadingTool}/`)
@@ -99,9 +121,25 @@ const Form = () => {
     updateStore({ unit: e })
 
     if (bucketSize && e === "customary") {
-      updateStore({ bucketSize: (bucketSize * 1.308).toFixed(1) })
+      updateStore({
+        bucketSize: parseInt(
+          loadingTools.filter(a => a.id === loadingTool)[0]?.bucket_size_yd3
+        ).toFixed(1),
+        nomPayload: parseInt(
+          haulingTools.filter(a => a.name === haulingTool)[0]?.capacity_ton
+        ).toFixed(2)
+      })
     } else if (bucketSize && e === "metric") {
-      updateStore({ bucketSize: (bucketSize / 1.308).toFixed(1) })
+      updateStore({
+        bucketSize: parseInt(
+          loadingTools.filter(a => a.id === loadingTool)[0]?.metric_standard
+            .bucket_size_m3
+        ).toFixed(1),
+        nomPayload: parseInt(
+          haulingTools.filter(a => a.name === haulingTool)[0]?.metric_standard
+            .capacity_tonne
+        ).toFixed(2)
+      })
     }
   }
 
@@ -134,8 +172,10 @@ const Form = () => {
             Loading Tool
           </label>
           <DropDown
-            options={loadingTools}
-            defaultValue={loadingTools.filter(a => a.value === loadingTool)[0]}
+            options={loadingToolOptions}
+            defaultValue={
+              loadingToolOptions.filter(a => a.value === loadingTool)[0]
+            }
             // onChange={(e)=>fetchAssociatedLoading(e)}
             onChange={e => {
               updateStore({ loadingTool: e.value })
@@ -205,12 +245,8 @@ const Form = () => {
             <DropDown
               options={haulingToolOptions}
               onChange={e => {
-                updateStore({
-                  nomPayload: haulingTools.filter(
-                    tool => tool.name === e.value
-                  )[0]?.capacity_ton
-                })
                 updateStore({ haulingTool: e.value })
+                onHaulingToolChange(e.value)
               }}
               defaultValue={
                 haulingToolOptions.filter(a => a.value === haulingTool)[0]
@@ -237,13 +273,7 @@ const Form = () => {
             text="Reset Truck"
             backgroundColor="yellow"
             url=""
-            onClick={() => {
-              updateStore({
-                nomPayload: haulingTools.filter(
-                  tool => tool.name === haulingTool
-                )[0].capacity_ton
-              })
-            }}
+            onClick={() => onHaulingToolChange(haulingTool)}
           />
         </div>
         <div className="flex justify-center md:justify-end mb-8">
