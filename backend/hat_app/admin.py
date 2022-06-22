@@ -84,7 +84,7 @@ class MaterialDensityAdmin(ImportExportMixin, admin.ModelAdmin):
     def get_density_metric(self, instance):
         density = instance.get_metric_standard.get('density', None)
         if density:
-            html_text = f'{density:.2f} kg/m<sup>3</sup>'
+            html_text = f'{density:.1f} kg/m<sup>3</sup>'
             return mark_safe(html_text)
         return None
 
