@@ -85,6 +85,17 @@ const Form = () => {
     }
   }, [])
 
+  const defaultValues = () => {
+    // default perameter values
+    updateStore({
+      materialDensity: unit === "metric" ? 1360 : 3000,
+      materialSwell: 20,
+      operatorEfficiency: 50,
+      truckSpotTime: 15,
+      estRoundTripTravel: 10
+    })
+  }
+
   const DensityModal = () => {
     return (
       <div className="bg-white p-5">
@@ -226,6 +237,7 @@ const Form = () => {
               backgroundColor="yellow"
               className="mb-6"
               url=""
+              onClick={defaultValues}
             />
             <DashboardButton
               text="Next"
