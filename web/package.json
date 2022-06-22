@@ -23,6 +23,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
+    "build-be-win": "craco build && xcopy build \"..\\backend\\web_front_build\" /hievry",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
