@@ -163,7 +163,7 @@ const Form = () => {
         <DropDown
           options={UnitOptions}
           onChange={e => changeUnit(e.value)}
-          defaultValue={UnitOptions[0]}
+          defaultValue={() => UnitOptions.filter(a => a.value === unit)[0]}
         />
       </div>
       <div className="flex gap-8">
