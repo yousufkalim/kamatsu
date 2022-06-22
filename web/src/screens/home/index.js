@@ -125,7 +125,6 @@ const Form = () => {
 
   return (
     <div>
-      {console.log(unit)}
       <div className="w-1/2 gap-8 md:w-1/4 mb-6">
         <label className="block text-smaller mb-1 font-normal">
           Unit Selection
@@ -156,6 +155,8 @@ const Form = () => {
           </label>
           <Input
             onChange={e => setCycleTime(e.target.value)}
+            type="text"
+            maxLength="4"
             //placeholder="0.95"
             className="mb-6"
             value={cycleTime}
@@ -172,6 +173,8 @@ const Form = () => {
               onChange={e => {
                 setBucketFill(e.target.value)
               }}
+              type="text"
+              maxLength="4"
               //placeholder="0.95"
               // className="mb-6"
               value={bucketFill}
@@ -185,6 +188,8 @@ const Form = () => {
               onChange={e => setBucketSize(e.target.value)}
               //placeholder="0.95"
               value={bucketSize}
+              type="text"
+              maxLength="4"
             />
           </div>
         </div>
