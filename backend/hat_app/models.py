@@ -77,7 +77,7 @@ class HaulingTool(BaseTimeStampModel):
 
 class MaterialDensity(BaseTimeStampModel):
     title = models.CharField(_('Title'), max_length=120, )
-    density = models.DecimalField(_('Density (US or Imperial)'), decimal_places=2, max_digits=20,
+    density = models.DecimalField(_('Density (US or Imperial)'), decimal_places=1, max_digits=20,
                                   help_text=_('Unit: lb/yd**3'))
     position = models.PositiveIntegerField(_('Ordering Position'), default=0)
 
@@ -95,7 +95,7 @@ class MaterialDensity(BaseTimeStampModel):
         density_metric = density.item()
         return {
             'unit_text': 'kg/m3',
-            'density': float(f'{density_metric:.2f}')
+            'density': float(f'{density_metric:.1f}')
         }
 
     class Meta:
