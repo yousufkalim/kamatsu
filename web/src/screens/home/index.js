@@ -235,13 +235,31 @@ const Form = () => {
           </div>
         </div>
         <div className="flex justify-center md:justify-end mb-12">
-          <DashboardButton text="Reset Truck" backgroundColor="yellow" url="" />
+          <DashboardButton
+            text="Reset Truck"
+            backgroundColor="yellow"
+            url=""
+            onClick={() => {
+              setNomPayload(
+                haulingTools.filter(tool => tool.name === haulingTool)[0]
+                  .capacity_ton
+              )
+            }}
+          />
         </div>
         <div className="flex justify-center md:justify-end mb-8">
           <DashboardButton
             text="Next"
             backgroundColor="blue"
             textColor="white"
+            disabled={
+              !loadingTool ||
+              !cycleTime ||
+              !bucketFill ||
+              !bucketSize ||
+              !nomPayload ||
+              !haulingTool
+            }
             url="/parameters"
           />
         </div>
