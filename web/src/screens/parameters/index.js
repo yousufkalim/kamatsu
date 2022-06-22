@@ -77,17 +77,12 @@ const Form = () => {
 
   useEffect(() => {
     fetchMaterialDensity()
-
-    if (unit === "metric") {
-      // lbs to kg
-      updateStore({ materialDensity: parseInt(materialDensity / 2.205) })
-    }
   }, [])
 
   const defaultValues = () => {
     // default perameter values
     updateStore({
-      materialDensity: unit === "metric" ? 1360 : 3000,
+      materialDensity: 3000,
       materialSwell: 20,
       operatorEfficiency: 50,
       truckSpotTime: 15,
