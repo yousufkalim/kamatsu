@@ -16,6 +16,7 @@ const Form = () => {
   const [HaulingToolsIsLoading, setHaulingToolsIsLoading] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
   const [bigHaulingOptions, setBigLHaulingOptions] = useState([])
+  const [unit, setUnit] = useState("metric")
 
   const {
     loadingTool,
@@ -58,12 +59,16 @@ const Form = () => {
     await axios
       .get(`${baseURL}hat/loading-tools/${e || loadingTool}/`)
       .then(res => {
-        console.log(res.data.bucket_fill)
         setBucketFill(res.data.bucket_fill)
-        console.log(bucketFill)
         setCycleTime(res.data.cycle_time_second)
-        setBucketSize(res.data.bucket_size_yd3)
-        console.log(nomPayload)
+        if (unit === "metric") {
+          setBucketSize(
+            parseInt(res.data.metric_standard.bucket_size_m3).toFixed(1)
+          )
+        } else {
+          setBucketSize(parseInt(res.data.bucket_size_yd3).toFixed(1))
+        }
+
         fetchHaulingTools(e)
       })
       .catch(err => {
@@ -86,6 +91,16 @@ const Form = () => {
   useEffect(() => {
     fetchLoadingTools()
   }, [])
+
+  const changeUnit = e => {
+    setUnit(e)
+
+    if (bucketSize && e === "customary") {
+      setBucketSize((bucketSize * 1.308).toFixed(1))
+    } else if (bucketSize && e === "metric") {
+      setBucketSize((bucketSize / 1.308).toFixed(1))
+    }
+  }
 
   let loadingOptions = []
   if (!loadingToolsIsLoading) {
@@ -110,11 +125,16 @@ const Form = () => {
 
   return (
     <div>
+      {console.log(unit)}
       <div className="w-1/2 gap-8 md:w-1/4 mb-6">
         <label className="block text-smaller mb-1 font-normal">
           Unit Selection
         </label>
-        <DropDown options={UnitOptions} defaultValue={UnitOptions[0]} />
+        <DropDown
+          options={UnitOptions}
+          onChange={e => changeUnit(e.value)}
+          defaultValue={UnitOptions[0]}
+        />
       </div>
       <div className="flex gap-8">
         <div className="w-1/2">
