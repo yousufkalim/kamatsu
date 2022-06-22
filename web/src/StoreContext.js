@@ -28,7 +28,14 @@ export function StoreProvider({ children }) {
     loadingTools: [],
     haulingTools: [],
     haulingToolOptions: [],
-    loadingToolOptions: []
+    loadingToolOptions: [],
+
+    // permanent values
+    materialDensity: 3000,
+    truckSpotTime: 15,
+    operatorEfficiency: 50,
+    estRoundTripTravel: 10,
+    materialSwell: 20
   })
 
   const updateStore = data => {

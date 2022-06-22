@@ -11,6 +11,7 @@ import Modal from "react-modal"
 import CloseModal from "../../assets/close-modal.svg"
 import axios from "axios"
 import { baseURL } from "../../api"
+import { Store, UpdateStore } from "../../StoreContext"
 
 const customStyles = {
   content: {
@@ -50,6 +51,17 @@ const Form = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [apiDensities, setApiDensities] = useState([])
 
+  const {
+    materialDensity,
+    truckSpotTime,
+    operatorEfficiency,
+    estRoundTripTravel,
+    materialSwell,
+    unit
+  } = Store()
+
+  const updateStore = UpdateStore()
+
   const fetchMaterialDensity = () => {
     axios.get(`${baseURL}hat/material-densities/`).then(res => {
       setApiDensities(res.data)
@@ -66,20 +78,12 @@ const Form = () => {
 
   useEffect(() => {
     fetchMaterialDensity()
-  }, [])
 
-  const {
-    materialDensity,
-    setMaterialDensity,
-    truckSpotTime,
-    setTruckSpotTime,
-    operatorEfficiency,
-    setOperatorEfficiency,
-    estRoundTripTravel,
-    setEstRoundTripTravel,
-    materialSwell,
-    serMaterialSwell
-  } = useContext(ParametersContext)
+    if (unit === "metric") {
+      // lbs to kg
+      updateStore({ materialDensity: parseInt(materialDensity / 2.205) })
+    }
+  }, [])
 
   const DensityModal = () => {
     return (
@@ -155,7 +159,7 @@ const Form = () => {
         <div className="flex gap-8">
           <div className="w-1/2">
             <label className="block text-smaller mb-1 font-normal">
-              Material Density (lbs/lcy){" "}
+              Material Density {unit === "metric" ? "kg/lcm" : "lbs/lcy"}
               <img
                 className="inline"
                 src={DensityPopupIcon}
@@ -163,8 +167,8 @@ const Form = () => {
               />
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               value={materialDensity}
+              onChange={e => updateStore({ materialDensity: e.target.value })}
               className="mb-6"
             />
           </div>
@@ -173,9 +177,9 @@ const Form = () => {
               Truck Spot Time
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               className="mb-6"
               value={truckSpotTime}
+              onChange={e => updateStore({ truckSpotTime: e.target.value })}
             />
           </div>
         </div>
@@ -185,9 +189,11 @@ const Form = () => {
               Operator Efficiency (min/hr)
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               className="mb-6"
               value={operatorEfficiency}
+              onChange={e =>
+                updateStore({ operatorEfficiency: e.target.value })
+              }
             />
           </div>
           <div className="w-1/2">
@@ -195,9 +201,11 @@ const Form = () => {
               Est. Round Trip Travel Time (min)
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               className="mb-6"
               value={estRoundTripTravel}
+              onChange={e =>
+                updateStore({ estRoundTripTravel: e.target.value })
+              }
             />
           </div>
         </div>
@@ -207,9 +215,9 @@ const Form = () => {
               Material Swell (%)
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               className="mb-6"
               value={materialSwell}
+              onChange={e => updateStore({ materialSwell: e.target.value })}
             />
           </div>
           <div className="w-1/2 flex justify-between">
