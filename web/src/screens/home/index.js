@@ -16,21 +16,26 @@ const Form = () => {
     bucketFill,
     bucketSize,
     haulingTool,
-    nomPayload
+    nomPayload,
+    unit,
+    loadingTools,
+    haulingTools,
+    haulingToolOptions
   } = Store()
   const updateStore = UpdateStore()
-  const [loadingTools, setLoadingTools] = useState([])
   const [loadingToolsIsLoading, setLoadingToolsIsLoading] = useState(true)
-  const [haulingTools, setHaulingTools] = useState([])
   const [HaulingToolsIsLoading, setHaulingToolsIsLoading] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
   const [bigHaulingOptions, setBigLHaulingOptions] = useState([])
-  const [unit, setUnit] = useState("metric")
 
   const fetchLoadingTools = () => {
     axios
       .get(`${baseURL}hat/loading-tools/`)
-      .then(res => setLoadingTools(res.data))
+      .then(res =>
+        updateStore({
+          loadingTools: res.data?.map(a => ({ value: a.id, label: a.name }))
+        })
+      )
       .then(setLoadingToolsIsLoading(false))
   }
 
@@ -39,12 +44,14 @@ const Form = () => {
     axios
       .get(`${baseURL}hat/loading-tools/${e || loadingTool}/hauling-tools/`)
       .then(res => {
-        setHaulingTools(res.data)
+        updateStore({ haulingTools: res.data })
+        updateStore({
+          haulingToolOptions: res.data.map(tool => ({
+            value: tool.name,
+            label: tool.name
+          }))
+        })
         setHaulingToolsIsLoading(false)
-
-        setBigLHaulingOptions(
-          res.data.map(tool => ({ value: tool.name, label: tool.name }))
-        )
       })
   }
 
@@ -89,23 +96,13 @@ const Form = () => {
   }, [])
 
   const changeUnit = e => {
-    setUnit(e)
+    updateStore({ unit: e })
 
     if (bucketSize && e === "customary") {
       updateStore({ bucketSize: (bucketSize * 1.308).toFixed(1) })
     } else if (bucketSize && e === "metric") {
       updateStore({ bucketSize: (bucketSize / 1.308).toFixed(1) })
     }
-  }
-
-  let loadingOptions = []
-  if (!loadingToolsIsLoading) {
-    loadingTools.map(tool => {
-      let toolData = {}
-      toolData.value = tool.id
-      toolData.label = tool.name
-      loadingOptions.push(toolData)
-    })
   }
 
   const UnitOptions = [
@@ -137,10 +134,8 @@ const Form = () => {
             Loading Tool
           </label>
           <DropDown
-            options={loadingOptions}
-            defaultValue={
-              loadingOptions.filter(a => a.value === loadingTool)[0]
-            }
+            options={loadingTools}
+            defaultValue={loadingTools.filter(a => a.value === loadingTool)[0]}
             // onChange={(e)=>fetchAssociatedLoading(e)}
             onChange={e => {
               updateStore({ loadingTool: e.value })
@@ -208,15 +203,18 @@ const Form = () => {
               Hauling Tool
             </label>
             <DropDown
-              options={bigHaulingOptions}
+              options={haulingToolOptions}
               onChange={e => {
                 updateStore({
                   nomPayload: haulingTools.filter(
                     tool => tool.name === e.value
-                  )[0].capacity_ton
+                  )[0]?.capacity_ton
                 })
                 updateStore({ haulingTool: e.value })
               }}
+              defaultValue={
+                haulingToolOptions.filter(a => a.value === haulingTool)[0]
+              }
             />
           </div>
           <div className="w-1/2">

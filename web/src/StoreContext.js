@@ -23,7 +23,11 @@ export function StoreProvider({ children }) {
     bucketFill: "",
     bucketSize: "",
     haulingTool: "",
-    nomPayload: ""
+    nomPayload: "",
+    unit: "metric",
+    loadingTools: [],
+    haulingTools: [],
+    haulingToolOptions: []
   })
 
   const updateStore = data => {
