@@ -4,15 +4,14 @@ import DashboardFrame from "../dashboard"
 import "./index.css"
 import { baseURL } from "../../api"
 
-const Body = () => {
+const Body = ({ setTitle }) => {
   const [isLoading, setIsLoading] = useState(true)
-  const [title, setTitle] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [description, setDescription] = useState("")
 
   const fetchAboutData = () => {
-    axios.get(`${baseURL}api/v1/pages/about-us/`).then(res => {
+    axios.get(`${baseURL}pages/about-us/`).then(res => {
       console.log("about us data", res.data)
       setTitle(res.data.title)
       setEmail(res.data.contact_email)
@@ -31,17 +30,8 @@ const Body = () => {
       {!isLoading && (
         <div>
           <p className="font-normal text-about leading-about">
-            The objective of this tool is to conduct productivity and unit cost
-            analyses for mining or construction fleet configurations. The
-            parameters in this app can model a specific site for a customer as
-            well as utilize industry standard parameters in a loader-dependent
-            or truck-dependent application. All values calculated by this tool
-            are intended for preliminary planning and budgetary purposes. <br />{" "}
-            For additional questions, please contact the Komatsu Application
-            Engineering team at &nbsp;
-            <span className="email-color">
-              MiningApplicationEngineering@global.komatsu
-            </span>
+            {description} &nbsp;
+            <span className="email-color">{email}</span>
           </p>
         </div>
       )}
@@ -50,7 +40,9 @@ const Body = () => {
 }
 
 const About = () => {
-  return <DashboardFrame title="About Us" body={<Body />} />
+  const [title, setTitle] = useState("")
+
+  return <DashboardFrame title={title} body={<Body setTitle={setTitle} />} />
 }
 
 export default About
