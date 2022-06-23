@@ -118,7 +118,7 @@ const Form = () => {
   }, [])
 
   const changeUnit = e => {
-    updateStore({ unit: e })
+    updateStore({ unit: e, parameters_unit: e })
 
     if (bucketSize && e === "customary") {
       updateStore({

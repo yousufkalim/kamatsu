@@ -31,6 +31,7 @@ export function StoreProvider({ children }) {
     loadingToolOptions: [],
 
     // permanent values
+    parameters_unit: "metric",
     materialDensity: "",
     truckSpotTime: "",
     operatorEfficiency: "",

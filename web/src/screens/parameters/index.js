@@ -57,7 +57,8 @@ const Form = () => {
     operatorEfficiency,
     estRoundTripTravel,
     materialSwell,
-    unit
+    unit,
+    parameters_unit
   } = Store()
 
   const updateStore = UpdateStore()
@@ -73,8 +74,10 @@ const Form = () => {
       `${baseURL}hat/defaults/screens/site-parameters/`
     )
 
+    console.log(parameters_unit)
+
     const density =
-      unit === "metric"
+      parameters_unit === "metric"
         ? (parseFloat(site_parameters.data.material_density) / 1.686).toFixed(1)
         : parseFloat(site_parameters.data.material_density).toFixed(1)
 
@@ -113,8 +116,8 @@ const Form = () => {
   }
 
   const changeUnit = e => {
-    if (e !== unit) {
-      updateStore({ unit: e })
+    if (e !== parameters_unit) {
+      updateStore({ parameters_unit: e })
 
       // convert density from lbs/lcy to kgs/lcm
       if (e === "metric") {
@@ -188,7 +191,9 @@ const Form = () => {
         <DropDown
           options={UnitOptions}
           onChange={e => changeUnit(e.value)}
-          defaultValue={() => UnitOptions.filter(a => a.value === unit)[0]}
+          defaultValue={() =>
+            UnitOptions.filter(a => a.value === parameters_unit)[0]
+          }
         />
       </div>
       <div>
