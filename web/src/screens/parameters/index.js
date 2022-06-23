@@ -78,7 +78,9 @@ const Form = () => {
 
     const density =
       parameters_unit === "metric"
-        ? (parseFloat(site_parameters.data.material_density) / 1.686).toFixed(1)
+        ? (parseFloat(site_parameters.data.material_density) / 1.6856).toFixed(
+            1
+          )
         : parseFloat(site_parameters.data.material_density).toFixed(1)
 
     updateStore({
@@ -122,11 +124,11 @@ const Form = () => {
       // convert density from lbs/lcy to kgs/lcm
       if (e === "metric") {
         updateStore({
-          materialDensity: (parseFloat(materialDensity) / 1.686).toFixed(1)
+          materialDensity: (parseFloat(materialDensity) / 1.6856).toFixed(1)
         })
       } else {
         updateStore({
-          materialDensity: (parseFloat(materialDensity) * 1.686).toFixed(1)
+          materialDensity: (parseFloat(materialDensity) * 1.6856).toFixed(1)
         })
       }
     }
