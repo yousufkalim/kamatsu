@@ -5,7 +5,9 @@
     border-radius: 6px;
     align-items: center;
 }
-
+.css-14el2xx-placeholder {
+    color: black !important
+}
 @media only screen and (max-width: 767px) {
     .home-button {
       /* margin: 0 20px; */

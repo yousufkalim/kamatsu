@@ -208,15 +208,17 @@ const DashboardFrame = ({
         </div>
         <div className=" md:hidden bg-white top-bar flex items-center px-4 justify-between">
           <div>
-            {displayBackButton ? (
-              <Link to={backButtonURL}>
+            {!homePage && (
+              <Link to="/fleet-definition">
                 <img src={BackArrow} />
               </Link>
-            ) : null}
+            )}
           </div>
 
           <div className="">
-            <img src={MobileLogoBlue} />
+            <Link to="/">
+              <img src={MobileLogoBlue} />
+            </Link>
           </div>
           <div className="">
             <img src={Hamburger} onClick={() => setMobileMenuIsOpen(true)} />
