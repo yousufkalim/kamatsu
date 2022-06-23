@@ -62,32 +62,50 @@ const Form = () => {
 
   const updateStore = UpdateStore()
 
-  const fetchMaterialDensity = () => {
-    axios.get(`${baseURL}hat/material-densities/`).then(res => {
-      setApiDensities(res.data)
-      setIsLoading(false)
+  const fetchSiteDensities = async () => {
+    const densities = await axios.get(`${baseURL}hat/material-densities/`)
+    setApiDensities(densities.data)
+    setIsLoading(false)
+  }
+
+  const fetchSiteParameters = async () => {
+    const site_parameters = await axios.get(
+      `${baseURL}hat/defaults/screens/site-parameters/`
+    )
+    updateStore({
+      materialDensity: parseFloat(
+        site_parameters.data.material_density
+      ).toFixed(1),
+      truckSpotTime: parseFloat(
+        site_parameters.data.truck_sport_time_sec
+      ).toFixed(1),
+      operatorEfficiency: parseFloat(
+        site_parameters.data.operator_efficiency
+      ).toFixed(1),
+      estRoundTripTravel: parseFloat(
+        site_parameters.data.est_round_trip_travel_time
+      ).toFixed(1),
+      materialSwell: parseFloat(site_parameters.data.material_swell).toFixed(1)
     })
-    // .then((res)=>{
-    //     setMaterialDensitiesResult("Hi");
-    //     console.log(materialDensitiesResult);
-    //     setIsLoading(false);
-    //     // console.log()
-    // })
   }
 
   useEffect(() => {
-    fetchMaterialDensity()
+    fetchSiteDensities()
+    fetchSiteParameters()
   }, [])
 
-  const defaultValues = () => {
-    // default perameter values
-    updateStore({
-      materialDensity: 3000,
-      materialSwell: 20,
-      operatorEfficiency: 50,
-      truckSpotTime: 15,
-      estRoundTripTravel: 10
-    })
+  const handleInput = e => {
+    // Don't allow more than one decimal point
+    if (e.target.value.includes(".")) {
+      e.target.value = e.target.value.substring(
+        0,
+        e.target.value.indexOf(".") + 2
+      )
+    }
+    // don't allow alphabetical characters
+    if (!e.target.value.match(/[a-z]/i)) {
+      updateStore({ [e.target.name]: e.target.value })
+    }
   }
 
   const DensityModal = () => {
@@ -173,7 +191,8 @@ const Form = () => {
             </label>
             <Input
               value={materialDensity}
-              onChange={e => updateStore({ materialDensity: e.target.value })}
+              onChange={handleInput}
+              name="materialDensity"
               className="mb-6"
             />
           </div>
@@ -184,7 +203,8 @@ const Form = () => {
             <Input
               className="mb-6"
               value={truckSpotTime}
-              onChange={e => updateStore({ truckSpotTime: e.target.value })}
+              onChange={handleInput}
+              name="truckSpotTime"
             />
           </div>
         </div>
@@ -196,9 +216,8 @@ const Form = () => {
             <Input
               className="mb-6"
               value={operatorEfficiency}
-              onChange={e =>
-                updateStore({ operatorEfficiency: e.target.value })
-              }
+              onChange={handleInput}
+              name="operatorEfficiency"
             />
           </div>
           <div className="w-1/2">
@@ -208,9 +227,8 @@ const Form = () => {
             <Input
               className="mb-6"
               value={estRoundTripTravel}
-              onChange={e =>
-                updateStore({ estRoundTripTravel: e.target.value })
-              }
+              onChange={handleInput}
+              name="estRoundTripTravel"
             />
           </div>
         </div>
@@ -222,7 +240,8 @@ const Form = () => {
             <Input
               className="mb-6"
               value={materialSwell}
-              onChange={e => updateStore({ materialSwell: e.target.value })}
+              onChange={handleInput}
+              name="materialSwell"
             />
           </div>
           <div className="w-1/2 flex justify-between">
@@ -231,7 +250,7 @@ const Form = () => {
               backgroundColor="yellow"
               className="mb-6"
               url=""
-              onClick={defaultValues}
+              onClick={fetchSiteParameters}
             />
             <DashboardButton
               text="Next"

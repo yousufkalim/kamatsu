@@ -31,11 +31,11 @@ export function StoreProvider({ children }) {
     loadingToolOptions: [],
 
     // permanent values
-    materialDensity: 3000,
-    truckSpotTime: 15,
-    operatorEfficiency: 50,
-    estRoundTripTravel: 10,
-    materialSwell: 20
+    materialDensity: "",
+    truckSpotTime: "",
+    operatorEfficiency: "",
+    estRoundTripTravel: "",
+    materialSwell: ""
   })
 
   const updateStore = data => {
