@@ -72,10 +72,14 @@ const Form = () => {
     const site_parameters = await axios.get(
       `${baseURL}hat/defaults/screens/site-parameters/`
     )
+
+    const density =
+      unit === "metric"
+        ? (parseFloat(site_parameters.data.material_density) / 1.686).toFixed(1)
+        : parseFloat(site_parameters.data.material_density).toFixed(1)
+
     updateStore({
-      materialDensity: parseFloat(
-        site_parameters.data.material_density
-      ).toFixed(1),
+      materialDensity: density,
       truckSpotTime: parseFloat(
         site_parameters.data.truck_sport_time_sec
       ).toFixed(1),
@@ -105,6 +109,23 @@ const Form = () => {
     // don't allow alphabetical characters
     if (!e.target.value.match(/[a-z]/i)) {
       updateStore({ [e.target.name]: e.target.value })
+    }
+  }
+
+  const changeUnit = e => {
+    if (e !== unit) {
+      updateStore({ unit: e })
+
+      // convert density from lbs/lcy to kgs/lcm
+      if (e === "metric") {
+        updateStore({
+          materialDensity: (parseFloat(materialDensity) / 1.686).toFixed(1)
+        })
+      } else {
+        updateStore({
+          materialDensity: (parseFloat(materialDensity) * 1.686).toFixed(1)
+        })
+      }
     }
   }
 
@@ -160,6 +181,16 @@ const Form = () => {
 
   return (
     <div>
+      <div className="w-1/2 gap-8 md:w-1/4 mb-6">
+        <label className="block text-smaller mb-1 font-normal">
+          Unit Selection
+        </label>
+        <DropDown
+          options={UnitOptions}
+          onChange={e => changeUnit(e.value)}
+          defaultValue={() => UnitOptions.filter(a => a.value === unit)[0]}
+        />
+      </div>
       <div>
         <Modal
           isOpen={densityPopupOpen}
