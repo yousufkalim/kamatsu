@@ -31,7 +31,9 @@ const Body = ({ setTitle }) => {
         <div>
           <p className="font-normal text-about leading-about">
             {description} &nbsp;
-            <span className="email-color">{email}</span>
+            <a className="email-color" href={`mailto:${email}`}>
+              {email}
+            </a>
           </p>
         </div>
       )}
