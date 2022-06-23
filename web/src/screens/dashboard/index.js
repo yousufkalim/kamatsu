@@ -1,5 +1,5 @@
 import Logo from "../../assets/logo-white.png"
-import { Link, NavLink, useNavigate } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import "./index.css"
 import BackArrow from "../../assets/back-arrow.svg"
 import MobileLogoBlue from "../../assets/mobile-logo-blue.png"
@@ -141,15 +141,22 @@ const MobileMenu = ({ mobileMenuIsOpen, onClickOuterSpace }) => {
   )
 }
 
-const DashboardFrame = ({ title, body, displayBackButton, backButtonURL }) => {
+const DashboardFrame = ({
+  title,
+  body,
+  displayBackButton,
+  backButtonURL,
+  homePage
+}) => {
   const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
-  const navigate = useNavigate()
   return (
     <div className="flex">
       <div className="hidden md:block md:w-1/6 blue md:h-screen">
         <div className="">
           <div className="top-bar px-8 flex items-center">
-            <img src={Logo} className="" />
+            <Link to="/">
+              <img src={Logo} className="" />
+            </Link>
           </div>
           <div className="py-6">
             <Menu text="Home" url="/fleet-definition" />
@@ -179,9 +186,11 @@ const DashboardFrame = ({ title, body, displayBackButton, backButtonURL }) => {
       <div className="deepGray w-full md:h-screen">
         <div className="hidden md:flex bg-white top-bar items-center px-12 justify-between">
           <div>
-            <Link to="" onClick={() => navigate(-1)}>
-              <img src={BackArrow} />
-            </Link>
+            {!homePage && (
+              <Link to="/fleet-definition">
+                <img src={BackArrow} />
+              </Link>
+            )}
           </div>
           <div className="">
             <h4 className="text-body leading-smaller font-normal">John Doe</h4>

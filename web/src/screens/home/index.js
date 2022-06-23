@@ -310,7 +310,9 @@ const Form = () => {
 }
 
 const FleetDefinition = () => {
-  return <DashboardFrame title="Fleet Definition" body={<Form />} />
+  return (
+    <DashboardFrame title="Fleet Definition" homePage={true} body={<Form />} />
+  )
 }
 
 export default FleetDefinition
