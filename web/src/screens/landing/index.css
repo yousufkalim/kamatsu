@@ -1,12 +1,12 @@
 .right-landing {
     height: 100vh;
-    background: 
-    linear-gradient(
-      rgba(0, 0, 0, 0.37), 
-      rgba(0, 0, 0, 0.38)
-    ),
-    url('../../assets/landing-photo.png');
-    background-size: cover;
+    position: relative;
+}
+
+.right-landing img {
+    height: 100vh;
+   position: absolute;
+   right: 0;
 }
 
 .mobile-head {

@@ -5,10 +5,10 @@ import Trolley from "../../assets/trolley.png"
 import Logo from "../../assets/logo.png"
 import WhiteLogo from "../../assets/mobile-logo-white.png"
 import Photo from "../../assets/landing-photo.png"
-import LandingPhoto from "../../assets/landing-photo-mobile.png"
 import Ellipsis from "../../assets/ellipsis.png"
 import { Button } from "../../components/Button"
 import "./index.css"
+import LandingPhoto from "../../assets/landing-photo.png"
 
 const Landing = () => {
   return (
@@ -97,8 +97,7 @@ const Landing = () => {
       </div>
 
       <div className="hidden md:flex md:w-1/2 right-landing ">
-        <h4>Hii</h4>
-        {/* <img src={Photo}/> */}
+        <img src={LandingPhoto} />
       </div>
     </div>
   )
