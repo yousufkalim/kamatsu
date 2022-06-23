@@ -268,7 +268,7 @@ const Form = () => {
           </div>
           <div className="w-1/2">
             <label className="block text-sm mb-1 font-normal">
-              Nom. Payload {unit === "metric" ? "(tonnes)" : "(tons)"}
+              Nom. Payload {unit === "metric" ? "(Tonnes)" : "(Tons)"}
             </label>
             <Input
               onChange={handleInput}

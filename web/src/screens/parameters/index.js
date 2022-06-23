@@ -220,6 +220,7 @@ const Form = () => {
             <label className="block text-smaller mb-1 font-normal">
               Material Density{" "}
               {parameters_unit === "metric" ? "(kgs/lcm)" : "(lbs/lcy)"}
+              &nbsp;
               <img
                 className="inline"
                 src={DensityPopupIcon}
