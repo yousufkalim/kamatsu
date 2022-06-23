@@ -68,13 +68,13 @@ const Form = () => {
         updateStore({ cycleTime: res.data.cycle_time_second })
         if (unit === "metric") {
           updateStore({
-            bucketSize: parseInt(
+            bucketSize: parseFloat(
               res.data.metric_standard.bucket_size_m3
             ).toFixed(1)
           })
         } else {
           updateStore({
-            bucketSize: parseInt(res.data.bucket_size_yd3).toFixed(1)
+            bucketSize: parseFloat(res.data.bucket_size_yd3).toFixed(1)
           })
         }
 
@@ -98,7 +98,7 @@ const Form = () => {
     }
 
     updateStore({
-      nomPayload: parseInt(weight).toFixed(1)
+      nomPayload: parseFloat(weight).toFixed(1)
     })
   }
 
@@ -122,24 +122,38 @@ const Form = () => {
 
     if (bucketSize && e === "customary") {
       updateStore({
-        bucketSize: parseInt(
+        bucketSize: parseFloat(
           loadingTools.filter(a => a.id === loadingTool)[0]?.bucket_size_yd3
         ).toFixed(1),
-        nomPayload: parseInt(
+        nomPayload: parseFloat(
           haulingTools.filter(a => a.name === haulingTool)[0]?.capacity_ton
         ).toFixed(1)
       })
     } else if (bucketSize && e === "metric") {
       updateStore({
-        bucketSize: parseInt(
+        bucketSize: parseFloat(
           loadingTools.filter(a => a.id === loadingTool)[0]?.metric_standard
             .bucket_size_m3
         ).toFixed(1),
-        nomPayload: parseInt(
+        nomPayload: parseFloat(
           haulingTools.filter(a => a.name === haulingTool)[0]?.metric_standard
             .capacity_tonne
         ).toFixed(1)
       })
+    }
+  }
+
+  const handleInput = e => {
+    // Don't allow more than one decimal point
+    if (e.target.value.includes(".")) {
+      e.target.value = e.target.value.substring(
+        0,
+        e.target.value.indexOf(".") + 2
+      )
+    }
+    // don't allow alphabetical characters
+    if (!e.target.value.match(/[a-z]/i)) {
+      updateStore({ [e.target.name]: e.target.value })
     }
   }
 
@@ -188,9 +202,9 @@ const Form = () => {
             Cycle Time (Sec)
           </label>
           <Input
-            onChange={e => updateStore({ cycleTime: e.target.value })}
+            onChange={handleInput}
+            name="cycleTime"
             type="text"
-            maxLength="4"
             //placeholder="0.95"
             className="mb-6"
             value={cycleTime}
@@ -204,11 +218,9 @@ const Form = () => {
               Bucket Fill (%)
             </label>
             <Input
-              onChange={e => {
-                updateStore({ bucketFill: e.target.value })
-              }}
+              onChange={handleInput}
+              name="bucketFill"
               type="text"
-              maxLength="4"
               //placeholder="0.95"
               // className="mb-6"
               value={bucketFill}
@@ -220,11 +232,11 @@ const Form = () => {
               <sup>3</sup>)
             </label>
             <Input
-              onChange={e => updateStore({ bucketSize: e.target.value })}
+              onChange={handleInput}
+              name="bucketSize"
               //placeholder="0.95"
               value={bucketSize}
               type="text"
-              maxLength="4"
             />
           </div>
         </div>
@@ -256,14 +268,12 @@ const Form = () => {
           </div>
           <div className="w-1/2">
             <label className="block text-sm mb-1 font-normal">
-              Nom. Payload {unit === "metric" ? "(tonne)" : "(ton)"}
+              Nom. Payload {unit === "metric" ? "(tonnes)" : "(tons)"}
             </label>
             <Input
-              onChange={e => {
-                updateStore({ nomPayload: e.target.value })
-              }}
+              onChange={handleInput}
               type="text"
-              maxLength={5}
+              name="nomPayload"
               //placeholder="0.95"
               // className="mb-6"
               value={nomPayload}
