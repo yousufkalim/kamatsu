@@ -89,6 +89,8 @@ const Form = () => {
   const onHaulingToolChange = e => {
     let weight
 
+    if (!e) return null
+
     if (unit === "metric") {
       weight = haulingTools.filter(a => a.name === e)[0]?.metric_standard
         .capacity_tonne
@@ -98,7 +100,7 @@ const Form = () => {
     }
 
     updateStore({
-      nomPayload: parseFloat(weight).toFixed(1)
+      nomPayload: parseFloat(weight).toFixed(1) || ""
     })
   }
 
@@ -120,25 +122,33 @@ const Form = () => {
   const changeUnit = e => {
     updateStore({ unit: e, parameters_unit: e })
 
-    if (bucketSize && e === "customary") {
+    if (e === "customary") {
       updateStore({
-        bucketSize: parseFloat(
-          loadingTools.filter(a => a.id === loadingTool)[0]?.bucket_size_yd3
-        ).toFixed(1),
-        nomPayload: parseFloat(
-          haulingTools.filter(a => a.name === haulingTool)[0]?.capacity_ton
-        ).toFixed(1)
+        bucketSize:
+          bucketSize &&
+          parseFloat(
+            loadingTools.filter(a => a.id === loadingTool)[0]?.bucket_size_yd3
+          ).toFixed(1),
+        nomPayload:
+          nomPayload &&
+          parseFloat(
+            haulingTools.filter(a => a.name === haulingTool)[0]?.capacity_ton
+          ).toFixed(1)
       })
-    } else if (bucketSize && e === "metric") {
+    } else if (e === "metric") {
       updateStore({
-        bucketSize: parseFloat(
-          loadingTools.filter(a => a.id === loadingTool)[0]?.metric_standard
-            .bucket_size_m3
-        ).toFixed(1),
-        nomPayload: parseFloat(
-          haulingTools.filter(a => a.name === haulingTool)[0]?.metric_standard
-            .capacity_tonne
-        ).toFixed(1)
+        bucketSize:
+          bucketSize &&
+          parseFloat(
+            loadingTools.filter(a => a.id === loadingTool)[0]?.metric_standard
+              .bucket_size_m3
+          ).toFixed(1),
+        nomPayload:
+          nomPayload &&
+          parseFloat(
+            haulingTools.filter(a => a.name === haulingTool)[0]?.metric_standard
+              .capacity_tonne
+          ).toFixed(1)
       })
     }
   }
