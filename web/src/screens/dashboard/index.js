@@ -173,7 +173,7 @@ const DashboardFrame = ({
             <div>
               <a
                 className="web-menu-anchor"
-                href="https://www.komatsu.com/en/terms-of-use/"
+                href="https://www.komatsu.com/en/privacy-statement/"
                 target="_blank"
               >
                 Privacy Policy
