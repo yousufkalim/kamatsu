@@ -3,7 +3,7 @@ import { Input, InputContainer, CustomSelect } from "../../components/Input"
 import { DashboardButton } from "../../components/Button"
 import DropDown from "../../components/Dropdown"
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 // import Fll from "../../context/ParametersContext";
 import "./index.css"
 import { baseURL } from "../../api"
@@ -49,12 +49,14 @@ const Form = () => {
     axios
       .get(`${baseURL}hat/loading-tools/${e || loadingTool}/hauling-tools/`)
       .then(res => {
-        updateStore({ haulingTools: res.data })
         updateStore({
+          haulingTools: res.data,
           haulingToolOptions: res.data.map(tool => ({
             value: tool.name,
             label: tool.name
-          }))
+          })),
+          haulingTool: "",
+          nomPayload: ""
         })
         setHaulingToolsIsLoading(false)
       })
@@ -265,6 +267,7 @@ const Form = () => {
             <label className="block text-sm mb-1 font-normal">
               Hauling Tool
             </label>
+
             <DropDown
               options={haulingToolOptions}
               onChange={e => {
@@ -274,6 +277,7 @@ const Form = () => {
               defaultValue={
                 haulingToolOptions.filter(a => a.value === haulingTool)[0]
               }
+              value={haulingTool ? undefined : null}
             />
           </div>
           <div className="w-1/2">
