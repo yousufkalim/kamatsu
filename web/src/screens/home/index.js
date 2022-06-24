@@ -66,19 +66,14 @@ const Form = () => {
     await axios
       .get(`${baseURL}hat/loading-tools/${e || loadingTool}/`)
       .then(res => {
-        updateStore({ bucketFill: res.data.bucket_fill })
-        updateStore({ cycleTime: res.data.cycle_time_second })
-        if (unit === "metric") {
-          updateStore({
-            bucketSize: parseFloat(
-              res.data.metric_standard.bucket_size_m3
-            ).toFixed(1)
-          })
-        } else {
-          updateStore({
-            bucketSize: parseFloat(res.data.bucket_size_yd3).toFixed(1)
-          })
-        }
+        updateStore({
+          bucketFill: res.data.bucket_fill,
+          cycleTime: res.data.cycle_time_second,
+          bucketSize:
+            unit === "metric"
+              ? parseFloat(res.data.metric_standard.bucket_size_m3).toFixed(1)
+              : parseFloat(res.data.bucket_size_yd3).toFixed(1)
+        })
 
         fetchHaulingTools(e)
       })
