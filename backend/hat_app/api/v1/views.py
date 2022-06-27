@@ -36,7 +36,18 @@ class SiteParametersScreenDefaultValuesAPIView(RetrieveAPIView):
 class PreviewResultAPIView(APIView):
     @staticmethod
     def post(request, *args, **kwargs):
+        from hat_app.utils import tons_per_scoop
         serializer = FleetDefinitionSerializerPreview(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            return Response(serializer.validated_data)
+            data = serializer.validated_data
+            unit_selection = data.get('unit_selection')
+            loading_tool = data.get('loading_tool')
+            hauling_tool = data.get('hauling_tool')
+            material_denstiy = data.get('material_denstiy')
+            result = {
+                'tons_per_scoop': tons_per_scoop(loading_tool, material_denstiy, unit=unit_selection)
+            }
+            data['result'] = result
+
+            return Response(data)
         return Response(serializer.errors)

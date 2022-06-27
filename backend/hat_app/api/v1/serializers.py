@@ -54,15 +54,33 @@ class FleetDefinitionLoadingToolSerializer(serializers.Serializer):
     cycle_time_second = serializers.DecimalField(max_digits=10, decimal_places=1)
     bucket_fill = serializers.DecimalField(max_digits=10, decimal_places=1)
     bucket_size = serializers.DecimalField(max_digits=10, decimal_places=1)
-    cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1)
+
+    cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
+
+    def validate(self, attrs):
+        name = attrs.get('name')
+        cost_per_hour = LoadingTool.objects.get(name=name).cost_per_hour
+        attrs['cost_per_hour'] = cost_per_hour
+        return attrs
 
 
 class FleetDefinitionHaulingToolSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=32)
     capacity_ton = serializers.DecimalField(max_digits=10, decimal_places=1)
-    cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1)
+    cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
+
+    def validate(self, attrs):
+        name = attrs.get('name')
+        cost_per_hour = HaulingTool.objects.get(name=name).cost_per_hour
+        attrs['cost_per_hour'] = cost_per_hour
+        return attrs
 
 
 class FleetDefinitionSerializerPreview(serializers.Serializer):
+    unit_selection = serializers.ChoiceField(choices=(
+        ('us', _('US Customary')),
+        ('metric', _('Metric')),
+    ), default='us')
     loading_tool = FleetDefinitionLoadingToolSerializer(required=True, many=False)
     hauling_tool = FleetDefinitionHaulingToolSerializer(required=True, many=False)
+    material_denstiy = serializers.DecimalField(decimal_places=2, max_digits=20, required=True)
