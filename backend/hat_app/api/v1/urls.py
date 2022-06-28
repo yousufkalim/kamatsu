@@ -14,4 +14,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('defaults/screens/site-parameters/', views.SiteParametersScreenDefaultValuesAPIView.as_view()),
     path('result-preview/', views.PreviewResultAPIView.as_view()),
+    path('verify/fleet-definition/', views.VerifyFleetDefinitionAPIView.as_view()),
+    path('verify/site-parameters/', views.VerifySiteParametersAPIView.as_view()),
+    path('result-preview/', views.PreviewResultAPIView.as_view()),
+    path('result-preview/', views.PreviewResultAPIView.as_view()),
 ]
