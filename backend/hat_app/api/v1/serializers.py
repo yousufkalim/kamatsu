@@ -106,11 +106,36 @@ class VerifyFleetDefinitionSerializer(serializers.Serializer):
         return hauling_tool
 
 
-class FleetDefinitionSerializerPreview(serializers.Serializer):
+class VerifySiteParameterSerializer(serializers.Serializer):
     unit_selection = serializers.ChoiceField(choices=(
         ('us', _('US Customary')),
         ('metric', _('Metric')),
     ), default='us')
+    material_density = serializers.DecimalField(decimal_places=2, max_digits=20)
+    truck_sport_time_sec = serializers.DecimalField(decimal_places=1, max_digits=20)
+    operator_efficiency = serializers.DecimalField(decimal_places=1, max_digits=20)
+    est_round_trip_travel_time = serializers.DecimalField(decimal_places=1, max_digits=20)
+    material_swell = serializers.DecimalField(decimal_places=1, max_digits=20)
+
+    def validate(self, attrs):
+        unit_selection = attrs.get('unit_selection')
+        material_density = attrs.get('material_density')
+        if unit_selection == 'us':
+            material_density_metric = lbyd3_to_kgm3(material_density)
+            attrs['material_density_metric'] = material_density_metric
+        elif unit_selection == 'metric':
+            material_density_us = kgm3_to_lbyd3(material_density)
+            attrs['material_density_us'] = material_density_us
+        return attrs
+
+
+class ResultPreviewSerialzer(serializers.Serializer):
+    unit_selection = serializers.ChoiceField(choices=(
+        ('us', _('US Customary')),
+        ('metric', _('Metric')),
+    ), default='us')
+    is_volume = serializers.BooleanField(default=False)
     loading_tool = FleetDefinitionLoadingToolSerializer(required=True, many=False)
     hauling_tool = FleetDefinitionHaulingToolSerializer(required=True, many=False)
     material_denstiy = serializers.DecimalField(decimal_places=2, max_digits=20, required=True)
+    truck_sport_time_sec = serializers.DecimalField(decimal_places=1, max_digits=20, required=True)
