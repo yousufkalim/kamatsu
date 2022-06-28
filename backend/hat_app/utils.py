@@ -31,6 +31,20 @@ def kgm3_to_lbyd3(kgm3):
     return float(f'{lbyd3_value:.6f}')
 
 
+def short_ton_to_tonne(short_ton):
+    unit_value = float(short_ton) * pq.short_ton
+    unit_value.units = pq.tonne
+    tonne = unit_value.item()
+    return float(f'{tonne:.6f}')
+
+
+def tonne_to_short_ton(tonne):
+    unit_value = float(tonne) * pq.tonne
+    unit_value.units = pq.short_ton
+    short_ton = unit_value.item()
+    return float(f'{short_ton:.6f}')
+
+
 def tons_per_scoop(loading_tool, material_density, unit='us'):
     calc_value_us = 0
     calc_value_metric = 0

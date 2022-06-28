@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.utils.translation import ugettext_lazy as _
 from hat_app.models import *
+from hat_app.utils import *
 
 
 class LoadingToolSerializer(serializers.ModelSerializer):
@@ -74,6 +75,35 @@ class FleetDefinitionHaulingToolSerializer(serializers.Serializer):
         cost_per_hour = HaulingTool.objects.get(name=name).cost_per_hour
         attrs['cost_per_hour'] = cost_per_hour
         return attrs
+
+
+class VerifyFleetDefinitionSerializer(serializers.Serializer):
+    unit_selection = serializers.ChoiceField(choices=(
+        ('us', _('US Customary')),
+        ('metric', _('Metric')),
+    ), default='us')
+    loading_tool = FleetDefinitionLoadingToolSerializer(required=True, many=False)
+    hauling_tool = FleetDefinitionHaulingToolSerializer(required=True, many=False)
+
+    def validate_loading_tool(self, loading_tool):
+        unit_selection = self.initial_data.get('unit_selection')
+        if unit_selection == 'us':
+            bucket_size_metric = yd3_to_m3(loading_tool.get('bucket_size'))
+            loading_tool['bucket_size_metric'] = bucket_size_metric
+        elif unit_selection == 'metric':
+            bucket_size_us = m3_to_yd3(loading_tool.get('bucket_size'))
+            loading_tool['bucket_size_us'] = bucket_size_us
+        return loading_tool
+
+    def validate_hauling_tool(self, hauling_tool):
+        unit_selection = self.initial_data.get('unit_selection')
+        if unit_selection == 'us':
+            capacity_ton_metric = short_ton_to_tonne(hauling_tool.get('capacity_ton'))
+            hauling_tool['capacity_ton_metric'] = capacity_ton_metric
+        elif unit_selection == 'metric':
+            capacity_ton_us = tonne_to_short_ton(hauling_tool.get('capacity_ton'))
+            hauling_tool['capacity_ton_us'] = capacity_ton_us
+        return hauling_tool
 
 
 class FleetDefinitionSerializerPreview(serializers.Serializer):
