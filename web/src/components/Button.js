@@ -90,11 +90,13 @@ export const DashboardButton = ({
   url,
   textColor,
   onClick,
-  disabled
+  disabled,
+  id
 }) => {
   return (
     <Link to={url}>
       <button
+        id={id}
         className={`${backgroundColor} text-${textColor} dashboard-button flex justify-center font-medium `}
         onClick={onClick}
         style={{ opacity: disabled ? 0.5 : 1, color: textColor }}

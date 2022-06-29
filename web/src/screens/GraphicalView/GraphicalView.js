@@ -8,7 +8,7 @@ const GraphicalView = () => {
       title="Graphical View"
       body={<Graphical />}
       displayBackButton={true}
-      backButtonURL="/parameters"
+      backButtonURL="/result"
     />
   )
 }

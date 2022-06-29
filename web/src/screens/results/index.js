@@ -1,7 +1,11 @@
 import { DashboardButton } from "../../components/Button"
+import * as html2canvas from "html2canvas"
 import DashboardFrame from "../dashboard"
 import "./index.css"
 import { useState } from "react"
+import logo from "../../assets/logo.png"
+import jsPdf from "jspdf"
+
 
 const ResultValue = ({ label, value }) => {
   return (
@@ -43,9 +47,28 @@ const Body = () => {
       setVolume(false)
     }
   }
+  const printPDF = () => {
+    const domElement = document.getElementById("resultBox");
+    html2canvas(domElement, {
+      onclone: document => {
+        document.getElementById("print").style.visibility = "hidden";
+      }
+    }).then(canvas => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPdf();
+      pdf.setFillColor(40, 43, 56);
+      pdf.addImage(logo, "PNG", 65, 15, 80, 15);
+      // first from Left
+      // second from Top
+      // Third from width
+      // Fourth from heigth
+      pdf.addImage(imgData, "JPEG", 10, 50, 250, 100);
+      pdf.save(`${new Date().toISOString()}.pdf`);
+    });
+  };
   return (
     <div>
-      <div className="bg-white p-10 rounded-md">
+      <div className="bg-white p-10 rounded-md" id="resultBox">
         <div>
           <ResultValue label="Current Loading Tool" value="WA470" />
           <ResultValue label="Current Hauling Tool" value="HM300" />
@@ -54,7 +77,7 @@ const Body = () => {
         <div className="unit_selection_div">
           <p className="reusltLabel">Unit Selection : </p>
           <div className="unit_selection_checkbox_div">
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "row" }}>
               <input
                 value={metric}
                 type="checkbox"
@@ -106,10 +129,12 @@ const Body = () => {
           url="/graphical-view"
         />
         <DashboardButton
+          id="print"
           text="Save Results"
           backgroundColor="blue"
           textColor="white"
           url=""
+          onClick={printPDF}
         />
       </div>
     </div>
