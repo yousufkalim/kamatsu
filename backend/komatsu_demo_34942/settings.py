@@ -30,16 +30,17 @@ env.read_env(env_file)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
-try:
-    # Pull secrets from Secret Manager
-    _, project = google.auth.default()
-    client = secretmanager.SecretManagerServiceClient()
-    settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
-    name = client.secret_version_path(project, settings_name, "latest")
-    payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
-    env.read_env(io.StringIO(payload))
-except (DefaultCredentialsError, PermissionDenied):
-    pass
+if not DEBUG:
+    try:
+        # Pull secrets from Secret Manager
+        _, project = google.auth.default()
+        client = secretmanager.SecretManagerServiceClient()
+        settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
+        name = client.secret_version_path(project, settings_name, "latest")
+        payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
+        env.read_env(io.StringIO(payload))
+    except (DefaultCredentialsError, PermissionDenied):
+        pass
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/

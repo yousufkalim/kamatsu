@@ -78,7 +78,7 @@ class FleetDefinitionHaulingToolSerializer(serializers.Serializer):
 
 
 class VerifyFleetDefinitionSerializer(serializers.Serializer):
-    unit_selection = serializers.ChoiceField(choices=(
+    unit_selection_fleet = serializers.ChoiceField(choices=(
         ('us', _('US Customary')),
         ('metric', _('Metric')),
     ), default='us')
@@ -129,13 +129,40 @@ class VerifySiteParameterSerializer(serializers.Serializer):
         return attrs
 
 
-class ResultPreviewSerialzer(serializers.Serializer):
+class SiteParameterSerializerPreview(serializers.Serializer):
     unit_selection = serializers.ChoiceField(choices=(
         ('us', _('US Customary')),
         ('metric', _('Metric')),
     ), default='us')
-    is_volume = serializers.BooleanField(default=False)
+    material_density = serializers.DecimalField(decimal_places=2, max_digits=20)
+    truck_sport_time_sec = serializers.DecimalField(decimal_places=1, max_digits=20)
+    operator_efficiency = serializers.DecimalField(decimal_places=1, max_digits=20)
+    est_round_trip_travel_time = serializers.DecimalField(decimal_places=1, max_digits=20)
+    material_swell = serializers.DecimalField(decimal_places=1, max_digits=20)
+
+
+class FleetDefinitionResultPreviewSerializer(serializers.Serializer):
+    unit_selection = serializers.ChoiceField(choices=(
+        ('us', _('US Customary')),
+        ('metric', _('Metric')),
+    ), default='us')
+
     loading_tool = FleetDefinitionLoadingToolSerializer(required=True, many=False)
     hauling_tool = FleetDefinitionHaulingToolSerializer(required=True, many=False)
-    material_denstiy = serializers.DecimalField(decimal_places=2, max_digits=20, required=True)
-    truck_sport_time_sec = serializers.DecimalField(decimal_places=1, max_digits=20, required=True)
+
+
+class ResultPreviewSerialzer(serializers.Serializer):
+    # material_denstiy = serializers.DecimalField(decimal_places=2, max_digits=20, required=True)
+    # truck_sport_time_sec = serializers.DecimalField(decimal_places=1, max_digits=20, required=True)
+    # est_round_trip_travel_time = serializers.DecimalField(decimal_places=1, max_digits=20, required=True)
+    fleet_definition = FleetDefinitionResultPreviewSerializer(required=True, many=False)
+    site_parameters = SiteParameterSerializerPreview(required=True, many=False)
+
+    result = serializers.JSONField(default=dict, read_only=True)
+
+    def create(self, validated_data):
+        fleet_definition = validated_data.get('fleet_definition')
+        site_parameters = validated_data.get('site_parameters')
+        result = get_result_preview(fleet_definition, site_parameters)
+        validated_data['result'] = result
+        return validated_data
