@@ -8,10 +8,13 @@ import About from "./screens/about"
 import Feedback from "./screens/feedback"
 import Results from "./screens/results"
 import Parameters from "./screens/parameters"
+import GraphicalView from "./screens/GraphicalView/GraphicalView"
+
 import { ParametersProvider } from "./context/ParametersContext"
 import { FleetProvider } from "./context/FleetContext"
 import { useContext } from "react"
 import { Toaster } from "react-hot-toast"
+import Chart from "../src/components/LineChart"
 
 function App() {
   // const {materialDensity} = useContext(ParametersContext)
@@ -28,8 +31,11 @@ function App() {
               <Route path="/fleet-definition" element={<FleetDefinition />} />
               <Route path="/about" element={<About />} />
               <Route path="/feedback" element={<Feedback />} />
-              <Route path="/result" element={<Results />} />
               <Route path="/parameters" element={<Parameters />} />
+              <Route path="/result" element={<Results />} />
+              <Route path="/graphical-view" element={<GraphicalView />} />
+              {/* tem route */}
+              <Route path="/chart" element={<Chart />} />
             </Routes>
           </ParametersProvider>
         </FleetProvider>
