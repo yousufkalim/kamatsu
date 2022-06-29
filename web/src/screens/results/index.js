@@ -1,6 +1,11 @@
 import { DashboardButton } from "../../components/Button"
+import * as html2canvas from "html2canvas"
 import DashboardFrame from "../dashboard"
 import "./index.css"
+import { useState } from "react"
+import logo from "../../assets/logo.png"
+import jsPdf from "jspdf"
+
 
 const ResultValue = ({ label, value }) => {
   return (
@@ -26,16 +31,71 @@ const Title = ({ title }) => {
 }
 
 const Body = () => {
+  const [metric, setMetric] = useState(false)
+  const [volume, setVolume] = useState(false)
+  const HandleMetricChange = e => {
+    if (e.target.checked === true) {
+      setMetric(true)
+    } else {
+      setMetric(false)
+    }
+  }
+  const HandleVolumeChange = e => {
+    if (e.target.checked === true) {
+      setVolume(true)
+    } else {
+      setVolume(false)
+    }
+  }
+  const printPDF = () => {
+    const domElement = document.getElementById("resultBox");
+    html2canvas(domElement, {
+      onclone: document => {
+        document.getElementById("print").style.visibility = "hidden";
+      }
+    }).then(canvas => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPdf();
+      pdf.setFillColor(40, 43, 56);
+      pdf.addImage(logo, "PNG", 65, 15, 80, 15);
+      // first from Left
+      // second from Top
+      // Third from width
+      // Fourth from heigth
+      pdf.addImage(imgData, "JPEG", 10, 50, 250, 100);
+      pdf.save(`${new Date().toISOString()}.pdf`);
+    });
+  };
   return (
     <div>
-      <div className="bg-white p-10 rounded-md">
+      <div className="bg-white p-10 rounded-md" id="resultBox">
         <div>
           <ResultValue label="Current Loading Tool" value="WA470" />
           <ResultValue label="Current Hauling Tool" value="HM300" />
           <Line />
         </div>
-        <div className="">
-          <ResultValue label="Unit Selection" />
+        <div className="unit_selection_div">
+          <p className="reusltLabel">Unit Selection : </p>
+          <div className="unit_selection_checkbox_div">
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "row" }}>
+              <input
+                value={metric}
+                type="checkbox"
+                onChange={HandleMetricChange}
+                className="checkbox"
+              />
+              <p>Metric</p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <input
+                value={volume}
+                type="checkbox"
+                onChange={HandleVolumeChange}
+                className="checkbox"
+              />
+              <p>Volume</p>
+            </div>
+          </div>
           <Line />
         </div>
         <div>
@@ -64,15 +124,17 @@ const Body = () => {
       <div className="flex justify-end gap-2 mt-8">
         <DashboardButton
           text="Graphical View"
-          backgroundColor="red"
+          backgroundColor="yellow"
           textColor="black"
           url="/graphical-view"
         />
         <DashboardButton
+          id="print"
           text="Save Results"
           backgroundColor="blue"
           textColor="white"
           url=""
+          onClick={printPDF}
         />
       </div>
     </div>
@@ -80,7 +142,13 @@ const Body = () => {
 }
 
 const Results = () => {
-  return <DashboardFrame title="Results" body={<Body />} />
+  return (
+    <DashboardFrame
+      title="Results"
+      body={<Body />}
+      backButtonURL="/parameters"
+    />
+  )
 }
 
 export default Results

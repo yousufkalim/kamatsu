@@ -187,7 +187,7 @@ const DashboardFrame = ({
         <div className="hidden md:flex bg-white top-bar items-center px-12 justify-between">
           <div>
             {!homePage && (
-              <Link to="/fleet-definition">
+              <Link to={backButtonURL}>
                 <img src={BackArrow} />
               </Link>
             )}
