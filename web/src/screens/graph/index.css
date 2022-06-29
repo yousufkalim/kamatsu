@@ -7,7 +7,23 @@
 .graph-checkboxes-container div label {
     margin-left: 10px;
 }
-
+.btn_div{
+    margin-top: 1rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+/* checkboc */
+.checkbox{
+    height: 17px;
+    width: 17px;
+    margin-right: 13px; 
+    cursor: pointer;
+}
+input[type=checkbox]{
+    accent-color: #2D2F8A;
+    outline: #2D2F8A;
+}
 /* Chart */
 .chart-container {
     width: 100%;

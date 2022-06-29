@@ -9,7 +9,6 @@ import Feedback from "./screens/feedback"
 import Results from "./screens/results"
 import Parameters from "./screens/parameters"
 import Graph from "./screens/graph"
-import GraphicalView from "./screens/GraphicalView/GraphicalView"
 
 import { ParametersProvider } from "./context/ParametersContext"
 import { FleetProvider } from "./context/FleetContext"
@@ -35,9 +34,6 @@ function App() {
               <Route path="/parameters" element={<Parameters />} />
               <Route path="/graphical-view" element={<Graph />} />
               <Route path="/result" element={<Results />} />
-              <Route path="/graphical-view" element={<GraphicalView />} />
-              {/* tem route */}
-              <Route path="/chart" element={<Chart />} />
             </Routes>
           </ParametersProvider>
         </FleetProvider>

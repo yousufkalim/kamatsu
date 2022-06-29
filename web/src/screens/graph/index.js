@@ -1,9 +1,25 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Chart from "chart.js/auto"
 import DashboardFrame from "../dashboard"
 import "./index.css"
-
+import { DashboardButton } from "../../components/Button"
 const Body = () => {
+  const [metric, setMetric] = useState(false)
+  const [volume, setVolume] = useState(false)
+  const HandleMetricChange = e => {
+    if (e.target.checked === true) {
+      setMetric(true)
+    } else {
+      setMetric(false)
+    }
+  }
+  const HandleVolumeChange = e => {
+    if (e.target.checked === true) {
+      setVolume(true)
+    } else {
+      setVolume(false)
+    }
+  }
   useEffect(() => {
     const ctx = document.getElementById("graph").getContext("2d")
     let labels = [
@@ -15,8 +31,8 @@ const Body = () => {
       "June",
       "July"
     ]
-    let currentMonth = [100, 200, 300, 400, 500, 600, 700]
-    let lastMonth = [1000, 2000, 3000, 4000, 5000, 6000, 7000]
+    // let currentMonth = [100, 200, 300, 400, 500, 600, 700]
+    // let lastMonth = [1000, 2000, 3000, 4000, 5000, 6000, 7000]
 
     // Line Chart
     new Chart(ctx, {
@@ -25,34 +41,57 @@ const Body = () => {
         labels: labels,
         datasets: [
           {
-            label: ["Current Month"],
-            data: currentMonth,
-            backgroundColor: "rgba(54, 162, 235, 0.2)",
-            borderColor: "rgba(54, 162, 235, 1)",
+            label: "Dataset 1",
+            fill: false,
+            data: [6000, 6000, 5000, 4000, 3000, 2000, 1000],
+            backgroundColor: "transparent",
+            borderColor: "#008000",
             borderWidth: 2,
             pointRadius: 0,
             hitRadius: 10,
             hoverRadius: 10
           },
           {
-            label: ["Last Month"],
-            data: lastMonth,
-            backgroundColor: "rgba(255, 102, 153, 0.1)",
-            borderColor: "rgba(255, 102, 153, 1)",
-            borderDash: [5, 3],
-            borderWidth: 1,
+            label: "Dataset 1",
+            data: [5000, 5000, 4000, 3000, 2000, 1000],
+            backgroundColor: "transparent",
+            borderColor: "#0000FF",
+            borderDash: [],
+            borderWidth: 2,
             pointRadius: 0,
             hitRadius: 10,
             hoverRadius: 10
+          },
+          {
+            label: "Dataset 1",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "transparent",
+            borderColor: "#FF8C00",
+            borderCapStyle: "butt",
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: "miter",
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: [4000, 4000, 3000, 2000, 1000]
           }
         ]
       },
 
       // Line Chart options
+
       options: {
+        plugins: { legend: { display: false } },
         scales: {
           y: {
-            // grid: false,
             ticks: {
               beginAtZero: true,
               callback: function (value, index, array) {
@@ -61,12 +100,8 @@ const Body = () => {
             }
           },
           x: {
-            gridLines: {
+            grid: {
               display: false
-            },
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 6
             }
           }
         }
@@ -74,17 +109,24 @@ const Body = () => {
     })
   }, [])
 
-  //   <canvas id="myChart" width="400" height="100"></canvas>
   return (
     <div className="graph">
       <div className="graph-checkboxes">
         <div className="graph-checkboxes-container">
           <div>
-            <input type="checkbox" />
+            <input type="checkbox"
+              value={metric}
+              onChange={HandleMetricChange}
+              className="checkbox"
+            />
             <label htmlFor="">Metric</label>
           </div>
           <div>
-            <input type="checkbox" />
+            <input type="checkbox"
+              value={volume}
+              onChange={HandleVolumeChange}
+              className="checkbox"
+            />
             <label htmlFor="">Volume</label>
           </div>
         </div>
@@ -116,12 +158,28 @@ const Body = () => {
           <p>Round Trip Travel Time (minutes)</p>
         </div>
       </div>
+      <div className="btn_div">
+        <div style={{ cursor: "pointer" }}>
+          <DashboardButton
+            text="Save Results"
+            backgroundColor="blue"
+            textColor="white"
+            url=""
+          />
+        </div>
+      </div>
     </div>
   )
 }
 
 const Graph = () => {
-  return <DashboardFrame title="Graphical View" body={<Body />} />
+  return (
+    <DashboardFrame
+      title="Graphical View"
+      body={<Body />}
+      backButtonURL="/result"
+    />
+  )
 }
 
 export default Graph
