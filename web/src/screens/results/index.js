@@ -1,6 +1,7 @@
 import { DashboardButton } from "../../components/Button"
 import DashboardFrame from "../dashboard"
 import "./index.css"
+import { useState } from "react"
 
 const ResultValue = ({ label, value }) => {
   return (
@@ -26,6 +27,22 @@ const Title = ({ title }) => {
 }
 
 const Body = () => {
+  const [metric, setMetric] = useState(false)
+  const [volume, setVolume] = useState(false)
+  const HandleMetricChange = e => {
+    if (e.target.checked === true) {
+      setMetric(true)
+    } else {
+      setMetric(false)
+    }
+  }
+  const HandleVolumeChange = e => {
+    if (e.target.checked === true) {
+      setVolume(true)
+    } else {
+      setVolume(false)
+    }
+  }
   return (
     <div>
       <div className="bg-white p-10 rounded-md">
@@ -34,8 +51,28 @@ const Body = () => {
           <ResultValue label="Current Hauling Tool" value="HM300" />
           <Line />
         </div>
-        <div className="">
-          <ResultValue label="Unit Selection" />
+        <div className="unit_selection_div">
+          <p className="reusltLabel">Unit Selection : </p>
+          <div className="unit_selection_checkbox_div">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <input
+                value={metric}
+                type="checkbox"
+                onChange={HandleMetricChange}
+                className="checkbox"
+              />
+              <p>Metric</p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <input
+                value={volume}
+                type="checkbox"
+                onChange={HandleVolumeChange}
+                className="checkbox"
+              />
+              <p>Volume</p>
+            </div>
+          </div>
           <Line />
         </div>
         <div>
@@ -64,9 +101,9 @@ const Body = () => {
       <div className="flex justify-end gap-2 mt-8">
         <DashboardButton
           text="Graphical View"
-          backgroundColor="red"
+          backgroundColor="yellow"
           textColor="black"
-          url=""
+          url="/graphical-view"
         />
         <DashboardButton
           text="Save Results"
@@ -80,7 +117,13 @@ const Body = () => {
 }
 
 const Results = () => {
-  return <DashboardFrame title="Results" body={<Body />} />
+  return (
+    <DashboardFrame
+      title="Results"
+      body={<Body />}
+      backButtonURL="/parameters"
+    />
+  )
 }
 
 export default Results

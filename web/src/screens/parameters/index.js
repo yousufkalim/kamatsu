@@ -3,8 +3,6 @@ import DashboardFrame from "../dashboard"
 import { Input, InputContainer, CustomSelect } from "../../components/Input"
 import { DashboardButton } from "../../components/Button"
 import DropDown from "../../components/Dropdown"
-import ParametersContext from "../../context/ParametersContext"
-import { useContext } from "react"
 import "./index.css"
 import DensityPopupIcon from "../../assets/density-popup.svg"
 import Modal from "react-modal"
@@ -297,7 +295,7 @@ const Form = () => {
               backgroundColor="blue"
               className="mb-6"
               textColor="white"
-              url=""
+              url="/result"
             />
           </div>
         </div>

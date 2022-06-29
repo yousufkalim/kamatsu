@@ -9,3 +9,32 @@
 .reusltLabel {
     color: #A1A1A1;
 }
+
+
+
+
+.unit_selection_checkbox_div{
+    margin-left: 2rem;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.checkbox{
+    height: 17px;
+    width: 17px;
+    margin-right: 15px; 
+    cursor: pointer;
+}
+input[type=checkbox]{
+    accent-color: #2D2F8A;
+    outline: #2D2F8A;
+}
+
+
+.unit_selection_div{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+}
