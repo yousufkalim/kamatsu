@@ -52,13 +52,21 @@ const Form = () => {
   const [apiDensities, setApiDensities] = useState([])
 
   const {
+    loadingTool,
+    cycleTime,
+    bucketFill,
+    bucketSize,
+    haulingTool,
+    nomPayload,
     materialDensity,
     truckSpotTime,
     operatorEfficiency,
     estRoundTripTravel,
     materialSwell,
     unit,
-    parameters_unit
+    parameters_unit,
+    loadingToolCostPerHour,
+    haulingToolCostPerHour
   } = Store()
 
   const updateStore = UpdateStore()
@@ -131,6 +139,31 @@ const Form = () => {
           materialDensity: (parseFloat(materialDensity) * 1.6856).toFixed(1)
         })
       }
+    }
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(`${baseURL}hat/result-preview/`, {
+        unit_selection: unit,
+        loading_tool: {
+          name: loadingTool,
+          cycle_time_second: cycleTime,
+          bucket_fill: bucketFill,
+          bucket_size: bucketSize,
+          cost_per_hour: loadingToolCostPerHour
+        },
+        hauling_tool: {
+          name: haulingTool,
+          capacity_ton: nomPayload,
+          cost_per_hour: haulingToolCostPerHour
+        },
+        material_denstiy: materialDensity
+      })
+
+      console.log("Result response --> ", response.data)
+    } catch (err) {
+      console.log("Api error: ", err)
     }
   }
 
@@ -298,6 +331,7 @@ const Form = () => {
               className="mb-6"
               textColor="white"
               url=""
+              onClick={handleSubmit}
             />
           </div>
         </div>

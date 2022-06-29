@@ -69,6 +69,7 @@ const Form = () => {
         updateStore({
           bucketFill: res.data.bucket_fill,
           cycleTime: res.data.cycle_time_second,
+          loadingToolCostPerHour: parseFloat(res.data.cost_per_hour).toFixed(1),
           bucketSize:
             unit === "metric"
               ? parseFloat(res.data.metric_standard.bucket_size_m3).toFixed(1)
@@ -97,7 +98,11 @@ const Form = () => {
     }
 
     updateStore({
-      nomPayload: parseFloat(weight).toFixed(1) || ""
+      haulingTool: e,
+      nomPayload: parseFloat(weight).toFixed(1) || "",
+      haulingToolCostPerHour: parseFloat(
+        haulingTools.filter(a => a.name === e)[0]?.cost_per_hour
+      ).toFixed(1)
     })
   }
 
@@ -266,7 +271,6 @@ const Form = () => {
             <DropDown
               options={haulingToolOptions}
               onChange={e => {
-                updateStore({ haulingTool: e.value })
                 onHaulingToolChange(e.value)
               }}
               defaultValue={
