@@ -66,7 +66,7 @@ const Body = () => {
           text="Graphical View"
           backgroundColor="red"
           textColor="black"
-          url=""
+          url="/graphical-view"
         />
         <DashboardButton
           text="Save Results"
