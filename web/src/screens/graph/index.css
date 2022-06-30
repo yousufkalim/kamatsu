@@ -104,7 +104,7 @@ input[type=checkbox]{
 }
 
 #graph {
-    width: 100%;
+    width: 100% !important;
 }
 
 /* Chart footer */
@@ -112,4 +112,60 @@ input[type=checkbox]{
     width: 100%;
     text-align: center;
     padding: 30px 0;
+}
+@media only screen and (max-width: 1490px) {
+    .graph-checkboxes-container{
+        width: 20%;
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    .graph-checkboxes-container{
+        width: 25%;
+    }
+    .checkbox{
+        margin-right: 9px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .graph-checkboxes-container{
+        width: 25%;
+    }
+    .checkbox{
+        margin-right: 5px;
+    }
+}
+@media only screen and (max-width: 890px) {
+    .graph-checkboxes-container{
+        width: 30%;
+    }
+    .checkbox{
+        margin-right: 5px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .graph-checkboxes-container{
+        width: 34%;
+    }
+    .checkbox{
+        margin-right: 5px;
+    }
+    .chart-body p{
+        font-size: 0.8rem;
+    }
+    .chart-footer{
+        padding: 15px 0;
+    }
+    .chart-footer p{
+        font-size: 0.8rem;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+}
+
+@media only screen and (max-width: 480px) {
 }

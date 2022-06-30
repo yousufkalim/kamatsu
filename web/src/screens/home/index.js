@@ -32,7 +32,7 @@ const Form = () => {
   const fetchLoadingTools = () => {
     axios
       .get(`${baseURL}hat/loading-tools/`)
-      .then(res =>
+      .then((res) => {
         updateStore({
           loadingToolOptions: res.data?.map(a => ({
             value: a.id,
@@ -40,6 +40,7 @@ const Form = () => {
           })),
           loadingTools: res.data
         })
+      }
       )
       .then(setLoadingToolsIsLoading(false))
   }
@@ -176,7 +177,7 @@ const Form = () => {
     },
     {
       label: "US Customary",
-      value: "customary"
+      value: "us"
     }
   ]
 
@@ -293,7 +294,7 @@ const Form = () => {
             />
           </div>
         </div>
-        <div className="flex justify-center md:justify-end mb-12">
+        <div className="flex justify-center md:justify-end mb-8">
           <DashboardButton
             text="Reset Truck"
             backgroundColor="yellow"

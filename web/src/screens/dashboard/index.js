@@ -183,7 +183,7 @@ const DashboardFrame = ({
           </div>
         </div>
       </div>
-      <div className="deepGray w-full md:h-screen">
+      <div className="deepGray w-full md:h-screen " style={{ overflow: "hidden" }}>
         <div className="hidden md:flex bg-white top-bar items-center px-12 justify-between">
           <div>
             {!homePage && (
@@ -224,11 +224,11 @@ const DashboardFrame = ({
             <img src={Hamburger} onClick={() => setMobileMenuIsOpen(true)} />
           </div>
         </div>
-        <div className="px-4 md:px-12 py-6">
+        <div className="px-4 md:px-12 py-1">
           <div>
             <h4 className="text-title leading-title font-medium">{title}</h4>
           </div>
-          <div className="mt-10">{body}</div>
+          <div className="mt-1" style={{ height: "100%" }}>{body}</div>
         </div>
       </div>
     </div>

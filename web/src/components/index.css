@@ -20,7 +20,7 @@
 
   .dashboard-button {
     height: 40px;
-    width: 247px;
+    width: 287px;
     padding: 16px 20px;
     border-radius: 5px;
     align-items: center;
@@ -32,5 +32,68 @@
       height: 40px;
       width: 100%;
       align-items: center;
+    }
+  }
+
+  @media only screen and (max-width: 1440px) {
+    .dashboard-button{
+      width: 247px;
+    }
+  }
+  
+  @media only screen and (max-width: 1366px) {
+    .dashboard-button{
+      width: 220px;
+    }
+  }
+  @media only screen and (max-width: 1180px) {
+    .dashboard-button{
+      width: 210px;
+    }
+  }
+  @media only screen and (max-width: 1130px) {
+    .dashboard-button{
+      width: 190px;
+    }
+  }
+  @media only screen and (max-width: 1080px) {
+    .dashboard-button{
+      width: 180px;
+    }
+  }
+  
+  @media only screen and (max-width: 992px) {
+    .dashboard-button{
+      width: 160px;
+    }
+  }
+  @media only screen and (max-width: 900px) {
+    .dashboard-button{
+      width: 150px;
+    }
+  }
+  @media only screen and (max-width: 852px) {
+    .dashboard-button{
+      width: 140px;
+      font-size: 0.9rem;
+    }
+
+  }
+  @media only screen and (max-width: 790px) {
+    .dashboard-button{
+      width: 132px;
+      font-size: 0.8rem;
+
+    }
+  }
+  @media only screen and (max-width: 562px) {
+    .dashboard-button{
+      width: 115px;
+    }
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .dashboard-button{
+      width: 95px;
     }
   }

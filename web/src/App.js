@@ -17,8 +17,6 @@ import { Toaster } from "react-hot-toast"
 import Chart from "../src/components/LineChart"
 
 function App() {
-  // const {materialDensity} = useContext(ParametersContext)
-  // console.log(materialDensity)
   return (
     <div>
       <Toaster />

@@ -38,7 +38,19 @@ export function StoreProvider({ children }) {
     operatorEfficiency: "",
     estRoundTripTravel: "",
     materialSwell: "",
-    haulingToolCostPerHour: ""
+    haulingToolCostPerHour: "",
+
+    //result page 
+    haulagePerhour: "",
+    haulagePerWeight: "",
+    ldNumberOfTrucks: "",
+    ldUnitPerCostHour: "",
+    loadSize: "",
+    minutesPerLoad: "",
+    scopePerLoad: "",
+    tonsPerScope: "",
+    unitsPerHours: "",
+    trucks: [],
   })
 
   const updateStore = data => {

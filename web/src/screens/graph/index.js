@@ -23,17 +23,9 @@ const Body = () => {
   useEffect(() => {
     const ctx = document.getElementById("graph").getContext("2d")
     let labels = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July"
-    ]
-    // let currentMonth = [100, 200, 300, 400, 500, 600, 700]
-    // let lastMonth = [1000, 2000, 3000, 4000, 5000, 6000, 7000]
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
 
+    ]
     // Line Chart
     new Chart(ctx, {
       type: "line",
@@ -147,11 +139,11 @@ const Body = () => {
           </ul>
         </div>
         <div className="chart-body">
-          <div>
+          <div className="chart_left_text">
             <p>Fleet productivity (bcm/hr)</p>
           </div>
-          <div>
-            <canvas id="graph" height="350px"></canvas>
+          <div className="wrapper">
+            <canvas id="graph" height="350px" ></canvas>
           </div>
         </div>
         <div className="chart-footer">
