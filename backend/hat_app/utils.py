@@ -241,7 +241,7 @@ def get_minus_truck_list(loading_tool, site_parameters, scoops_per_load, load_si
                 'value_metric': float(f'{truck_haulage_minus_one_metric:.2f}'),
                 'percentage': 100
             })
-        elif item != ld_number_of_trucks_us and item > 1:
+        elif item != ld_number_of_trucks_us and item > 1 and len(us) < 4:
             truck_haulage_us = float(truck_haulage_minus_one_us) / float(ld_number_of_trucks_us - 1) * float(
                 ld_number_of_trucks_us - item)
 
