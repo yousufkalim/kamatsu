@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
 import * as appStyles from "../../utils/appStyles"
 import {
   heightPercentageToDP as hp,
@@ -21,14 +21,16 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: appStyles.BORDER_COLOR,
     borderRadius: appStyles.BORDER_RADIUS,
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: "#000"
   },
   labelContainer: {
     flexDirection: "row"
   },
   labelIcon: {
-    fontSize: 14,
-    marginLeft: 2
+    fontSize: 12,
+    marginLeft: 2,
+    marginTop: 3
   },
   errorMessage: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,

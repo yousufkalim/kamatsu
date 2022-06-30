@@ -4,6 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { composeWithDevTools } from "redux-devtools-extension"
 
 import unitReducer from "../container/app/redux/unit/reducers"
+import fleetDefinitionReducer from "../container/app/redux/fleetDefinition/reducers"
+import siteDefinitionReducer from "../container/app/redux/site/reducers"
 
 const persistConfig = {
   key: "root",
@@ -28,7 +30,9 @@ export function rehydration() {
 const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
-    unitState: unitReducer
+    unitState: unitReducer,
+    fleetDefinitionState: fleetDefinitionReducer,
+    siteParameterState: siteDefinitionReducer
   })
 )
 

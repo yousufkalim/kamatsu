@@ -10,6 +10,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 10
   },
+  chart: {
+    flex: 1,
+    backgroundColor: "red"
+  },
   title: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
     fontSize: 28,

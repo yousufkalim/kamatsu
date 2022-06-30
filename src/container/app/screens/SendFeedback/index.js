@@ -3,14 +3,13 @@ import React, { useState } from "react"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import IIcon from "react-native-vector-icons/Ionicons"
 
-import * as appStyles from "../../../../utils/appStyles"
 import { useSendFeedback } from "../../../../hooks/query/useFeedback"
 import { validateEmail } from "../../../../utils/validateEmail"
+import * as appStyles from "../../../../utils/appStyles"
+import { Button } from "../../../../components/Button"
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
 import { Input } from "../../../../components/Input"
-import { Button } from "../../../../components/Button"
-
 import { styles } from "./styles"
 
 const SendFeedback = () => {

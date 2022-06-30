@@ -3,23 +3,29 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
+import {
+  useGetMaterialDensities,
+  useVerifySiteParameters
+} from "../../../../hooks/query/useSiteParameter"
+import { setSiteValuesAction } from "../../redux/site/actions"
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
 import { Select } from "../../../../components/Select"
 import { Input } from "../../../../components/Input"
 import { Button } from "../../../../components/Button"
 import Modal from "../../../../components/Modal"
-import { setUnitAction } from "../../redux/unit/actions"
+import { setUnitSiteAction } from "../../redux/unit/actions"
 import { MaterialDensity } from "../../../../components/MaterialDensity"
-import { useGetMaterialDensities } from "../../../../hooks/query/useSiteParameter"
 import { styles } from "./styles"
 
 const SiteParameters = ({ navigation }) => {
   const dispatch = useDispatch()
 
-  const unitStateValue = useSelector(state => state.unitState.unit)
+  const unitStateValue = useSelector(state => state.unitState.unitSite)
 
   const { materialDensities, isLoading } = useGetMaterialDensities()
+  const { verifySiteParameters, isVerifying, isSuccess } =
+    useVerifySiteParameters()
 
   const [unit, setUnit] = useState(unitStateValue)
   const [materialDensity, setMaterialDensity] = useState(
@@ -36,12 +42,29 @@ const SiteParameters = ({ navigation }) => {
     { label: "US Customary", value: "US Customary" }
   ]
 
-  const handleNext = () => {
-    // navigation.navigate("Results")
-  }
+  const handleNext = async () => {
+    const values = {
+      unit_selection: unitStateValue?.value === "Metric" ? "metric" : "us",
+      material_density: parseFloat(materialDensity),
+      truck_sport_time_sec: parseFloat(truckSpotTime),
+      est_round_trip_travel_time: parseFloat(roundTripTravelTime),
+      operator_efficiency: parseFloat(operatorEfficiency),
+      material_swell: parseFloat(materialSwell)
+    }
 
+    console.log("SiteParameters", values)
+    dispatch(setSiteValuesAction(values))
+
+    try {
+      await verifySiteParameters(values)
+
+      navigation.navigate("Results")
+    } catch (error) {
+      console.log("err", error)
+    }
+  }
   const handleUnitChange = value => {
-    dispatch(setUnitAction(value))
+    dispatch(setUnitSiteAction(value))
     setUnit(value)
   }
 
@@ -82,7 +105,7 @@ const SiteParameters = ({ navigation }) => {
       setValue(value)
     }
   }
-  
+
   return (
     <Layout>
       <Header showBack />
@@ -152,7 +175,12 @@ const SiteParameters = ({ navigation }) => {
 
         <View style={styles.nextBtn} />
 
-        <Button btnText="Next" isPrimary onPress={handleNext} />
+        <Button
+          btnText="Next"
+          isPrimary
+          onPress={handleNext}
+          isLoading={isVerifying}
+        />
 
         <Modal
           modalVisible={modalVisible}

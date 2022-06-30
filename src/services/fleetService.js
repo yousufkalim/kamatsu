@@ -24,7 +24,20 @@ function getHaulingTools() {
     })
 }
 
+function verifyFleetDefinition(payload) {
+  return request
+    .post(`/hat/verify/fleet-definition/`, payload)
+    .then(res => {
+      return res.data
+    })
+    .catch(function (error) {
+      console.log(error)
+      throw error
+    })
+}
+
 export const fleetApiService = {
   getLoadingTools,
-  getHaulingTools
+  getHaulingTools,
+  verifyFleetDefinition
 }

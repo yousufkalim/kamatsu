@@ -1,4 +1,4 @@
-import { useQuery } from "react-query"
+import { useMutation, useQuery } from "react-query"
 import { siteApiService } from "../../services/siteService"
 
 export const useGetMaterialDensities = () => {
@@ -19,5 +19,24 @@ export const useGetMaterialDensities = () => {
     materialDensities: data,
     isLoading,
     error
+  }
+}
+
+export const useVerifySiteParameters = () => {
+  const { mutateAsync, isLoading, isSuccess } = useMutation(
+    payload => siteApiService.verifySiteParameters(payload),
+    {
+      onSuccess: () => {
+        console.log("Verified successfully")
+      },
+      onError: e => {
+        console.error(e)
+      }
+    }
+  )
+  return {
+    verifySiteParameters: mutateAsync,
+    isVerifying: isLoading,
+    isSuccess
   }
 }
