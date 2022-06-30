@@ -239,6 +239,7 @@ def get_minus_truck_list(loading_tool, site_parameters, scoops_per_load, load_si
                 'name': f'{item} Trucks',
                 'value_us': float(f'{truck_haulage_minus_one_us:.2f}'),
                 'value_metric': float(f'{truck_haulage_minus_one_metric:.2f}'),
+                'percentage': 100
             })
         elif item != ld_number_of_trucks_us and item > 1:
             truck_haulage_us = float(truck_haulage_minus_one_us) / float(ld_number_of_trucks_us - 1) * float(
@@ -247,11 +248,14 @@ def get_minus_truck_list(loading_tool, site_parameters, scoops_per_load, load_si
             truck_haulage_metric = float(truck_haulage_minus_one_metric) / float(ld_number_of_trucks_us - 1) * float(
                 ld_number_of_trucks_us - item)
 
+            percentage = (100 / truck_haulage_minus_one_us) * truck_haulage_us
+
             us.append({
                 'item': ld_number_of_trucks_us - item + 1,
                 'name': f'{ld_number_of_trucks_us - item + 1} Trucks',
                 'value_us': float(f'{truck_haulage_us:.2f}'),
                 'value_metric': float(f'{truck_haulage_metric:.2f}'),
+                'percentage': float(f'{percentage:.0f}')
             })
 
     if len(us) > 0:
