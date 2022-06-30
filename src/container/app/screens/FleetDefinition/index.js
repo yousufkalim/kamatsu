@@ -3,19 +3,25 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
-import { useGetLoadingTool } from "../../../../hooks/query/useFleet"
+import {
+  useGetLoadingTool,
+  useVerifyFleetDefinition
+} from "../../../../hooks/query/useFleet"
+import { setUnitFleetAction } from "../../redux/unit/actions"
+import { setFleetValuesAction } from "../../redux/fleetDefinition/actions"
+import { setUnitSiteAction } from "../../redux/unit/actions"
 import { Header } from "../../../../components/Header"
 import { Layout } from "../../../../components/Layout"
 import { Input } from "../../../../components/Input"
 import { Select } from "../../../../components/Select"
 import { Button } from "../../../../components/Button"
-import { setUnitAction } from "../../redux/unit/actions"
+
 import { styles } from "./styles"
 
 const FleetDefinition = ({ navigation }) => {
   const dispatch = useDispatch()
 
-  const unitStateValue = useSelector(state => state?.unitState?.unit)
+  const unitStateValue = useSelector(state => state?.unitState?.unitFleet)
 
   const [unit, setUnit] = useState(unitStateValue)
   const [selectedLoadingTool, setSelectedLoadingTool] = useState({})
@@ -25,19 +31,50 @@ const FleetDefinition = ({ navigation }) => {
   const [bucketSize, setBucketSize] = useState("")
   const [bucketFill, setBucketFill] = useState("")
   const [payload, setPayload] = useState("")
+
   const { loadingTools, isLoading } = useGetLoadingTool()
+  const { verifyFleetDefinition, isVerifying, isSuccess } =
+    useVerifyFleetDefinition()
 
   const units = [
     { label: "Metric", value: "Metric" },
     { label: "US Customary", value: "US Customary" }
   ]
 
-  const handleNext = () => {
-    navigation.navigate("SiteParameters")
+  const handleNext = async () => {
+    console.log("selectedLoadingTool", selectedLoadingTool)
+    console.log("unitStateValue", unitStateValue)
+    const values = {
+      unit_selection: unitStateValue?.value === "Metric" ? "metric" : "us",
+      loading_tool: {
+        name: selectedLoadingTool?.name,
+        cycle_time_second: parseFloat(cycleTime),
+        bucket_fill: parseFloat(bucketFill),
+        bucket_size: parseFloat(bucketSize),
+        cost_per_hour: parseFloat(selectedLoadingTool?.cost_per_hour)
+      },
+      hauling_tool: {
+        name: selectedHaulingTool?.name,
+        capacity_ton: parseFloat(payload),
+        cost_per_hour: parseFloat(selectedHaulingTool?.cost_per_hour)
+      }
+    }
+
+    console.log("values", values)
+
+    dispatch(setFleetValuesAction(values))
+    try {
+      await verifyFleetDefinition(values)
+
+      navigation.navigate("SiteParameters")
+    } catch (error) {
+      console.log("err", error)
+    }
   }
 
   const handleUnitChange = value => {
-    dispatch(setUnitAction(value))
+    dispatch(setUnitFleetAction(value))
+    dispatch(setUnitSiteAction(value))
     setUnit(value)
   }
 
@@ -51,7 +88,7 @@ const FleetDefinition = ({ navigation }) => {
     }
   }, [unitStateValue])
 
-  const handleloadingToolsChange = value => {
+  const handleloadingToolsChange = (value, reset = false) => {
     setSelectedLoadingTool(value)
     setHaulingTools(value?.compatible_trucks)
     setCycleTime(Number(value?.cycle_time_second).toFixed(1))
@@ -60,8 +97,11 @@ const FleetDefinition = ({ navigation }) => {
     unitStateValue?.value === "Metric"
       ? setBucketSize(Number(value?.metric_standard?.bucket_size_m3).toFixed(1))
       : setBucketSize(Number(value?.bucket_size_yd3).toFixed(1))
-    setSelectedHaulingTool({})
-    setPayload("")
+
+    if (!reset) {
+      setSelectedHaulingTool({})
+      setPayload("")
+    }
   }
 
   const handleHaulingToolsChange = value => {
@@ -79,7 +119,7 @@ const FleetDefinition = ({ navigation }) => {
 
   const resetLoader = () => {
     if (selectedLoadingTool?.name) {
-      handleloadingToolsChange(selectedLoadingTool)
+      handleloadingToolsChange(selectedLoadingTool, true)
     }
   }
 
@@ -135,10 +175,9 @@ const FleetDefinition = ({ navigation }) => {
             setValue={value => handleChangeInputFloat(value, setBucketFill)}
           />
           <Input
-            inputLabel="Bucket Size"
-            symbol={
+            inputLabel={`Bucket Size ${
               unitStateValue?.value === "Metric" ? `(m\u00B3)` : `(yd\u00B3)`
-            }
+            }`}
             value={bucketSize}
             setValue={value => handleChangeInputFloat(value, setBucketSize)}
           />
@@ -158,8 +197,9 @@ const FleetDefinition = ({ navigation }) => {
             valueName="name"
           />
           <Input
-            inputLabel="Nom. Payload"
-            symbol={unitStateValue?.value === "Metric" ? `(tonnes)` : `(tons)`}
+            inputLabel={`Nom. Payload ${
+              unitStateValue?.value === "Metric" ? "(Tonnes)" : "(Tons)"
+            }`}
             value={payload}
             setValue={value => handleChangeInputFloat(value, setPayload)}
           />
@@ -169,7 +209,12 @@ const FleetDefinition = ({ navigation }) => {
         </View>
 
         <View style={styles.nextBtn} />
-        <Button btnText="Next" isPrimary onPress={handleNext} />
+        <Button
+          btnText="Next"
+          isPrimary
+          onPress={handleNext}
+          isLoading={isVerifying}
+        />
       </KeyboardAwareScrollView>
     </Layout>
   )
