@@ -51,18 +51,18 @@ def get_tons_per_scoop(loading_tool, material_density, unit='us'):
     bucket_size = loading_tool.get('bucket_size')
     bucket_fill = loading_tool.get('bucket_fill')
     if unit == 'us':
-        bucket_size_us = bucket_size
+        bucket_size_us = float(bucket_size)
         bucket_size_metric = yd3_to_m3(bucket_size)
         material_density_metric = lbyd3_to_kgm3(material_density)
-        calc_value_us = (bucket_size_us * (bucket_fill / 100) * material_density / 2000)
+        calc_value_us = (bucket_size_us * float(bucket_fill / 100) * float(material_density) / 2000)
         calc_value_metric = (bucket_size_metric * float(
             bucket_fill / 100) * material_density_metric / 1000)
     elif unit == 'metric':
         bucket_size_us = m3_to_yd3(bucket_size)
-        bucket_size_metric = bucket_size
+        bucket_size_metric = float(bucket_size)
         material_density_us = kgm3_to_lbyd3(material_density)
         calc_value_us = (bucket_size_us * float(bucket_fill / 100) * material_density_us / 2000)
-        calc_value_metric = (bucket_size_metric * (bucket_fill / 100) * material_density / 1000)
+        calc_value_metric = (bucket_size_metric * float(bucket_fill / 100) * float(material_density) / 1000)
 
     data = {
         'us': float(f'{calc_value_us:.2f}'),
