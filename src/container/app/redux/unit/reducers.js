@@ -1,15 +1,22 @@
 import * as types from "./constants"
 
 const initialState = {
-  unit: { label: "Metric", value: "Metric" }
+  unitFleet: { label: "Metric", value: "Metric" },
+  unitSite: { label: "Metric", value: "Metric" }
 }
 
 export default unitReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.SET_UNIT:
+    case types.SET_UNIT_FLEET:
       return {
         ...state,
-        unit: action.payload
+        unitFleet: action.payload
+      }
+
+    case types.SET_UNIT_SITE:
+      return {
+        ...state,
+        unitSite: action.payload
       }
 
     default:
