@@ -183,11 +183,14 @@ const DashboardFrame = ({
           </div>
         </div>
       </div>
-      <div className="deepGray w-full md:h-screen " style={{ overflow: "hidden" }}>
+      <div
+        className="deepGray w-full md:h-screen "
+        style={{ overflow: "hidden" }}
+      >
         <div className="hidden md:flex bg-white top-bar items-center px-12 justify-between">
           <div>
             {!homePage && (
-              <Link to={backButtonURL}>
+              <Link to={backButtonURL || "/fleet-definition"}>
                 <img src={BackArrow} />
               </Link>
             )}
@@ -215,12 +218,12 @@ const DashboardFrame = ({
             )}
           </div>
 
-          <div >
+          <div>
             <Link to="/">
               <img src={MobileLogoBlue} />
             </Link>
           </div>
-          <div >
+          <div>
             <img src={Hamburger} onClick={() => setMobileMenuIsOpen(true)} />
           </div>
         </div>
@@ -228,7 +231,9 @@ const DashboardFrame = ({
           <div>
             <h4 className="text-title leading-title font-medium">{title}</h4>
           </div>
-          <div className="mt-1" style={{ height: "100%" }}>{body}</div>
+          <div className="mt-1" style={{ height: "100%" }}>
+            {body}
+          </div>
         </div>
       </div>
     </div>
