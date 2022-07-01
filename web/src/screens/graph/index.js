@@ -33,7 +33,7 @@ const Body = () => {
         labels: labels,
         datasets: [
           {
-            label: "Dataset 1",
+            label: "",
             fill: false,
             data: [6000, 6000, 5000, 4000, 3000, 2000, 1000],
             backgroundColor: "transparent",
@@ -44,7 +44,7 @@ const Body = () => {
             hoverRadius: 10
           },
           {
-            label: "Dataset 1",
+            label: "",
             data: [5000, 5000, 4000, 3000, 2000, 1000],
             backgroundColor: "transparent",
             borderColor: "#0000FF",
@@ -55,7 +55,7 @@ const Body = () => {
             hoverRadius: 10
           },
           {
-            label: "Dataset 1",
+            label: "",
             fill: false,
             lineTension: 0.1,
             backgroundColor: "transparent",

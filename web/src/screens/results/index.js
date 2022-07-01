@@ -47,7 +47,8 @@ const Body = () => {
     trucks,
     tonsPerScope,
     scopePerLoad,
-    haulagePerWeight
+    haulagePerWeight,
+    loadSize
   } = Store()
   useEffect(() => {
     handleLoadingName()
@@ -61,7 +62,7 @@ const Body = () => {
   const HandleMetricChange = e => {
     if (e.target.checked === true) {
       setMetric(true)
-      setVolume(false)
+
     } else {
       setMetric(false)
     }
@@ -69,7 +70,6 @@ const Body = () => {
   const HandleVolumeChange = e => {
     if (e.target.checked === true) {
       setVolume(true)
-      setMetric(false)
     } else {
       setVolume(false)
     }
@@ -132,24 +132,35 @@ const Body = () => {
               <p className="checkbox_text">Volume</p>
             </div>
           </div>
-          <Line />
         </div>
+        <Line />
         <div>
           <div className="flex">
             <div className="w-1/2">
               <Title title="Loader Dependent Fleet" />
-              {metric === true ?
+              {metric === true && volume === false ?
                 <>
-                  <ResultValue label="Productivity" value={`${haulagePerWeight?.metric} tons/hr`} />
-                  <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.metric} />
+                  <ResultValue label="Productivity" value={`${loadSize?.metric} Tonnes/hr`} />
                 </> :
-                volume === true ?
+                metric === false && volume === true ?
                   <>
 
-                    <ResultValue label="Productivity" value={`${haulagePerWeight?.us} tons/hr`} />
-                    <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.us} />
+                    <ResultValue label="Productivity" value={`${loadSize?.us} bcy/hr`} />
+
+                  </>
+                  : metric === false && volume === false ?
+                    <>
+
+                      <ResultValue label="Productivity" value={`${loadSize?.us} Tons/hr`} />
+
+                    </>
+                    : metric === true && volume === true ?
+                      <>
+
+                        <ResultValue label="Productivity" value={`${loadSize?.metric} bcm/hr`} />
                   </>
                   : ""} 
+              <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.us} />
             </div>
             <div>
 
@@ -157,11 +168,11 @@ const Body = () => {
               {trucks.map((item) => {
                 return metric === true ?
                   <>
-                    <ResultValue label={item.name} value={`${item.value_metric} tons/hr (${item.percentage}%)`} />
+                    <ResultValue label={item.name} value={`${item.value_metric} Tonnes/hr (${item.percentage}%)`} />
                   </> :
-                  volume === true ?
+                  metric === false ?
                     <>
-                      <ResultValue label={item.name} value={`${item.value_us} tons/hr (${item.percentage}%)`} />
+                      <ResultValue label={item.name} value={`${item.value_us} Tons/hr (${item.percentage}%)`} />
                     </>
                     : ""
               })}
@@ -177,14 +188,15 @@ const Body = () => {
 
           {metric === true ?
             <>
-              <p className="checkbox_text">{scopePerLoad.metric} passes @ {tonsPerScope.metric}tons/pass</p>
+              <p className="checkbox_text">{scopePerLoad.metric} passes @ {parseFloat(tonsPerScope.metric).toFixed(1)} Tonnes/pass</p>
 
             </> :
-            volume === true ?
+            metric === false ?
               <>
-                <p className="checkbox_text">{scopePerLoad.us} passes @ {tonsPerScope.us}tons/pass</p>
+                <p className="checkbox_text">{scopePerLoad.us} passes @ {parseFloat(tonsPerScope.us).toFixed(1)} Tons/pass</p>
               </>
               : ""}
+          {/* parseFloat(res.data.metric_standard.bucket_size_m3).toFixed(1) */}
         </div>
       </div>
       <div className="flex justify-end gap-2 mt-8">
