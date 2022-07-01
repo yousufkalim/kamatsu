@@ -45,7 +45,7 @@ export function StoreProvider({ children }) {
     haulagePerWeight: "",
     ldNumberOfTrucks: "",
     ldUnitPerCostHour: "",
-    loadSize: "",
+    loadSize: {},
     minutesPerLoad: "",
     scopePerLoad: "",
     tonsPerScope: "",
