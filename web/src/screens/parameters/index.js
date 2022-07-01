@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react"
 import DashboardFrame from "../dashboard"
-import { Input, InputContainer, CustomSelect } from "../../components/Input"
+import { Input } from "../../components/Input"
 import { DashboardButton } from "../../components/Button"
 import DropDown from "../../components/Dropdown"
-import ParametersContext from "../../context/ParametersContext"
-import { useContext } from "react"
 import "./index.css"
 import DensityPopupIcon from "../../assets/density-popup.svg"
 import Modal from "react-modal"
 import CloseModal from "../../assets/close-modal.svg"
 import axios from "axios"
 import { baseURL } from "../../api"
+import { Store, UpdateStore } from "../../StoreContext"
 
 const customStyles = {
   content: {
@@ -25,9 +24,6 @@ const customStyles = {
     overflow: "scroll",
     height: "80%",
     className: "modal-class",
-    //   position:'relaive',
-
-    //   backgroundColor: "#000",
     overlay: {
       background: "#000"
     }
@@ -42,51 +38,166 @@ const Form = () => {
     },
     {
       label: "US Customary",
-      value: "customary"
+      value: "us"
     }
   ]
 
   const [densityPopupOpen, setDensityPopupOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [apiDensities, setApiDensities] = useState([])
+  const [loadingToolName, setLoadingToolName] = useState("")
 
-  const fetchMaterialDensity = () => {
-    axios.get(`${baseURL}hat/material-densities/`).then(res => {
-      setApiDensities(res.data)
-      console.log(apiDensities)
-      setIsLoading(false)
+  const {
+    loadingTool,
+    cycleTime,
+    bucketFill,
+    bucketSize,
+    haulingTool,
+    nomPayload,
+    materialDensity,
+    truckSpotTime,
+    operatorEfficiency,
+    estRoundTripTravel,
+    materialSwell,
+    unit,
+    parameters_unit,
+    loadingToolCostPerHour,
+    haulingToolCostPerHour,
+    loadingToolOptions,
+  } = Store()
+
+  const handleLoadingName = () => {
+    const name = loadingToolOptions.find((item) => {
+      return item?.value === loadingTool
+    })?.label
+    setLoadingToolName(name)
+  } 
+  const updateStore = UpdateStore()
+
+  const fetchSiteDensities = async () => {
+    const densities = await axios.get(`${baseURL}hat/material-densities/`)
+    setApiDensities(densities.data)
+    setIsLoading(false)
+  }
+
+  const fetchSiteParameters = async () => {
+    const site_parameters = await axios.get(
+      `${baseURL}hat/defaults/screens/site-parameters/`
+    )
+
+    console.log(parameters_unit)
+
+    const density =
+      parameters_unit === "metric"
+        ? (parseFloat(site_parameters.data.material_density) / 1.6856).toFixed(
+            1
+          )
+        : parseFloat(site_parameters.data.material_density).toFixed(1)
+
+    updateStore({
+      materialDensity: density,
+      truckSpotTime: parseFloat(
+        site_parameters.data.truck_sport_time_sec
+      ).toFixed(1),
+      operatorEfficiency: parseFloat(
+        site_parameters.data.operator_efficiency
+      ).toFixed(1),
+      estRoundTripTravel: parseFloat(
+        site_parameters.data.est_round_trip_travel_time
+      ).toFixed(1),
+      materialSwell: parseFloat(site_parameters.data.material_swell).toFixed(1)
     })
-    // .then((res)=>{
-    //     setMaterialDensitiesResult("Hi");
-    //     console.log(materialDensitiesResult);
-    //     setIsLoading(false);
-    //     // console.log()
-    // })
   }
 
   useEffect(() => {
-    fetchMaterialDensity()
+    fetchSiteDensities()
+    fetchSiteParameters()
+    handleLoadingName()
   }, [])
 
-  const {
-    materialDensity,
-    setMaterialDensity,
-    truckSpotTime,
-    setTruckSpotTime,
-    operatorEfficiency,
-    setOperatorEfficiency,
-    estRoundTripTravel,
-    setEstRoundTripTravel,
-    materialSwell,
-    serMaterialSwell
-  } = useContext(ParametersContext)
+  const handleInput = e => {
+    // Don't allow more than one decimal point
+    if (e.target.value.includes(".")) {
+      e.target.value = e.target.value.substring(
+        0,
+        e.target.value.indexOf(".") + 2
+      )
+    }
+    // don't allow alphabetical characters
+    if (!e.target.value.match(/[a-z]/i)) {
+      updateStore({ [e.target.name]: e.target.value })
+    }
+  }
+
+  const changeUnit = e => {
+    if (e !== parameters_unit) {
+      updateStore({ parameters_unit: e })
+
+      // convert density from lbs/lcy to kgs/lcm
+      if (e === "metric") {
+        updateStore({
+          materialDensity: (parseFloat(materialDensity) / 1.6856).toFixed(1)
+        })
+      } else {
+        updateStore({
+          materialDensity: (parseFloat(materialDensity) * 1.6856).toFixed(1)
+        })
+      }
+    }
+  }
+
+  const handleSubmit = async () => {
+    try {
+      await axios.post(`${baseURL}hat/result-preview/`, {
+        fleet_definition: {
+          unit_selection: unit,
+          loading_tool: {
+            name: loadingToolName,
+            cycle_time_second: cycleTime,
+            bucket_fill: bucketFill,
+            bucket_size: bucketSize,
+            cost_per_hour: loadingToolCostPerHour
+          },
+          hauling_tool: {
+            name: haulingTool,
+            capacity_ton: nomPayload,
+            cost_per_hour: haulingToolCostPerHour
+          },
+        },
+        site_parameters: {
+          material_denstiy: materialDensity,
+          material_density: materialDensity,
+          truck_sport_time_sec: truckSpotTime,
+          est_round_trip_travel_time: estRoundTripTravel,
+          operator_efficiency: operatorEfficiency,
+          material_swell: materialSwell
+        }
+
+      }).then((res) => {
+        updateStore({
+          haulagePerhour: res.data.result.haulage_per_hour,
+          haulagePerWeight: res.data.result.haulage_per_hour_weight,
+          ldNumberOfTrucks: res.data.result.ld_number_of_trucks,
+          ldUnitPerCostHour: res.data.result.ld_unit_cost_per_hour,
+          loadSize: res.data.result.load_size,
+          minutesPerLoad: res.data.result.minutes_per_load,
+          scopePerLoad: res.data.result.scoops_per_load,
+          tonsPerScope: res.data.result.tons_per_scoop,
+          unitsPerHours: res.data.result.units_per_hour,
+          trucks: res.data.result.trucks,
+        })
+      })
+    } catch (err) {
+      console.log("Api error: ", err)
+    }
+  }
 
   const DensityModal = () => {
     return (
       <div className="bg-white p-5">
         <div className="flex justify-end">
           <img
-            className=""
+            alt=""
             src={CloseModal}
             onClick={() => setDensityPopupOpen(false)}
           />
@@ -111,10 +222,10 @@ const Form = () => {
                     <h4 className="density-title">{density.title}</h4>
                     <p className="density-body">Density</p>
                     <p className="density-body">
-                      {density.metric_standard.density}{" "}
-                      {density.metric_standard.density.unit_text}
+                      {density.metric_standard.density} (kgs/lcm)
+                      {/* {density.metric_standard.density.unit_text} */}
                     </p>
-                    <p className="density-body">{density.density}</p>
+                    <p className="density-body">{density.density} (lbs/lcy)</p>
                     <hr className="line" />
                   </div>
                 )
@@ -133,6 +244,18 @@ const Form = () => {
 
   return (
     <div>
+      <div className="w-1/2 gap-8 md:w-1/4 mb-6">
+        <label className="block text-smaller mb-1 font-normal">
+          Unit Selection
+        </label>
+        <DropDown
+          options={UnitOptions}
+          onChange={e => changeUnit(e.value)}
+          defaultValue={() =>
+            UnitOptions.filter(a => a.value === parameters_unit)[0]
+          }
+        />
+      </div>
       <div>
         <Modal
           isOpen={densityPopupOpen}
@@ -145,7 +268,7 @@ const Form = () => {
         </Modal>
       </div>
 
-      <div className="hidden md:block">
+      <div className=" md:block">
         <div className="w-1/2">
           {/* <CustomSelect >
 
@@ -155,16 +278,20 @@ const Form = () => {
         <div className="flex gap-8">
           <div className="w-1/2">
             <label className="block text-smaller mb-1 font-normal">
-              Material Density (lbs/lcy){" "}
+              Material Density{" "}
+              {parameters_unit === "metric" ? "(kgs/lcm)" : "(lbs/lcy)"}
+              &nbsp;
               <img
                 className="inline"
                 src={DensityPopupIcon}
                 onClick={() => setDensityPopupOpen(true)}
+                alt=""
               />
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               value={materialDensity}
+              onChange={handleInput}
+              name="materialDensity"
               className="mb-6"
             />
           </div>
@@ -173,9 +300,10 @@ const Form = () => {
               Truck Spot Time
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               className="mb-6"
               value={truckSpotTime}
+              onChange={handleInput}
+              name="truckSpotTime"
             />
           </div>
         </div>
@@ -185,9 +313,10 @@ const Form = () => {
               Operator Efficiency (min/hr)
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               className="mb-6"
               value={operatorEfficiency}
+              onChange={handleInput}
+              name="operatorEfficiency"
             />
           </div>
           <div className="w-1/2">
@@ -195,9 +324,10 @@ const Form = () => {
               Est. Round Trip Travel Time (min)
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               className="mb-6"
               value={estRoundTripTravel}
+              onChange={handleInput}
+              name="estRoundTripTravel"
             />
           </div>
         </div>
@@ -207,9 +337,10 @@ const Form = () => {
               Material Swell (%)
             </label>
             <Input
-              onChange={e => console.log(e.target.value)}
               className="mb-6"
               value={materialSwell}
+              onChange={handleInput}
+              name="materialSwell"
             />
           </div>
           <div className="w-1/2 flex justify-between">
@@ -217,112 +348,17 @@ const Form = () => {
               text="Default"
               backgroundColor="yellow"
               className="mb-6"
-              url=""
+              onClick={fetchSiteParameters}
             />
             <DashboardButton
               text="Next"
               backgroundColor="blue"
-              className="mb-6"
+              className="mb-6 next"
               textColor="white"
-              url=""
+              url="/result"
+              onClick={handleSubmit}
             />
           </div>
-        </div>
-      </div>
-      <div className="md:hidden">
-        <div className="flex gap-8 mb-8">
-          <div className="w-1/2">
-            <label className="block text-smaller mb-1 font-normal">
-              Unit Selection
-            </label>
-            <DropDown
-              options={UnitOptions}
-              onChange={e => console.log(e.value)}
-            />
-          </div>
-        </div>
-        <div className="flex gap-8">
-          <div className="w-1/2">
-            <label className="block text-smaller mb-1 font-normal">
-              Material Density (lbs/lcy){" "}
-              <img
-                className="inline"
-                src={DensityPopupIcon}
-                onClick={() => setDensityPopupOpen(true)}
-              />
-            </label>
-            <Input
-              onChange={e => console.log(e.target.value)}
-              className="mb-6"
-              value={materialDensity}
-            />
-          </div>
-          <div className="w-1/2">
-            <label className="block text-smaller mb-1 font-normal">
-              Material Swell (%)
-            </label>
-            <Input
-              onChange={e => console.log(e.target.value)}
-              className="mb-6"
-              value={materialSwell}
-            />
-          </div>
-        </div>
-        <div className="flex gap-8">
-          <div className="w-1/2">
-            <label className="block text-smaller mb-1 font-normal">
-              Operator Efficiency (min/hr)
-            </label>
-            <Input
-              onChange={e => console.log(e.target.value)}
-              className="mb-6"
-              value={operatorEfficiency}
-            />
-          </div>
-          <div className="w-1/2">
-            <label className="block text-smaller mb-1 font-normal">
-              Truck Spot Time (sec)
-            </label>
-            <Input
-              onChange={e => console.log(e.target.value)}
-              className="mb-6"
-              value={truckSpotTime}
-            />
-          </div>
-        </div>
-        <div className="flex gap-8">
-          <div className="w-1/2">
-            <label className="block text-smaller mb-1 font-normal">
-              Est. Round Trip
-              <br />
-              Travel Time (min)
-            </label>
-            <Input
-              onChange={e => console.log(e.target.value)}
-              className="mb-6"
-              value={estRoundTripTravel}
-            />
-          </div>
-          <div className="w-1/2">
-            <label className="block text-smaller mb-1 font-small invisible">
-              Est. Round Trip Travel Time (min)
-            </label>
-            <DashboardButton
-              text="Default"
-              backgroundColor="yellow"
-              className="mb-6"
-              url=""
-            />
-          </div>
-        </div>
-        <div className="flex gap-8">
-          <DashboardButton
-            text="Next"
-            backgroundColor="blue"
-            className="mb-6"
-            textColor="white"
-            url=""
-          />
         </div>
       </div>
     </div>

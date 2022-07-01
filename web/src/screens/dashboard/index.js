@@ -91,7 +91,7 @@ const MobileMenu = ({ mobileMenuIsOpen, onClickOuterSpace }) => {
         <div>
           <div>
             <div className="mt-14 mb-8">
-              <img src={MobileLogoBlue} />
+              <img src={MobileLogoBlue} alt="" />
             </div>
             <div className="mb-8">
               <h4 className="text-body leading-smaller font-normal">
@@ -141,14 +141,22 @@ const MobileMenu = ({ mobileMenuIsOpen, onClickOuterSpace }) => {
   )
 }
 
-const DashboardFrame = ({ title, body, displayBackButton, backButtonURL }) => {
+const DashboardFrame = ({
+  title,
+  body,
+  displayBackButton,
+  backButtonURL,
+  homePage
+}) => {
   const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
   return (
     <div className="flex">
       <div className="hidden md:block md:w-1/6 blue md:h-screen">
         <div className="">
           <div className="top-bar px-8 flex items-center">
-            <img src={Logo} className="" />
+            <Link to="/">
+              <img src={Logo} alt="" />
+            </Link>
           </div>
           <div className="py-6">
             <Menu text="Home" url="/fleet-definition" />
@@ -165,7 +173,7 @@ const DashboardFrame = ({ title, body, displayBackButton, backButtonURL }) => {
             <div>
               <a
                 className="web-menu-anchor"
-                href="https://www.komatsu.com/en/terms-of-use/"
+                href="https://www.komatsu.com/en/privacy-statement/"
                 target="_blank"
               >
                 Privacy Policy
@@ -175,14 +183,14 @@ const DashboardFrame = ({ title, body, displayBackButton, backButtonURL }) => {
           </div>
         </div>
       </div>
-      <div className="deepGray w-full md:h-screen">
+      <div className="deepGray w-full md:h-screen " style={{ overflow: "hidden" }}>
         <div className="hidden md:flex bg-white top-bar items-center px-12 justify-between">
           <div>
-            {displayBackButton ? (
+            {!homePage && (
               <Link to={backButtonURL}>
-                <img src={BackArrow} />
+                <img src={BackArrow} alt="" />
               </Link>
-            ) : null}
+            )}
           </div>
           <div className="">
             <h4 className="text-body leading-smaller font-normal">John Doe</h4>
@@ -200,25 +208,27 @@ const DashboardFrame = ({ title, body, displayBackButton, backButtonURL }) => {
         </div>
         <div className=" md:hidden bg-white top-bar flex items-center px-4 justify-between">
           <div>
-            {displayBackButton ? (
-              <Link to={backButtonURL}>
-                <img src={BackArrow} />
+            {!homePage && (
+              <Link to="/fleet-definition">
+                <img src={BackArrow} alt="" />
               </Link>
-            ) : null}
+            )}
           </div>
 
-          <div className="">
-            <img src={MobileLogoBlue} />
+          <div >
+            <Link to="/">
+              <img src={MobileLogoBlue} alt="" />
+            </Link>
           </div>
-          <div className="">
-            <img src={Hamburger} onClick={() => setMobileMenuIsOpen(true)} />
+          <div >
+            <img src={Hamburger} onClick={() => setMobileMenuIsOpen(true)} alt="" />
           </div>
         </div>
-        <div className="px-4 md:px-12 py-6">
+        <div className="px-4 md:px-12 py-1">
           <div>
             <h4 className="text-title leading-title font-medium">{title}</h4>
           </div>
-          <div className="mt-10">{body}</div>
+          <div className="mt-1" style={{ height: "100%" }}>{body}</div>
         </div>
       </div>
     </div>

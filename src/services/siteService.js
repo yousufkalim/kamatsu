@@ -12,6 +12,19 @@ function getMaterialDensities() {
     })
 }
 
+function verifySiteParameters(payload) {
+  return request
+    .post(`/hat/verify/site-parameters/`, payload)
+    .then(res => {
+      return res.data
+    })
+    .catch(function (error) {
+      console.log(error)
+      throw error
+    })
+}
+
 export const siteApiService = {
-  getMaterialDensities
+  getMaterialDensities,
+  verifySiteParameters
 }

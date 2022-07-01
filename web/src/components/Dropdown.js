@@ -5,7 +5,7 @@ const colourStyles = {
   control: styles => ({ ...styles, backgroundColor: "white" }),
   control: (base, state) => ({
     ...base,
-    "&:hover": { borderColor: state.isFocused ? "#A5ABAF" : "#A5ABAF" },
+    "&:hover": { borderColor: state.isFocused ? "black" : "black" },
     // border: 0,
     boxShadow: "none"
   }),
@@ -16,7 +16,7 @@ const colourStyles = {
       backgroundColor: isDisabled ? "red" : "#fffff",
       backgroundColor: isFocused ? "rgba(255, 200, 47, 0.2)" : null,
       // backgroundColor: isSelected ? "rgba(255, 200, 47, 0.2)" : null,
-      color: "#A5ABAF",
+      color: "black",
       cursor: isDisabled ? "not-allowed" : "default"
     }
   },
@@ -32,7 +32,7 @@ const colourStyles = {
   })
 }
 
-const DropDown = ({ options, onChange, defaultValue }) => {
+const DropDown = ({ options, onChange, defaultValue, value }) => {
   return (
     <Select
       options={options}
@@ -41,6 +41,7 @@ const DropDown = ({ options, onChange, defaultValue }) => {
       className="basic"
       isSearchable={false}
       defaultValue={defaultValue}
+      value={value}
     />
   )
 }

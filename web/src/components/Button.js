@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import "./index.css"
 import { Link } from "react-router-dom"
 import Modal from "react-modal"
@@ -44,15 +44,10 @@ export const Button = ({
 }) => {
   const [isShown, setIsShown] = useState(false)
   const [modalIsOpen, setModalIsOpen] = useState(false)
-
-  // const closeModal
-  // let color = 'blue'
   return (
     <>
-      {/* <div> */}
       <Modal
         isOpen={modalIsOpen}
-        // onRequestClose= {true}
         style={customStyles}
         ariaHideApp={false}
         shouldCloseOnOverlayClick={true}
@@ -61,25 +56,16 @@ export const Button = ({
           <h4 className="text-xl">This feature is coming soon.</h4>
         </div>
       </Modal>
-      {/* </div> */}
-      {/* <div> */}
       <Link to={url}>
         <button
           className={`${backgroundColor} text-${textColor} home-button flex w-[274px] items-center pl-8`}
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={() => setIsShown(false)}
-          //   onClick={() => {
-          //     if (modal) setModalIsOpen(!modalIsOpen)
-          //     setTimeout(() => {
-          //       setModalIsOpen(false)
-          //     }, 2000)
-          //   }}
         >
-          <img className="mr-4" src={icon} />
+          <img className="mr-4" src={icon} alt="" />
           {isShown && comingSoon ? "Coming Soon" : text}
         </button>
       </Link>
-      {/* </div> */}
     </>
   )
 }
@@ -89,13 +75,18 @@ export const DashboardButton = ({
   backgroundColor,
   url,
   textColor,
-  onClick
+  onClick,
+  disabled,
+  id
 }) => {
   return (
     <Link to={url}>
       <button
-        className={`${backgroundColor} text-${textColor} dashboard-button flex justify-center font-medium `}
+        id={id}
+        className={`${backgroundColor} text-${textColor} dashboard-button flex justify-center`}
         onClick={onClick}
+        style={{ opacity: disabled ? 0.5 : 1, color: textColor }}
+        disabled={disabled}
       >
         {text}
       </button>

@@ -45,9 +45,6 @@
     grid-template-columns: 50% 50%;
 }
 
-@media screen {
-    max-width: 767px;
-}
 
 @media only screen and (max-width: 767px) {
     .densities-container {

@@ -7,7 +7,7 @@ import { styles } from "./styles"
 export const Button = ({
   btnText = "Button",
   isPrimary = false,
-  onPress,
+  onPress = () => {},
   halfWidthBtn = false,
   customStyle = {},
   isLoading

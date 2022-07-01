@@ -35,7 +35,7 @@ export const Input = ({
       <TextInput
         placeholder={placeHolder}
         placeholderTextColor="#A5ABAF"
-        style={{ ...styles.input, ...customInputStyle }}
+        style={[styles.input, customInputStyle && customInputStyle]}
         value={value}
         onChangeText={setValue}
         multiline={multiline}
