@@ -1,9 +1,9 @@
 import DashboardFrame from "../dashboard"
-import { Input, InputContainer, CustomSelect } from "../../components/Input"
+import { Input } from "../../components/Input"
 import { DashboardButton } from "../../components/Button"
 import DropDown from "../../components/Dropdown"
 import axios from "axios"
-import { useContext, useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 // import Fll from "../../context/ParametersContext";
 import "./index.css"
 import { baseURL } from "../../api"
@@ -29,8 +29,6 @@ const Form = () => {
   const updateStore = UpdateStore()
   const [loadingToolsIsLoading, setLoadingToolsIsLoading] = useState(true)
   const [HaulingToolsIsLoading, setHaulingToolsIsLoading] = useState(true)
-  const [isLoading, setIsLoading] = useState(true)
-  const [bigHaulingOptions, setBigLHaulingOptions] = useState([])
 
   const fetchLoadingTools = () => {
     axios
