@@ -46,6 +46,9 @@ const Body = () => {
     ldNumberOfTrucks,
     ldUnitPerCostHour,
     trucks,
+    tonsPerScope,
+    scopePerLoad,
+    haulagePerWeight
   } = Store()
   useEffect(() => {
     handleLoadingName()
@@ -136,8 +139,18 @@ const Body = () => {
           <div className="flex">
             <div className="w-1/2">
               <Title title="Loader Dependent Fleet" />
-              <ResultValue label="Productivity" value={`${ldUnitPerCostHour} tons/hr`} />
-              <ResultValue label="Trucks Required" value={ldNumberOfTrucks.us} />
+              {metric === true ?
+                <>
+                  <ResultValue label="Productivity" value={`${haulagePerWeight?.metric} tons/hr`} />
+                  <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.metric} />
+                </> :
+                volume === true ?
+                  <>
+
+                    <ResultValue label="Productivity" value={`${haulagePerWeight?.us} tons/hr`} />
+                    <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.us} />
+                  </>
+                  : ""} 
             </div>
             <div>
 
@@ -162,7 +175,17 @@ const Body = () => {
         </div>
         <div>
           <Title title="Key Fleet Performance Components" />
-          <p className="checkbox_text">3 passes @ 8.6 tons/pass</p>
+
+          {metric === true ?
+            <>
+              <p className="checkbox_text">{scopePerLoad.metric} passes @ {tonsPerScope.metric}tons/pass</p>
+
+            </> :
+            volume === true ?
+              <>
+                <p className="checkbox_text">{scopePerLoad.us} passes @ {tonsPerScope.us}tons/pass</p>
+              </>
+              : ""}
         </div>
       </div>
       <div className="flex justify-end gap-2 mt-8">

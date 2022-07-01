@@ -21,7 +21,10 @@ const Form = () => {
     loadingTools,
     haulingTools,
     haulingToolOptions,
-    loadingToolOptions
+    loadingToolOptions,
+    loadingToolCostPerHour,
+    haulingToolCostPerHour
+
   } = Store()
   const updateStore = UpdateStore()
   const [loadingToolsIsLoading, setLoadingToolsIsLoading] = useState(true)
@@ -181,6 +184,30 @@ const Form = () => {
     }
   ]
 
+  // const handleVerifySiteFleet = async () => {
+  //   await axios
+  //     .post(`${baseURL}hat/verify/fleet-definition/`, {
+  //       unit_selection: unit,
+  //       loading_tool: {
+  //         name: loadingTool,
+  //         cycle_time_second: cycleTime,
+  //         bucket_fill: bucketFill,
+  //         bucket_size: bucketSize,
+  //         cost_per_hour: loadingToolCostPerHour
+  //       },
+  //       hauling_tool: {
+  //         name: haulingTool,
+  //         capacity_ton: nomPayload,
+  //         cost_per_hour: haulingToolCostPerHour
+  //       }
+  //     })
+  //     .then(res => {
+  //       console.log("---> verification responce", res)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
   return (
     <div>
       <div className="w-1/2 gap-8 md:w-1/4 mb-6">
@@ -315,6 +342,7 @@ const Form = () => {
               !nomPayload ||
               !haulingTool
             }
+            // onClick={handleVerifySiteFleet}
             url="/parameters"
           />
         </div>
