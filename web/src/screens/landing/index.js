@@ -8,13 +8,13 @@ import Ellipsis from "../../assets/ellipsis.png"
 import { Button } from "../../components/Button"
 import "./index.css"
 import LandingPhoto from "../../assets/landing-photo.png"
-
+import Photo from "../../assets/landing-photo.png"
 const Landing = () => {
   return (
     <div className="flex items-center">
       <div className="w-full md:w-1/2 md:pl-12 ">
         <div className="hidden md:block md:mb-8 ">
-          <img src={Logo} alt="" />
+          <img src={Logo} />
         </div>
         <div className="hidden md:block md:mb-12">
           <h1 className="text-headline leading-headline font-bold">
@@ -31,7 +31,7 @@ const Landing = () => {
         <div className="flex justify-center align-middle mobile-header bg-black md:hidden">
           <div className="px-6">
             <div className="flex justify-center mb-12 mt-12">
-              <img src={WhiteLogo} alt="" />
+              <img src={WhiteLogo} />
             </div>
             <div className="mb-5">
               <h4 className="mobile-head">
@@ -47,7 +47,7 @@ const Landing = () => {
               </p>
             </div>
             <div className="flex justify-center">
-              <img src={Ellipsis} alt="" />
+              <img src={Ellipsis} />
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ const Landing = () => {
       </div>
 
       <div className="hidden md:flex md:w-1/2 right-landing ">
-        <img src={LandingPhoto} alt="" />
+        <img src={LandingPhoto} />
       </div>
     </div>
   )
