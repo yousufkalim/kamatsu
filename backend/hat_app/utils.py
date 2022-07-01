@@ -187,8 +187,8 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
     return data
 
 
-def get_truck_haulage(loading_tool, site_parameters, scoops_per_load, load_size, haulage_per_hour_weight,
-                      ld_number_of_trucks, unit):
+def get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load, load_size, haulage_per_hour_weight,
+                                ld_number_of_trucks, unit):
     operator_efficiency = float(site_parameters.get('operator_efficiency'))
     truck_sport_time_sec = site_parameters.get('truck_sport_time_sec')
     est_round_trip_travel_time = site_parameters.get('est_round_trip_travel_time')
@@ -214,49 +214,51 @@ def get_minus_truck_haulage_from_one(minus_one_haulage, ld_number_of_trucks, ite
 def get_minus_truck_list(loading_tool, site_parameters, scoops_per_load, load_size, haulage_per_hour_weight,
                          ld_number_of_trucks, unit='us'):
     us = []
-    metric = []
+    # metric = []
     ld_number_of_trucks_us = math.ceil(ld_number_of_trucks.get('us'))
-    ld_number_of_trucks_metric = math.ceil(ld_number_of_trucks.get('metric'))
-    truck_haulage_minus_one_us = 0
-    truck_haulage_minus_one_metric = 0
-    for item in reversed(range(1, ld_number_of_trucks_us + 1)):
+    # ld_number_of_trucks_metric = math.ceil(ld_number_of_trucks.get('metric'))
+    truck_haulage_first_us = get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load,
+                                                         load_size,
+                                                         haulage_per_hour_weight,
+                                                         ld_number_of_trucks_us, unit='us')
+
+    truck_haulage_first_metric = get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load,
+                                                             load_size,
+                                                             haulage_per_hour_weight,
+                                                             ld_number_of_trucks_us, unit='metric')
+
+    us.append({
+        'item': ld_number_of_trucks_us - 1,
+        'name': f'{ld_number_of_trucks_us - 1} Trucks',
+        'value_us': float(f'{truck_haulage_first_us:.1f}'),
+        'value_metric': float(f'{truck_haulage_first_metric:.1f}'),
+        'percentage': 100
+    })
+    for item in range(1, ld_number_of_trucks_us - 1):
         # print(item, ld_number_of_trucks_us)
-        if item != ld_number_of_trucks_us + 1 and item > 2:
-            print(item - 1)
-        if item == ld_number_of_trucks_us:
-            truck_haulage_minus_one_us = get_truck_haulage(loading_tool, site_parameters, scoops_per_load,
-                                                           load_size,
-                                                           haulage_per_hour_weight,
-                                                           item, unit='us')
 
-            truck_haulage_minus_one_metric = get_truck_haulage(loading_tool, site_parameters, scoops_per_load,
-                                                               load_size,
-                                                               haulage_per_hour_weight,
-                                                               item, unit='metric')
+        if item < 3:
+            minus_number = ld_number_of_trucks_us - (item + 1)
+            truck_haulage_us = float(truck_haulage_first_us) / float(ld_number_of_trucks_us - 1) * float(minus_number)
 
+            truck_haulage_metric = float(truck_haulage_first_metric) / float(ld_number_of_trucks_us - 1) * float(
+                minus_number)
+
+            percentage = (100 / truck_haulage_first_us) * truck_haulage_us
+            #
             us.append({
-                'item': item,
-                'name': f'{item} Trucks',
-                'value_us': float(f'{truck_haulage_minus_one_us:.2f}'),
-                'value_metric': float(f'{truck_haulage_minus_one_metric:.2f}'),
-                'percentage': 100
-            })
-        elif item != ld_number_of_trucks_us and item > 1 and len(us) < 4:
-            truck_haulage_us = float(truck_haulage_minus_one_us) / float(ld_number_of_trucks_us - 1) * float(
-                ld_number_of_trucks_us - item)
-
-            truck_haulage_metric = float(truck_haulage_minus_one_metric) / float(ld_number_of_trucks_us - 1) * float(
-                ld_number_of_trucks_us - item)
-
-            percentage = (100 / truck_haulage_minus_one_us) * truck_haulage_us
-
-            us.append({
-                'item': ld_number_of_trucks_us - item + 1,
-                'name': f'{ld_number_of_trucks_us - item + 1} Trucks',
-                'value_us': float(f'{truck_haulage_us:.2f}'),
-                'value_metric': float(f'{truck_haulage_metric:.2f}'),
+                'item': minus_number,
+                'name': f'{minus_number} Trucks',
+                'value_us': float(f'{truck_haulage_us:.1f}'),
+                'value_metric': float(f'{truck_haulage_metric:.1f}'),
                 'percentage': float(f'{percentage:.0f}')
             })
+        # print('count', count)
+        # else:
+        #     break
+        if item >= 3:
+            print('break on:', item)
+            break
 
     if len(us) > 0:
         return sorted(us, key=lambda d: d['item'], reverse=True)
@@ -339,19 +341,11 @@ def get_result_preview(fleet_definition, site_parameters):
         'tons_per_scoop': tons_per_scoop,
         'scoops_per_load': scoops_per_load,
         'minutes_per_load': minutes_per_load,
-        'ld_number_of_trucks': ld_number_of_trucks,
         'load_size': load_size,
         'haulage_per_hour_weight': haulage_per_hour_weight,
         'haulage_per_hour': haulage_per_hour,
-        'trucks': minus_truck_list,
         'ld_unit_cost_per_hour': ld_unit_cost_per_hour,
-        'units_per_hour': {},
+        'ld_number_of_trucks': ld_number_of_trucks,
+        'trucks': minus_truck_list,
     }
     return result
-
-
-# ((35 / 60) * (4-1) + (15 / 60) + (6/60) + 10) * 89.5 * (5 - 1)
-# (50 / () / 1732
-
-
-middle = (50 / ((35 / 60) * (4 - 1) + (15 / 60) + (6 / 60) + 10)) * 89.5 * (5 - 1)
