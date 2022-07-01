@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
-import { View, Text, ScrollView, Image, Dimensions } from "react-native"
+import { View, Text, ScrollView, Dimensions } from "react-native"
 import CheckBox from "@react-native-community/checkbox"
 import { useSelector } from "react-redux"
-import ViewShot from "react-native-view-shot"
-import RNImageToPdf from "react-native-image-to-pdf"
+// import ViewShot from "react-native-view-shot"
+// import RNImageToPdf from "react-native-image-to-pdf"
+import * as Progress from "react-native-progress"
 
+import * as appStyles from "../../../../utils/appStyles"
 import { useResultPreview } from "../../../../hooks/query/useResults"
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
@@ -19,13 +21,14 @@ const Results = ({ navigation }) => {
 
   const fleetDefinitionState = useSelector(state => state.fleetDefinitionState)
   const siteParameterState = useSelector(state => state.siteParameterState)
+  const unitStateValue = useSelector(state => state.unitState.unitSite)
 
   const { resultPreview, isLoading, isSuccess, data } = useResultPreview()
 
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
-  const [isMetricChecked, setIsMetricChecked] = useState(false)
+  const [isMetricChecked, setIsMetricChecked] = useState(
+    unitStateValue?.value === "Metric"
+  )
   const [isVolumeChecked, setIsVolumeChecked] = useState(false)
-  const [image, setImage] = useState(null)
 
   useEffect(() => {
     handleGetResult()
@@ -47,35 +50,35 @@ const Results = ({ navigation }) => {
 
   const handleSave = () => {
     console.log("eemj")
-    ref.current
-      .capture()
-      .then(uri => {
-        console.log("do something with ", uri)
-        // setImage(uri)
-        myAsyncPDFFunction(uri)
-      })
-      .catch(err => console.log("err", err))
+    //   ref.current
+    //     .capture()
+    //     .then(uri => {
+    //       console.log("do something with ", uri)
+    //       // setImage(uri)
+    //       // myAsyncPDFFunction(uri)
+    //     })
+    //     .catch(err => console.log("err", err))
   }
 
-  const myAsyncPDFFunction = async uri => {
-    try {
-      const options = {
-        imagePaths: [uri],
-        name: "PDFName",
-        maxSize: {
-          // optional maximum image dimension - larger images will be resized
-          width: 900,
-          height: Math.round((deviceHeight / deviceWidth) * 900)
-        },
-        quality: 0.7 // optional compression paramter
-      }
-      const pdf = await RNImageToPdf.createPDFbyImages(options)
+  // const myAsyncPDFFunction = async uri => {
+  //   try {
+  //     const options = {
+  //       imagePaths: [uri],
+  //       name: "komatsu",
+  //       maxSize: {
+  //         // optional maximum image dimension - larger images will be resized
+  //         width: 900,
+  //         height: Math.round((deviceHeight / deviceWidth) * 900)
+  //       },
+  //       quality: 0.7 // optional compression paramter
+  //     }
+  //     const pdf = await RNImageToPdf.createPDFbyImages(options)
 
-      console.log("pdf", pdf.filePath)
-    } catch (e) {
-      console.log("errr", e)
-    }
-  }
+  //     console.log("pdf", pdf.filePath)
+  //   } catch (e) {
+  //     console.log("errr", e)
+  //   }
+  // }
 
   return (
     <Layout>
@@ -84,18 +87,21 @@ const Results = ({ navigation }) => {
         <Text style={styles.title}>Results</Text>
 
         {isLoading ? (
-          <></>
+          <>
+            <View style={styles.loading}>
+              <Progress.Circle
+                size={40}
+                indeterminate={true}
+                color={appStyles.primaryColor}
+                thickness={11}
+              />
+
+              <Text style={styles.loadingText}>Processing...</Text>
+            </View>
+          </>
         ) : (
           <View style={{ flex: 1 }}>
-            <ViewShot
-              style={styles.resultsContainer}
-              ref={ref}
-              options={{
-                fileName: "Your-Name",
-                format: "jpg",
-                quality: 0.9
-              }}
-            >
+            <ScrollView style={styles.resultsContainer}>
               <View style={styles.section}>
                 <Text style={styles.label}>Current Loading Tool:</Text>
                 <Text style={styles.value}>
@@ -113,22 +119,28 @@ const Results = ({ navigation }) => {
                 <View style={styles.checkboxContainer}>
                   <CheckBox
                     disabled={false}
-                    value={toggleCheckBox}
+                    value={isMetricChecked}
                     boxType="square"
                     onValueChange={newValue => setIsMetricChecked(newValue)}
                     lineWidth={1}
+                    style={styles.checkbox}
+                    onTintColor={appStyles.primaryColor}
+                    onCheckColor={appStyles.primaryColor}
                   />
-                  <Text style={styles.value}>Metric</Text>
+                  <Text style={styles.checkboxLabel}>Metric</Text>
                 </View>
                 <View style={styles.checkboxContainer}>
                   <CheckBox
                     disabled={false}
-                    value={toggleCheckBox}
+                    value={isVolumeChecked}
                     boxType="square"
-                    onValueChange={newValue => setToggleCheckBox(newValue)}
+                    onValueChange={newValue => setIsVolumeChecked(newValue)}
                     lineWidth={1}
+                    style={styles.checkbox}
+                    onTintColor={appStyles.primaryColor}
+                    onCheckColor={appStyles.primaryColor}
                   />
-                  <Text style={styles.value}>Volume</Text>
+                  <Text style={styles.checkboxLabel}>Volume</Text>
                 </View>
               </View>
               <View style={styles.divider} />
@@ -136,9 +148,21 @@ const Results = ({ navigation }) => {
               <View style={styles.section}>
                 <Text style={styles.label}>Productivity:</Text>
                 <Text style={styles.value}>
-                  {isMetricChecked
-                    ? `${data?.result?.load_size?.metric} Tonnes/hr`
-                    : `${data?.result?.load_size?.us} Tons/hr`}
+                  {isMetricChecked &&
+                    !isVolumeChecked &&
+                    `${data?.result?.load_size?.metric} Tonnes/hr`}
+
+                  {!isMetricChecked &&
+                    !isVolumeChecked &&
+                    `${data?.result?.load_size?.us} Tons/hr`}
+
+                  {!isMetricChecked &&
+                    isVolumeChecked &&
+                    `${data?.result?.load_size?.us} bcy/hr`}
+
+                  {isMetricChecked &&
+                    isVolumeChecked &&
+                    `${data?.result?.load_size?.metric} bcm/hr`}
                 </Text>
               </View>
               <View style={styles.section}>
@@ -151,14 +175,26 @@ const Results = ({ navigation }) => {
               </View>
               <View style={styles.divider} />
               <Text style={styles.sectionHeader}>Truck Dependent Fleet</Text>
-              {data?.result?.trucks.map((truck, idx) => (
+              {data?.result?.trucks?.slice(1)?.map((truck, idx) => (
                 <View style={styles.section} key={idx}>
                   <Text style={styles.label}>{truck?.name}:</Text>
                   <Text style={styles.value}>
-                    {isMetricChecked
-                      ? `${truck?.value_metric} Tonnes/hr`
-                      : `${truck?.value_us} Tons/hr`}{" "}
-                    (96%)
+                    {isMetricChecked &&
+                      !isVolumeChecked &&
+                      `${truck?.value_metric} Tonnes/hr`}
+
+                    {!isMetricChecked &&
+                      !isVolumeChecked &&
+                      `${truck?.value_us} Tons/hr`}
+
+                    {!isMetricChecked &&
+                      isVolumeChecked &&
+                      `${truck?.value_us} bcy/hr`}
+
+                    {isMetricChecked &&
+                      isVolumeChecked &&
+                      `${truck?.value_metric} bcm/hr`}
+                 
                   </Text>
                 </View>
               ))}
@@ -178,7 +214,7 @@ const Results = ({ navigation }) => {
                   {data?.result?.tons_per_scoop?.us} Tons/pass
                 </Text>
               )}
-            </ViewShot>
+            </ScrollView>
 
             <Button btnText="Graphical View" onPress={handleGraphicalView} />
 

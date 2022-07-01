@@ -36,11 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Photo</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo</string>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NotoSans-Black.ttf</string>

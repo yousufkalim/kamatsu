@@ -63,5 +63,28 @@ export const styles = StyleSheet.create({
   image: {
     height: hp(70),
     width: wp(80)
+  },
+  loading: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  loadingText: {
+    color: appStyles.primaryColor,
+    fontFamily: appStyles.FONT_FAMILY_MEDIUM,
+    fontSize: 22,
+    marginTop: 30
+  },
+  checkbox: {
+    height: 20,
+    width: 20,
+    color: appStyles.primaryColor,
+
+  },
+  checkboxLabel: {
+    fontFamily: appStyles.FONT_FAMILY_REGULAR,
+    fontSize: 14,
+    paddingVertical: 7,
+    marginLeft: 10
   }
 })
