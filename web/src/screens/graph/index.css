@@ -1,0 +1,171 @@
+.graph-checkboxes-container {
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.graph-checkboxes-container div label {
+    margin-left: 10px;
+}
+.btn_div{
+    margin-top: 1rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+/* checkboc */
+.checkbox{
+    height: 17px;
+    width: 17px;
+    margin-right: 13px; 
+    cursor: pointer;
+}
+input[type=checkbox]{
+    accent-color: #2D2F8A;
+    outline: #2D2F8A;
+}
+/* Chart */
+.chart-container {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+.chart-header {
+    position: relative;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.chart-header h2 {
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'Noto Sans', sans-serif;
+    color: #2D2F8A;
+}
+
+.chart-header ul {
+    position: absolute;
+    right: 10%;
+    top: 10px;
+    list-style: none;
+}
+
+.bullet {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.bullet.orange {
+    background-color: orange;
+}
+
+.bullet.blue {
+    color: blue !important;
+}
+
+.bullet.green {
+    background-color: green;
+}
+
+/* Chart body */
+.chart-body {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 350px;
+}
+
+.chart-body div:first-child {
+    flex-basis: 4%;
+    height: 100%;
+    position: relative;
+}
+
+.chart-body p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    text-align: center;
+    transform-origin: 0 0;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+}
+
+.chart-body div:last-child {
+    flex-basis: 96%;
+}
+
+#graph {
+    width: 100% !important;
+}
+
+/* Chart footer */
+.chart-footer {
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+}
+@media only screen and (max-width: 1490px) {
+    .graph-checkboxes-container{
+        width: 20%;
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    .graph-checkboxes-container{
+        width: 25%;
+    }
+    .checkbox{
+        margin-right: 9px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .graph-checkboxes-container{
+        width: 25%;
+    }
+    .checkbox{
+        margin-right: 5px;
+    }
+}
+@media only screen and (max-width: 890px) {
+    .graph-checkboxes-container{
+        width: 30%;
+    }
+    .checkbox{
+        margin-right: 5px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .graph-checkboxes-container{
+        width: 34%;
+    }
+    .checkbox{
+        margin-right: 5px;
+    }
+    .chart-body p{
+        font-size: 0.8rem;
+    }
+    .chart-footer{
+        padding: 15px 0;
+    }
+    .chart-footer p{
+        font-size: 0.8rem;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+}
+
+@media only screen and (max-width: 480px) {
+}

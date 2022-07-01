@@ -6,6 +6,104 @@
     background-color: #F6F6F6;
 }
 
-.reusltLabel {
+.value{
+    font-size: 1rem;
+}
+.label{
+    font-size: 1rem;
+    font-weight: 500;
     color: #A1A1A1;
+}
+.title{
+font-size: 20px;
+font-weight: 500;
+}
+
+.unit_selection_checkbox_div{
+    margin-left: 2rem;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.checkbox{
+    margin-right: 15px; 
+    cursor: pointer;
+}
+input[type=checkbox]{
+    accent-color: #2D2F8A;
+    outline: #2D2F8A;
+}
+
+
+.unit_selection_div{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+}
+
+
+@media only screen and (max-width: 1440px) {
+    .unit_selection_checkbox_div{
+        width: 20%;
+    }
+    .value{
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 1166px) {
+    .unit_selection_checkbox_div{
+        width: 25%;
+    }
+    .title{
+        font-size: 18px;
+    }
+
+}
+
+@media only screen and (max-width: 992px) {
+    .unit_selection_checkbox_div{
+        width: 30%;
+    }
+    .title{
+        font-size: 17px;
+    }
+    .value{
+        font-size: 0.9rem;
+    }
+    .label{
+        font-size: 0.9rem;
+    }
+    .checkbox_text{
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 798px) {
+    .unit_selection_checkbox_div{
+        width: 35%;
+    }
+    .title{
+        font-size: 16px;
+    }
+    .value{
+        font-size: 0.8rem;
+    }
+    .label{
+        font-size: 0.8rem;
+    }
+    .checkbox_text{
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (max-width: 521px) {
+    .unit_selection_checkbox_div{
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
 }

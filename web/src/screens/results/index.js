@@ -1,12 +1,18 @@
 import { DashboardButton } from "../../components/Button"
+import * as html2canvas from "html2canvas"
 import DashboardFrame from "../dashboard"
 import "./index.css"
+import { useState, useEffect } from "react"
+import logo from "../../assets/logo.png"
+import jsPdf from "jspdf"
+import { Store, UpdateStore } from "../../StoreContext"
+
 
 const ResultValue = ({ label, value }) => {
   return (
     <div className="flex mb-6">
-      <h4 className="resultLabel font-normal">{label}:</h4>
-      <h4 className="ml-4">{value}</h4>
+      <label className="font-normal label">{label}:</label>
+      <label className="ml-4 value">{value}</label>
     </div>
   )
 }
@@ -21,35 +27,146 @@ const Line = () => {
 
 const Title = ({ title }) => {
   return (
-    <h4 className="text-[20px] leading-[27px] font-medium mb-6">{title}</h4>
+    <>
+      <h4 className="text-[20px] leading-[27px] font-medium mb-6 title">{title}</h4>
+    </>
   )
 }
 
 const Body = () => {
+  const [metric, setMetric] = useState(false)
+  const [volume, setVolume] = useState(false)
+  const [loadingToolName, setLoadingToolName] = useState("")
+
+  const {
+    loadingTool,
+    haulingTool,
+    unit,
+    loadingToolOptions,
+    ldNumberOfTrucks,
+    ldUnitPerCostHour,
+    trucks,
+    tonsPerScope,
+    scopePerLoad,
+    haulagePerWeight
+  } = Store()
+  useEffect(() => {
+    handleLoadingName()
+  }, [])
+  const handleLoadingName = () => {
+    const name = loadingToolOptions.find((item) => {
+      return item?.value === loadingTool
+    })?.label
+    setLoadingToolName(name)
+  } 
+  const HandleMetricChange = e => {
+    if (e.target.checked === true) {
+      setMetric(true)
+      setVolume(false)
+    } else {
+      setMetric(false)
+    }
+  }
+  const HandleVolumeChange = e => {
+    if (e.target.checked === true) {
+      setVolume(true)
+      setMetric(false)
+    } else {
+      setVolume(false)
+    }
+  }
+  const printPDF = () => {
+    const domElement = document.getElementById("resultBox");
+    html2canvas(domElement, {
+      onclone: document => {
+        document.getElementById("print").style.visibility = "hidden";
+      }
+    }).then(canvas => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPdf();
+      pdf.setFillColor(40, 43, 56);
+      pdf.addImage(logo, "PNG", 65, 15, 80, 15);
+      // first from Left
+      // second from Top
+      // Third from width
+      // Fourth from heigth
+      pdf.addImage(imgData, "JPEG", 10, 50, 250, 100);
+      pdf.save(`${new Date().toISOString()}.pdf`);
+    });
+  };
+  useEffect(() => {
+    if (unit === "metric") {
+      setMetric(true)
+      setVolume(false)
+    } else if (unit === "us") {
+      setVolume(true)
+      setMetric(false)
+    }
+  }, [unit])
   return (
     <div>
-      <div className="bg-white p-10 rounded-md">
+      <div className="bg-white p-10 rounded-md" id="resultBox">
         <div>
-          <ResultValue label="Current Loading Tool" value="WA470" />
-          <ResultValue label="Current Hauling Tool" value="HM300" />
+          <ResultValue label="Current Loading Tool" value={loadingToolName} />
+          <ResultValue label="Current Hauling Tool" value={haulingTool} />
           <Line />
         </div>
-        <div className="">
-          <ResultValue label="Unit Selection" />
+        <div className="unit_selection_div">
+          <p className="label">Unit Selection : </p>
+          <div className="unit_selection_checkbox_div">
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <input
+                checked={metric}
+                type="checkbox"
+                onChange={HandleMetricChange}
+                className="checkbox"
+              />
+              <p className="checkbox_text">Metric</p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <input
+                checked={volume}
+                type="checkbox"
+                onChange={HandleVolumeChange}
+                className="checkbox"
+              />
+              <p className="checkbox_text">Volume</p>
+            </div>
+          </div>
           <Line />
         </div>
         <div>
           <div className="flex">
             <div className="w-1/2">
               <Title title="Loader Dependent Fleet" />
-              <ResultValue label="Productivity" value="571 tons/hr" />
-              <ResultValue label="Trucks Required" value="6" />
+              {metric === true ?
+                <>
+                  <ResultValue label="Productivity" value={`${haulagePerWeight?.metric} tons/hr`} />
+                  <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.metric} />
+                </> :
+                volume === true ?
+                  <>
+
+                    <ResultValue label="Productivity" value={`${haulagePerWeight?.us} tons/hr`} />
+                    <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.us} />
+                  </>
+                  : ""} 
             </div>
             <div>
+
               <Title title="Truck Dependent Fleet" />
-              <ResultValue label="5 Trucks" value="548 tons/hr (96%)" />
-              <ResultValue label="4 Trucks" value="440 tons/hr (77%)" />
-              <ResultValue label="3 Trucks" value="331 tons/hr (58%)" />
+              {trucks.map((item) => {
+                return metric === true ?
+                  <>
+                    <ResultValue label={item.name} value={`${item.value_metric} tons/hr (${item.percentage}%)`} />
+                  </> :
+                  volume === true ?
+                    <>
+                      <ResultValue label={item.name} value={`${item.value_us} tons/hr (${item.percentage}%)`} />
+                    </>
+                    : ""
+              })}
+
             </div>
           </div>
           <div>
@@ -58,21 +175,33 @@ const Body = () => {
         </div>
         <div>
           <Title title="Key Fleet Performance Components" />
-          <p>3 passes @ 8.6 tons/pass</p>
+
+          {metric === true ?
+            <>
+              <p className="checkbox_text">{scopePerLoad.metric} passes @ {tonsPerScope.metric}tons/pass</p>
+
+            </> :
+            volume === true ?
+              <>
+                <p className="checkbox_text">{scopePerLoad.us} passes @ {tonsPerScope.us}tons/pass</p>
+              </>
+              : ""}
         </div>
       </div>
       <div className="flex justify-end gap-2 mt-8">
         <DashboardButton
           text="Graphical View"
-          backgroundColor="red"
+          backgroundColor="yellow"
           textColor="black"
-          url=""
+          url="/graphical-view"
         />
         <DashboardButton
+          id="print"
           text="Save Results"
           backgroundColor="blue"
           textColor="white"
           url=""
+          onClick={printPDF}
         />
       </div>
     </div>
@@ -80,7 +209,13 @@ const Body = () => {
 }
 
 const Results = () => {
-  return <DashboardFrame title="Results" body={<Body />} />
+  return (
+    <DashboardFrame
+      title="Results"
+      body={<Body />}
+      backButtonURL="/parameters"
+    />
+  )
 }
 
 export default Results

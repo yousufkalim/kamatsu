@@ -21,7 +21,10 @@ const Form = () => {
     loadingTools,
     haulingTools,
     haulingToolOptions,
-    loadingToolOptions
+    loadingToolOptions,
+    loadingToolCostPerHour,
+    haulingToolCostPerHour
+
   } = Store()
   const updateStore = UpdateStore()
   const [loadingToolsIsLoading, setLoadingToolsIsLoading] = useState(true)
@@ -32,7 +35,7 @@ const Form = () => {
   const fetchLoadingTools = () => {
     axios
       .get(`${baseURL}hat/loading-tools/`)
-      .then(res =>
+      .then((res) => {
         updateStore({
           loadingToolOptions: res.data?.map(a => ({
             value: a.id,
@@ -40,6 +43,7 @@ const Form = () => {
           })),
           loadingTools: res.data
         })
+      }
       )
       .then(setLoadingToolsIsLoading(false))
   }
@@ -69,6 +73,7 @@ const Form = () => {
         updateStore({
           bucketFill: res.data.bucket_fill,
           cycleTime: res.data.cycle_time_second,
+          loadingToolCostPerHour: parseFloat(res.data.cost_per_hour).toFixed(1),
           bucketSize:
             unit === "metric"
               ? parseFloat(res.data.metric_standard.bucket_size_m3).toFixed(1)
@@ -97,7 +102,11 @@ const Form = () => {
     }
 
     updateStore({
-      nomPayload: parseFloat(weight).toFixed(1) || ""
+      haulingTool: e,
+      nomPayload: parseFloat(weight).toFixed(1) || "",
+      haulingToolCostPerHour: parseFloat(
+        haulingTools.filter(a => a.name === e)[0]?.cost_per_hour
+      ).toFixed(1)
     })
   }
 
@@ -171,10 +180,34 @@ const Form = () => {
     },
     {
       label: "US Customary",
-      value: "customary"
+      value: "us"
     }
   ]
 
+  // const handleVerifySiteFleet = async () => {
+  //   await axios
+  //     .post(`${baseURL}hat/verify/fleet-definition/`, {
+  //       unit_selection: unit,
+  //       loading_tool: {
+  //         name: loadingTool,
+  //         cycle_time_second: cycleTime,
+  //         bucket_fill: bucketFill,
+  //         bucket_size: bucketSize,
+  //         cost_per_hour: loadingToolCostPerHour
+  //       },
+  //       hauling_tool: {
+  //         name: haulingTool,
+  //         capacity_ton: nomPayload,
+  //         cost_per_hour: haulingToolCostPerHour
+  //       }
+  //     })
+  //     .then(res => {
+  //       console.log("---> verification responce", res)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
   return (
     <div>
       <div className="w-1/2 gap-8 md:w-1/4 mb-6">
@@ -266,7 +299,6 @@ const Form = () => {
             <DropDown
               options={haulingToolOptions}
               onChange={e => {
-                updateStore({ haulingTool: e.value })
                 onHaulingToolChange(e.value)
               }}
               defaultValue={
@@ -289,7 +321,7 @@ const Form = () => {
             />
           </div>
         </div>
-        <div className="flex justify-center md:justify-end mb-12">
+        <div className="flex justify-center md:justify-end mb-8">
           <DashboardButton
             text="Reset Truck"
             backgroundColor="yellow"
@@ -310,6 +342,7 @@ const Form = () => {
               !nomPayload ||
               !haulingTool
             }
+            // onClick={handleVerifySiteFleet}
             url="/parameters"
           />
         </div>

@@ -3,8 +3,6 @@ import DashboardFrame from "../dashboard"
 import { Input, InputContainer, CustomSelect } from "../../components/Input"
 import { DashboardButton } from "../../components/Button"
 import DropDown from "../../components/Dropdown"
-import ParametersContext from "../../context/ParametersContext"
-import { useContext } from "react"
 import "./index.css"
 import DensityPopupIcon from "../../assets/density-popup.svg"
 import Modal from "react-modal"
@@ -26,9 +24,6 @@ const customStyles = {
     overflow: "scroll",
     height: "80%",
     className: "modal-class",
-    //   position:'relaive',
-
-    //   backgroundColor: "#000",
     overlay: {
       background: "#000"
     }
@@ -43,24 +38,43 @@ const Form = () => {
     },
     {
       label: "US Customary",
-      value: "customary"
+      value: "us"
     }
   ]
 
   const [densityPopupOpen, setDensityPopupOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [apiDensities, setApiDensities] = useState([])
+  const [loadingToolName, setLoadingToolName] = useState("")
 
   const {
+    loadingTool,
+    cycleTime,
+    bucketFill,
+    bucketSize,
+    haulingTool,
+    nomPayload,
     materialDensity,
     truckSpotTime,
     operatorEfficiency,
     estRoundTripTravel,
     materialSwell,
     unit,
-    parameters_unit
+    parameters_unit,
+    loadingToolCostPerHour,
+    haulingToolCostPerHour,
+    loadingToolOptions,
   } = Store()
 
+  useEffect(() => {
+    handleLoadingName()
+  }, [])
+  const handleLoadingName = () => {
+    const name = loadingToolOptions.find((item) => {
+      return item?.value === loadingTool
+    })?.label
+    setLoadingToolName(name)
+  } 
   const updateStore = UpdateStore()
 
   const fetchSiteDensities = async () => {
@@ -131,6 +145,52 @@ const Form = () => {
           materialDensity: (parseFloat(materialDensity) * 1.6856).toFixed(1)
         })
       }
+    }
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(`${baseURL}hat/result-preview/`, {
+        fleet_definition: {
+          unit_selection: unit,
+          loading_tool: {
+            name: loadingToolName,
+            cycle_time_second: cycleTime,
+            bucket_fill: bucketFill,
+            bucket_size: bucketSize,
+            cost_per_hour: loadingToolCostPerHour
+          },
+          hauling_tool: {
+            name: haulingTool,
+            capacity_ton: nomPayload,
+            cost_per_hour: haulingToolCostPerHour
+          },
+        },
+        site_parameters: {
+          material_denstiy: materialDensity,
+          material_density: materialDensity,
+          truck_sport_time_sec: truckSpotTime,
+          est_round_trip_travel_time: estRoundTripTravel,
+          operator_efficiency: operatorEfficiency,
+          material_swell: materialSwell
+        }
+
+      }).then((res) => {
+        updateStore({
+          haulagePerhour: res.data.result.haulage_per_hour,
+          haulagePerWeight: res.data.result.haulage_per_hour_weight,
+          ldNumberOfTrucks: res.data.result.ld_number_of_trucks,
+          ldUnitPerCostHour: res.data.result.ld_unit_cost_per_hour,
+          loadSize: res.data.result.load_size,
+          minutesPerLoad: res.data.result.minutes_per_load,
+          scopePerLoad: res.data.result.scoops_per_load,
+          tonsPerScope: res.data.result.tons_per_scoop,
+          unitsPerHours: res.data.result.units_per_hour,
+          trucks: res.data.result.trucks,
+        })
+      })
+    } catch (err) {
+      console.log("Api error: ", err)
     }
   }
 
@@ -295,9 +355,10 @@ const Form = () => {
             <DashboardButton
               text="Next"
               backgroundColor="blue"
-              className="mb-6"
+              className="mb-6 next"
               textColor="white"
-              url=""
+              url="/result"
+              onClick={handleSubmit}
             />
           </div>
         </div>

@@ -29,6 +29,7 @@ export function StoreProvider({ children }) {
     haulingTools: [],
     haulingToolOptions: [],
     loadingToolOptions: [],
+    loadingToolCostPerHour: "",
 
     // permanent values
     parameters_unit: "metric",
@@ -36,7 +37,20 @@ export function StoreProvider({ children }) {
     truckSpotTime: "",
     operatorEfficiency: "",
     estRoundTripTravel: "",
-    materialSwell: ""
+    materialSwell: "",
+    haulingToolCostPerHour: "",
+
+    //result page 
+    haulagePerhour: "",
+    haulagePerWeight: "",
+    ldNumberOfTrucks: "",
+    ldUnitPerCostHour: "",
+    loadSize: "",
+    minutesPerLoad: "",
+    scopePerLoad: "",
+    tonsPerScope: "",
+    unitsPerHours: "",
+    trucks: [],
   })
 
   const updateStore = data => {
