@@ -91,7 +91,7 @@ const MobileMenu = ({ mobileMenuIsOpen, onClickOuterSpace }) => {
         <div>
           <div>
             <div className="mt-14 mb-8">
-              <img src={MobileLogoBlue} alt="" />
+              <img src={MobileLogoBlue} />
             </div>
             <div className="mb-8">
               <h4 className="text-body leading-smaller font-normal">
@@ -155,7 +155,7 @@ const DashboardFrame = ({
         <div className="">
           <div className="top-bar px-8 flex items-center">
             <Link to="/">
-              <img src={Logo} alt="" />
+              <img src={Logo} className="" />
             </Link>
           </div>
           <div className="py-6">
@@ -188,7 +188,7 @@ const DashboardFrame = ({
           <div>
             {!homePage && (
               <Link to={backButtonURL}>
-                <img src={BackArrow} alt="" />
+                <img src={BackArrow} />
               </Link>
             )}
           </div>
@@ -210,18 +210,18 @@ const DashboardFrame = ({
           <div>
             {!homePage && (
               <Link to="/fleet-definition">
-                <img src={BackArrow} alt="" />
+                <img src={BackArrow} />
               </Link>
             )}
           </div>
 
           <div >
             <Link to="/">
-              <img src={MobileLogoBlue} alt="" />
+              <img src={MobileLogoBlue} />
             </Link>
           </div>
           <div >
-            <img src={Hamburger} onClick={() => setMobileMenuIsOpen(true)} alt="" />
+            <img src={Hamburger} onClick={() => setMobileMenuIsOpen(true)} />
           </div>
         </div>
         <div className="px-4 md:px-12 py-1">

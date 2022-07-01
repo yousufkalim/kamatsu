@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import DashboardFrame from "../dashboard"
-import { Input } from "../../components/Input"
+import { Input, InputContainer, CustomSelect } from "../../components/Input"
 import { DashboardButton } from "../../components/Button"
 import DropDown from "../../components/Dropdown"
 import "./index.css"
@@ -66,6 +66,9 @@ const Form = () => {
     loadingToolOptions,
   } = Store()
 
+  useEffect(() => {
+    handleLoadingName()
+  }, [])
   const handleLoadingName = () => {
     const name = loadingToolOptions.find((item) => {
       return item?.value === loadingTool
@@ -112,7 +115,6 @@ const Form = () => {
   useEffect(() => {
     fetchSiteDensities()
     fetchSiteParameters()
-    handleLoadingName()
   }, [])
 
   const handleInput = e => {
@@ -148,7 +150,7 @@ const Form = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post(`${baseURL}hat/result-preview/`, {
+      const response = await axios.post(`${baseURL}hat/result-preview/`, {
         fleet_definition: {
           unit_selection: unit,
           loading_tool: {
@@ -197,7 +199,7 @@ const Form = () => {
       <div className="bg-white p-5">
         <div className="flex justify-end">
           <img
-            alt=""
+            className=""
             src={CloseModal}
             onClick={() => setDensityPopupOpen(false)}
           />
@@ -285,7 +287,6 @@ const Form = () => {
                 className="inline"
                 src={DensityPopupIcon}
                 onClick={() => setDensityPopupOpen(true)}
-                alt=""
               />
             </label>
             <Input
@@ -349,6 +350,7 @@ const Form = () => {
               backgroundColor="yellow"
               className="mb-6"
               onClick={fetchSiteParameters}
+              url=""
             />
             <DashboardButton
               text="Next"
