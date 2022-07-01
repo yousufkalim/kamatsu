@@ -22,5 +22,25 @@ export const styles = StyleSheet.create({
   nextBtn: {
     flex: 1,
     alignSelf: "flex-end"
+  },
+  sectionCheckbox: {
+    flexDirection: "row",
+    paddingVertical: 10
+  },
+  checkbox: {
+    height: 20,
+    width: 20,
+    color: appStyles.primaryColor
+  },
+  checkboxLabel: {
+    fontFamily: appStyles.FONT_FAMILY_REGULAR,
+    fontSize: 14,
+    paddingVertical: 7,
+    marginLeft: 10
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: wp(40)
   }
 })
