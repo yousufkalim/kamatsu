@@ -1,4 +1,4 @@
-import logo from "./logo.svg"
+
 import "./App.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Landing from "./screens/landing"
@@ -9,12 +9,10 @@ import Feedback from "./screens/feedback"
 import Results from "./screens/results"
 import Parameters from "./screens/parameters"
 import Graph from "./screens/graph"
-
 import { ParametersProvider } from "./context/ParametersContext"
 import { FleetProvider } from "./context/FleetContext"
 import { useContext } from "react"
 import { Toaster } from "react-hot-toast"
-import Chart from "../src/components/LineChart"
 
 function App() {
   return (

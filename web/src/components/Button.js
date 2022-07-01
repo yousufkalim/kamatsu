@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import "./index.css"
 import { Link } from "react-router-dom"
 import Modal from "react-modal"
@@ -62,7 +62,7 @@ export const Button = ({
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={() => setIsShown(false)}
         >
-          <img className="mr-4" src={icon} />
+          <img className="mr-4" src={icon} alt="" />
           {isShown && comingSoon ? "Coming Soon" : text}
         </button>
       </Link>

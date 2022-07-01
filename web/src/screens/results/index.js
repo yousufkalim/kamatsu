@@ -5,7 +5,7 @@ import "./index.css"
 import { useState, useEffect } from "react"
 import logo from "../../assets/logo.png"
 import jsPdf from "jspdf"
-import { Store, UpdateStore } from "../../StoreContext"
+import { Store } from "../../StoreContext"
 
 
 const ResultValue = ({ label, value }) => {
@@ -44,7 +44,6 @@ const Body = () => {
     unit,
     loadingToolOptions,
     ldNumberOfTrucks,
-    ldUnitPerCostHour,
     trucks,
     tonsPerScope,
     scopePerLoad,
