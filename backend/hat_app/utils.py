@@ -158,22 +158,28 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
     metric = 0
     if unit == 'us':
         material_density_metric = lbyd3_to_kgm3(material_density)
-        divided_by_us = (float(material_density) * float(1 + material_swell / 100) * haulage_per_hour_weight.get('us'))
-        divided_by_metric = (
-                material_density_metric * float(1 + material_swell / 100) * haulage_per_hour_weight.get('metric'))
-        if divided_by_us > 0:
-            us = 2000 / divided_by_us
-        if divided_by_metric > 0:
-            metric = 1000 / divided_by_metric
+        # divided_by_us = (float(material_density) * float(1 + material_swell / 100) * haulage_per_hour_weight.get('us'))
+        # print('divided_by_us', divided_by_us)
+        us = 2000 / (float(material_density) * float(1 + material_swell / 100)) * haulage_per_hour_weight.get('us')
+        metric = 1000 / (material_density_metric * float(1 + material_swell / 100)) * haulage_per_hour_weight.get('metric')
+        # divided_by_metric = (
+        #         material_density_metric * float(1 + material_swell / 100) * haulage_per_hour_weight.get('metric'))
+        # if divided_by_us > 0:
+        #     us = 2000 / divided_by_us
+        # if divided_by_metric > 0:
+        #     metric = 1000 / divided_by_metric
     elif unit == 'metric':
         material_density_us = kgm3_to_lbyd3(material_density)
-        divided_by_us = (material_density_us * float(1 + (material_swell / 100)) * haulage_per_hour_weight.get('us'))
-        divided_by_metric = (
-                float(material_density) * float(1 + material_swell / 100) * haulage_per_hour_weight.get('metric'))
-        if divided_by_us > 0:
-            us = 2000 / divided_by_us
-        if divided_by_metric > 0:
-            metric = 1000 / divided_by_metric
+        # divided_by_us = (material_density_us * float(1 + (material_swell / 100)) * haulage_per_hour_weight.get('us'))
+        # divided_by_metric = (
+        #         float(material_density) * float(1 + material_swell / 100) * haulage_per_hour_weight.get('metric'))
+        # if divided_by_us > 0:
+        #     us = 2000 / divided_by_us
+        # if divided_by_metric > 0:
+        #     metric = 1000 / divided_by_metric
+
+        us = 2000 / (material_density_us * float(1 + material_swell / 100)) * haulage_per_hour_weight.get('us')
+        metric = 1000 / (float(material_density) * float(1 + material_swell / 100)) * haulage_per_hour_weight.get('metric')
 
     # if round(us) == 0:
     #     # print('us 0')
@@ -187,8 +193,10 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
     print(f'{us:.8f}')
     print(f'{metric:.8f}')
     data = {
-        'us': float(f'{round(us)}'),
-        'metric': float(f'{round(metric)}'),
+        # 'us': float(f'{round(us)}'),
+        # 'metric': float(f'{round(metric)}'),
+        'us': float(f'{us:.1f}'),
+        'metric': float(f'{metric:.1f}'),
         'us_without_volume': haulage_per_hour_weight.get('us'),
         'metric_without_volume': haulage_per_hour_weight.get('metric')
     }
@@ -314,7 +322,7 @@ def get_ld_unit_cost_per_hour(loading_tool, hauling_tool, ld_number_of_trucks, h
         print(err)
         cost_without_volume = 0
 
-    # print(cost)
+    print(cost_with_volume)
     data = {
         'cost': float(f'{cost_with_volume:.2f}'),
         'cost_without_volume': float(f'{cost_without_volume:.2f}'),
@@ -404,3 +412,12 @@ def get_result_preview(fleet_definition, site_parameters):
 #     if isVolume:
 #         return round(2000 / (MaterialDensity * (1 + MaterialSwell)) * haulagePerHourWeight)
 #     return haulagePerHourWeight
+
+
+# Set(haulagePerHour, If(Units.isVolume,
+#     Round(2000/(2700*1.20)*760)))
+#
+#
+# haulagePerHour = If(Units.isVolume,
+#     Round(2000/(2700*1.20)*760, 0),
+#     haulagePerHourWeight)
