@@ -88,8 +88,6 @@ const Form = () => {
       `${baseURL}hat/defaults/screens/site-parameters/`
     )
 
-    console.log(parameters_unit)
-
     const density =
       parameters_unit === "metric"
         ? (parseFloat(site_parameters.data.material_density) / 1.6856).toFixed(
@@ -176,6 +174,7 @@ const Form = () => {
         }
 
       }).then((res) => {
+        console.log("-->", res.data.result, "<--")
         updateStore({
           haulagePerhour: res.data.result.haulage_per_hour,
           haulagePerWeight: res.data.result.haulage_per_hour_weight,
