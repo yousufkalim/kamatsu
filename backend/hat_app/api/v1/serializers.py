@@ -58,6 +58,13 @@ class FleetDefinitionLoadingToolSerializer(serializers.Serializer):
 
     cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
 
+    def validate_name(self, name):
+        try:
+            LoadingTool.objects.get(name=name)
+        except LoadingTool.DoesNotExist:
+            raise serializers.ValidationError(_(f'Loading Tool not found with this name: {name}.'))
+        return name
+
     def validate(self, attrs):
         name = attrs.get('name')
         cost_per_hour = LoadingTool.objects.get(name=name).cost_per_hour
@@ -69,6 +76,13 @@ class FleetDefinitionHaulingToolSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=32)
     capacity_ton = serializers.DecimalField(max_digits=10, decimal_places=1)
     cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
+
+    def validate_name(self, name):
+        try:
+            HaulingTool.objects.get(name=name)
+        except LoadingTool.DoesNotExist:
+            raise serializers.ValidationError(_(f'Hauling Tool not found with this name: {name}.'))
+        return name
 
     def validate(self, attrs):
         name = attrs.get('name')
