@@ -3,6 +3,13 @@ import { WebView } from "react-native-webview"
 import React, { useRef, useState } from "react"
 import CheckBox from "@react-native-community/checkbox"
 import { useSelector } from "react-redux"
+import {
+  VictoryLine,
+  VictoryChart,
+  VictoryTheme,
+  VictoryLabel,
+  VictoryAxis
+} from "victory-native"
 
 import * as appStyles from "../../../../utils/appStyles"
 import { Layout } from "../../../../components/Layout"
@@ -13,12 +20,6 @@ import { styles } from "./styles"
 const GraphicalView = () => {
   const webviewRef = useRef()
 
-  var data = [
-    [10, 250],
-    [11, 200],
-    [12, 150]
-  ]
-
   const unitStateValue = useSelector(state => state.unitState.unitSite)
 
   const [isMetricChecked, setIsMetricChecked] = useState(
@@ -26,29 +27,11 @@ const GraphicalView = () => {
   )
   const [isVolumeChecked, setIsVolumeChecked] = useState(false)
 
-  function sendDataToWebView() {
-    webviewRef.current.postMessage("message")
-  }
-
   return (
     <Layout>
       <Header showBack />
       <View style={styles.container}>
         <Text style={styles.title}>Graphical View</Text>
-        {/* <TouchableOpacity
-          onPress={() => sendDataToWebView()}
-          style={{
-            padding: 20,
-            width: 300,
-            marginTop: 100,
-            backgroundColor: "#6751ff",
-            alignItems: "center"
-          }}
-        >
-          <Text style={{ fontSize: 20, color: "white" }}>
-            Send Data To WebView / Website
-          </Text>
-        </TouchableOpacity> */}
 
         <View style={styles.sectionCheckbox}>
           <View style={styles.checkboxContainer}>
@@ -80,20 +63,71 @@ const GraphicalView = () => {
         </View>
 
         <View style={styles.chart}>
-          {/* <WebView
-            originWhitelist={["*"]}
-            source={require("../../../../resources/chart.html")}
-          /> */}
-          <WebView
-            source={require("../../../../resources/chart.html")}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            startInLoadingState={true}
-            ref={webviewRef}
-            scalesPageToFit={false}
-            mixedContentMode="compatibility"
-            // onMessage={onMessage}
-          />
+          <VictoryChart
+            theme={VictoryTheme.material}
+            minDomain={{ y: 0, x: 0 }}
+            domainPadding={{ x: 30 }}
+          >
+            <VictoryLabel text={"LD= 250 bcm/hr"} x={60} y={40} />
+
+            <VictoryLine
+              style={{
+                data: { stroke: "#FF8C00" },
+                parent: { border: "1px solid #ccc" }
+              }}
+              data={[
+                { x: 10, y: 10 },
+                { x: 9, y: 20 },
+                { x: 8, y: 30 },
+                { x: 7, y: 40 },
+                { x: 6, y: 50 },
+                { x: 5, y: 60 },
+                { x: 0, y: 60 }
+              ]}
+            />
+
+            <VictoryLine
+              style={{
+                data: { stroke: "#0000FF" },
+                parent: { border: "1px solid #ccc" }
+              }}
+              data={[
+                { x: 12, y: 10 },
+                { x: 11, y: 20 },
+                { x: 10, y: 30 },
+                { x: 9, y: 40 },
+                { x: 8, y: 50 },
+                { x: 7, y: 60 },
+                { x: 5, y: 60 }
+              ]}
+            />
+
+            <VictoryLine
+              style={{
+                data: { stroke: "#008000" },
+                parent: { border: "1px solid #ccc" }
+              }}
+              data={[
+                { x: 14, y: 10 },
+                { x: 13, y: 20 },
+                { x: 12, y: 30 },
+                { x: 11, y: 40 },
+                { x: 10, y: 50 },
+                { x: 9, y: 60 },
+                { x: 7, y: 60 }
+              ]}
+            />
+
+            <VictoryAxis
+              label="Round Trip Travel Time (minutes)"
+              style={{ axisLabel: { padding: 30 } }}
+            />
+            <VictoryAxis
+              dependentAxis
+              label="Fleet productivity (bcm/hr)"
+              style={{ axisLabel: { padding: 30 } }}
+            />
+          </VictoryChart>
         </View>
 
         <Button isPrimary btnText="Save Results" />
