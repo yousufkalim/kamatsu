@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
   },
   chart: {
     flex: 1,
-    backgroundColor: "red"
   },
   title: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
