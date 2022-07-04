@@ -41,15 +41,15 @@ export function StoreProvider({ children }) {
     haulingToolCostPerHour: "",
 
     //result page 
-    haulagePerhour: "",
-    haulagePerWeight: "",
-    ldNumberOfTrucks: "",
-    ldUnitPerCostHour: "",
+    haulagePerhour: {},
+    haulagePerWeight: {},
+    ldNumberOfTrucks: {},
+    ldUnitPerCostHour: {},
     loadSize: {},
-    minutesPerLoad: "",
-    scopePerLoad: "",
-    tonsPerScope: "",
-    unitsPerHours: "",
+    minutesPerLoad: {},
+    scopePerLoad: {},
+    tonsPerScope: {},
+    unitsPerHours: {},
     trucks: [],
   })
 

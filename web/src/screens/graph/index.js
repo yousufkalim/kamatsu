@@ -3,9 +3,36 @@ import Chart from "chart.js/auto"
 import DashboardFrame from "../dashboard"
 import "./index.css"
 import { DashboardButton } from "../../components/Button"
+import { Store } from "../../StoreContext"
 const Body = () => {
   const [metric, setMetric] = useState(false)
   const [volume, setVolume] = useState(false)
+  console.log("metric", metric)
+  console.log("volume", volume)
+  const [loadingToolName, setLoadingToolName] = useState("")
+  const {
+    estRoundTripTravel,
+    haulagePerhour,
+    loadingToolOptions,
+    haulingTool,
+    unit,
+    loadingTool,
+    trucks,
+  } = Store()
+  console.log("-->", haulagePerhour)
+  useEffect(() => {
+    handleLoadingName()
+  }, [])
+
+  // func for finding name of loadingTool againist it's ID
+  const handleLoadingName = () => {
+    const name = loadingToolOptions.find((item) => {
+      return item?.value === loadingTool
+    })?.label
+    setLoadingToolName(name)
+  }
+
+// func for metric checkbox
   const HandleMetricChange = e => {
     if (e.target.checked === true) {
       setMetric(true)
@@ -13,6 +40,7 @@ const Body = () => {
       setMetric(false)
     }
   }
+// func for volume checkbox
   const HandleVolumeChange = e => {
     if (e.target.checked === true) {
       setVolume(true)
@@ -21,11 +49,14 @@ const Body = () => {
     }
   }
   useEffect(() => {
-    const ctx = document.getElementById("graph").getContext("2d")
-    let labels = [
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
 
-    ]
+    let InMinute = []
+    for (let i = 1; i <= estRoundTripTravel; i++) {
+      InMinute.push(i.toString())
+    }
+
+    const ctx = document.getElementById("graph").getContext("2d")
+    let labels = InMinute
     // Line Chart
     new Chart(ctx, {
       type: "line",
@@ -48,7 +79,6 @@ const Body = () => {
             data: [5000, 5000, 4000, 3000, 2000, 1000],
             backgroundColor: "transparent",
             borderColor: "#0000FF",
-            borderDash: [],
             borderWidth: 2,
             pointRadius: 0,
             hitRadius: 10,
@@ -89,6 +119,8 @@ const Body = () => {
               callback: function (value, index, array) {
                 return value < 1000 ? value : value / 1000 + "K"
               }
+            }, grid: {
+              display: false
             }
           },
           x: {
@@ -125,22 +157,31 @@ const Body = () => {
       </div>
       <div className="chart-container">
         <div className="chart-header">
-          <h2>WA470 x HM300</h2>
-          <ul>
+          <h2>{loadingToolName} x {haulingTool}</h2>
+          {trucks.map((item, index) => {
+            return <ul>
             <li>
-              <span className="bullet orange" /> 5 Trucks
-            </li>
-            <li>
-              <span className="bullet blue" /> 6 Trucks
-            </li>
-            <li>
-              <span className="bullet green" /> 7 Trucks
+                {index === 0 ? <span className="bullet orange" /> : ""}
+                {index === 1 ? <span className="bullet blue" /> : ""}
+                {index === 2 ? <span className="bullet green" /> : ""}
+                {item.name}
             </li>
           </ul>
+          })}
+
         </div>
         <div className="chart-body">
           <div className="chart_left_text">
-            <p>Fleet productivity (bcm/hr)</p>
+            {metric && !volume ?
+              <p>Fleet productivity (Tonnes/hr)</p>
+              : !metric && volume ?
+                <p>Fleet productivity (bcy/hr)</p>
+                : !metric && !volume ?
+                  <p>Fleet productivity (Tons/hr)</p>
+                  : metric && volume ?
+                    <p>Fleet productivity (bcm/hr)</p>
+                    : ""}
+
           </div>
           <div className="wrapper">
             <canvas id="graph" height="350px" ></canvas>

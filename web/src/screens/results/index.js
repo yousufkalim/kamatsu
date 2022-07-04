@@ -47,8 +47,7 @@ const Body = () => {
     trucks,
     tonsPerScope,
     scopePerLoad,
-    haulagePerWeight,
-    loadSize
+    haulagePerhour
   } = Store()
   useEffect(() => {
     handleLoadingName()
@@ -96,9 +95,7 @@ const Body = () => {
   useEffect(() => {
     if (unit === "metric") {
       setMetric(true)
-      setVolume(false)
     } else if (unit === "us") {
-      setVolume(true)
       setMetric(false)
     }
   }, [unit])
@@ -138,45 +135,30 @@ const Body = () => {
           <div className="flex">
             <div className="w-1/2">
               <Title title="Loader Dependent Fleet" />
-              {metric === true && volume === false ?
-                <>
-                  <ResultValue label="Productivity" value={`${loadSize?.metric} Tonnes/hr`} />
-                </> :
-                metric === false && volume === true ?
-                  <>
-
-                    <ResultValue label="Productivity" value={`${loadSize?.us} bcy/hr`} />
-
-                  </>
-                  : metric === false && volume === false ?
-                    <>
-
-                      <ResultValue label="Productivity" value={`${loadSize?.us} Tons/hr`} />
-
-                    </>
-                    : metric === true && volume === true ?
-                      <>
-
-                        <ResultValue label="Productivity" value={`${loadSize?.metric} bcm/hr`} />
-                  </>
+              {metric && !volume ?
+                <ResultValue label="Productivity" value={`${haulagePerhour?.metric_without_volume} Tonnes/hr`} />
+                : !metric && volume ?
+                  <ResultValue label="Productivity" value={`${haulagePerhour?.us} bcy/hr`} />
+                  : !metric && !volume ?
+                    <ResultValue label="Productivity" value={`${haulagePerhour?.us_without_volume} Tons/hr`} />
+                    : metric && volume ?
+                      <ResultValue label="Productivity" value={`${haulagePerhour?.metric} bcm/hr`} />
                   : ""} 
-              <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.us} />
+              {metric ?
+                <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.metric} />
+                :
+                <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.us} />
+              }
             </div>
             <div>
-
               <Title title="Truck Dependent Fleet" />
               {trucks.map((item) => {
-                return metric === true ?
-                  <>
-                    <ResultValue label={item.name} value={`${item.value_metric} Tonnes/hr (${item.percentage}%)`} />
-                  </> :
-                  metric === false ?
-                    <>
-                      <ResultValue label={item.name} value={`${item.value_us} Tons/hr (${item.percentage}%)`} />
-                    </>
+                return metric ?
+                  <ResultValue label={item.name} value={`${item.value_metric} Tonnes/hr (${item.percentage}%)`} /> 
+                  : !metric ?
+                    <ResultValue label={item.name} value={`${item.value_us} Tons/hr (${item.percentage}%)`} />
                     : ""
               })}
-
             </div>
           </div>
           <div>
@@ -186,17 +168,11 @@ const Body = () => {
         <div>
           <Title title="Key Fleet Performance Components" />
 
-          {metric === true ?
-            <>
+          {metric ?
               <p className="checkbox_text">{scopePerLoad.metric} passes @ {parseFloat(tonsPerScope.metric).toFixed(1)} Tonnes/pass</p>
-
-            </> :
-            metric === false ?
-              <>
-                <p className="checkbox_text">{scopePerLoad.us} passes @ {parseFloat(tonsPerScope.us).toFixed(1)} Tons/pass</p>
-              </>
+            : !metric ?
+              <p className="checkbox_text">{scopePerLoad.us} passes @ {parseFloat(tonsPerScope.us).toFixed(1)} Tons/pass</p>
               : ""}
-          {/* parseFloat(res.data.metric_standard.bucket_size_m3).toFixed(1) */}
         </div>
       </div>
       <div className="flex justify-end gap-2 mt-8">
