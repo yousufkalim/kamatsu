@@ -4,25 +4,34 @@ import DashboardFrame from "../dashboard"
 import "./index.css"
 import { DashboardButton } from "../../components/Button"
 import { Store } from "../../StoreContext"
+import faker from 'faker';
 const Body = () => {
   const [metric, setMetric] = useState(false)
   const [volume, setVolume] = useState(false)
-  console.log("metric", metric)
-  console.log("volume", volume)
   const [loadingToolName, setLoadingToolName] = useState("")
   const {
     estRoundTripTravel,
     haulagePerhour,
     loadingToolOptions,
     haulingTool,
-    unit,
+    parameters_unit,
     loadingTool,
     trucks,
   } = Store()
-  console.log("-->", haulagePerhour)
   useEffect(() => {
     handleLoadingName()
+    if (loadingToolName === "" && haulingTool === "") {
+      window.location = "/fleet-definition"
+    }
   }, [])
+
+  useEffect(() => {
+    if (parameters_unit === "metric") {
+      setMetric(true)
+    } else if (parameters_unit === "us") {
+      setMetric(false)
+    }
+  }, [parameters_unit])
 
   // func for finding name of loadingTool againist it's ID
   const handleLoadingName = () => {
@@ -52,7 +61,7 @@ const Body = () => {
 
     let InMinute = []
     for (let i = 1; i <= estRoundTripTravel; i++) {
-      InMinute.push(i.toString())
+      InMinute.push(i)
     }
 
     const ctx = document.getElementById("graph").getContext("2d")
@@ -65,8 +74,8 @@ const Body = () => {
         datasets: [
           {
             label: "",
-            fill: false,
-            data: [6000, 6000, 5000, 4000, 3000, 2000, 1000],
+            // fill: false,
+            data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
             backgroundColor: "transparent",
             borderColor: "#008000",
             borderWidth: 2,
@@ -76,7 +85,7 @@ const Body = () => {
           },
           {
             label: "",
-            data: [5000, 5000, 4000, 3000, 2000, 1000],
+            data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
             backgroundColor: "transparent",
             borderColor: "#0000FF",
             borderWidth: 2,
@@ -86,24 +95,13 @@ const Body = () => {
           },
           {
             label: "",
-            fill: false,
-            lineTension: 0.1,
+            data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
             backgroundColor: "transparent",
             borderColor: "#FF8C00",
-            borderCapStyle: "butt",
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: "miter",
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointHoverBorderWidth: 2,
+            hitRadius: 10,
+            borderWidth: 2,
             pointRadius: 1,
-            pointHitRadius: 10,
-            data: [4000, 4000, 3000, 2000, 1000]
+            hoverRadius: 10,
           }
         ]
       },
@@ -119,7 +117,8 @@ const Body = () => {
               callback: function (value, index, array) {
                 return value < 1000 ? value : value / 1000 + "K"
               }
-            }, grid: {
+            },
+            grid: {
               display: false
             }
           },
@@ -139,7 +138,7 @@ const Body = () => {
         <div className="graph-checkboxes-container">
           <div>
             <input type="checkbox"
-              value={metric}
+              checked={metric}
               onChange={HandleMetricChange}
               className="checkbox"
             />
@@ -147,7 +146,7 @@ const Body = () => {
           </div>
           <div>
             <input type="checkbox"
-              value={volume}
+              checked={volume}
               onChange={HandleVolumeChange}
               className="checkbox"
             />

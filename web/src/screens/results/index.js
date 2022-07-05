@@ -41,7 +41,7 @@ const Body = () => {
   const {
     loadingTool,
     haulingTool,
-    unit,
+    parameters_unit,
     loadingToolOptions,
     ldNumberOfTrucks,
     trucks,
@@ -51,6 +51,9 @@ const Body = () => {
   } = Store()
   useEffect(() => {
     handleLoadingName()
+    if (loadingToolName === "" && haulingTool === "") {
+      window.location = "/fleet-definition"
+    }
   }, [])
   const handleLoadingName = () => {
     const name = loadingToolOptions.find((item) => {
@@ -93,12 +96,12 @@ const Body = () => {
     });
   };
   useEffect(() => {
-    if (unit === "metric") {
+    if (parameters_unit === "metric") {
       setMetric(true)
-    } else if (unit === "us") {
+    } else if (parameters_unit === "us") {
       setMetric(false)
     }
-  }, [unit])
+  }, [parameters_unit])
   return (
     <div>
       <div className="bg-white p-10 rounded-md" id="resultBox">
