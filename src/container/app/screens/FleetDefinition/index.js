@@ -15,6 +15,7 @@ import { Layout } from "../../../../components/Layout"
 import { Input } from "../../../../components/Input"
 import { Select } from "../../../../components/Select"
 import { Button } from "../../../../components/Button"
+import { validateInputNumber } from "../../../../utils/validateInput"
 
 import { styles } from "./styles"
 
@@ -32,9 +33,13 @@ const FleetDefinition = ({ navigation }) => {
   const [bucketFill, setBucketFill] = useState("")
   const [payload, setPayload] = useState("")
 
+  const [cycleTimeErr, setCycleTimeErr] = useState("")
+  const [bucketSizeErr, setBucketSizeErr] = useState("")
+  const [bucketFillErr, setBucketFillErr] = useState("")
+  const [payloadErr, setPayloadErr] = useState("")
+
   const { loadingTools, isLoading } = useGetLoadingTool()
-  const { verifyFleetDefinition, isVerifying, isSuccess } =
-    useVerifyFleetDefinition()
+  const { verifyFleetDefinition, isVerifying } = useVerifyFleetDefinition()
 
   const units = [
     { label: "Metric", value: "Metric" },
@@ -42,8 +47,30 @@ const FleetDefinition = ({ navigation }) => {
   ]
 
   const handleNext = async () => {
-    console.log("selectedLoadingTool", selectedLoadingTool)
-    console.log("unitStateValue", unitStateValue)
+    if (!validateInputNumber(cycleTime)) {
+      setCycleTimeErr("Invalid cycle time")
+      return
+    }
+    setCycleTimeErr("")
+
+    if (!validateInputNumber(bucketSize)) {
+      setBucketSizeErr("Invalid bucket size")
+      return
+    }
+    setBucketSizeErr("")
+
+    if (!validateInputNumber(bucketFill)) {
+      setBucketFillErr("Invalid bucket fill")
+      return
+    }
+    setBucketFillErr("")
+
+    if (!validateInputNumber(payload)) {
+      setPayloadErr("Invalid nom. payload")
+      return
+    }
+    setPayloadErr("")
+
     const values = {
       unit_selection: unitStateValue?.value === "Metric" ? "metric" : "us",
       loading_tool: {
@@ -166,6 +193,7 @@ const FleetDefinition = ({ navigation }) => {
             inputLabel="Cycle Time (Sec) "
             value={cycleTime}
             setValue={value => handleChangeInputFloat(value, setCycleTime)}
+            errorMessage={cycleTimeErr}
           />
         </View>
         <View style={styles.inputGroup}>
@@ -173,6 +201,7 @@ const FleetDefinition = ({ navigation }) => {
             inputLabel="Bucket Fill (%)"
             value={bucketFill}
             setValue={value => handleChangeInputFloat(value, setBucketFill)}
+            errorMessage={bucketFillErr}
           />
           <Input
             inputLabel={`Bucket Size ${
@@ -180,6 +209,7 @@ const FleetDefinition = ({ navigation }) => {
             }`}
             value={bucketSize}
             setValue={value => handleChangeInputFloat(value, setBucketSize)}
+            errorMessage={bucketSizeErr}
           />
         </View>
 
@@ -202,6 +232,7 @@ const FleetDefinition = ({ navigation }) => {
             }`}
             value={payload}
             setValue={value => handleChangeInputFloat(value, setPayload)}
+            errorMessage={payloadErr}
           />
         </View>
         <View style={styles.btnSpacer}>

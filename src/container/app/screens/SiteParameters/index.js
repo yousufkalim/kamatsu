@@ -16,6 +16,7 @@ import { Button } from "../../../../components/Button"
 import Modal from "../../../../components/Modal"
 import { setUnitSiteAction } from "../../redux/unit/actions"
 import { MaterialDensity } from "../../../../components/MaterialDensity"
+import { validateInputNumber } from "../../../../utils/validateInput"
 import { styles } from "./styles"
 
 const SiteParameters = ({ navigation }) => {
@@ -35,6 +36,13 @@ const SiteParameters = ({ navigation }) => {
   const [operatorEfficiency, setOperatorEfficiency] = useState("50")
   const [truckSpotTime, setTruckSpotTime] = useState("15")
   const [roundTripTravelTime, setRoundTripTravelTime] = useState("10")
+
+  const [materialDensityErr, setMaterialDensityErr] = useState("")
+  const [materialSwellErr, setMaterialSwellErr] = useState("")
+  const [operatorEfficiencyErr, setOperatorEfficiencyErr] = useState("")
+  const [truckSpotTimeErr, setTruckSpotTimeErr] = useState("")
+  const [roundTripTravelTimeErr, setRoundTripTravelTimeErr] = useState("")
+
   const [modalVisible, setModalVisible] = useState(false)
 
   const units = [
@@ -43,6 +51,36 @@ const SiteParameters = ({ navigation }) => {
   ]
 
   const handleNext = async () => {
+    if (!validateInputNumber(materialDensity)) {
+      setMaterialDensityErr("Invalid material density")
+      return
+    }
+    setMaterialDensityErr("")
+
+    if (!validateInputNumber(materialSwell)) {
+      setMaterialSwellErr("Invalid material swell")
+      return
+    }
+    setMaterialSwellErr("")
+
+    if (!validateInputNumber(operatorEfficiency)) {
+      setOperatorEfficiencyErr("Invalid operator efficiency")
+      return
+    }
+    setOperatorEfficiencyErr("")
+
+    if (!validateInputNumber(truckSpotTime)) {
+      setTruckSpotTimeErr("Invalid truck spot time")
+      return
+    }
+    setTruckSpotTimeErr("")
+
+    if (!validateInputNumber(roundTripTravelTime)) {
+      setRoundTripTravelTimeErr("Invalid round trip travel time")
+      return
+    }
+    setRoundTripTravelTimeErr("")
+
     const values = {
       unit_selection: unitStateValue?.value === "Metric" ? "metric" : "us",
       material_density: parseFloat(materialDensity),
@@ -137,11 +175,13 @@ const SiteParameters = ({ navigation }) => {
             symbol={
               unitStateValue?.value === "Metric" ? "(kg/lcm)" : "(lbs/lcy)"
             }
+            errorMessage={materialDensityErr}
           />
           <Input
             inputLabel="Material Swell (%)"
             value={materialSwell}
             setValue={value => handleChangeInputFloat(value, setMaterialSwell)}
+            errorMessage={materialSwellErr}
           />
         </View>
 
@@ -152,11 +192,13 @@ const SiteParameters = ({ navigation }) => {
               handleChangeInputFloat(value, setOperatorEfficiency)
             }
             value={operatorEfficiency}
+            errorMessage={operatorEfficiencyErr}
           />
           <Input
             inputLabel="Truck Spot Time (sec)"
             setValue={value => handleChangeInputFloat(value, setTruckSpotTime)}
             value={truckSpotTime}
+            errorMessage={truckSpotTimeErr}
           />
         </View>
         <Text style={{ ...styles.roundTripTxt, marginBottom: -10 }}>
@@ -169,6 +211,7 @@ const SiteParameters = ({ navigation }) => {
               handleChangeInputFloat(value, setRoundTripTravelTime)
             }
             value={roundTripTravelTime}
+            errorMessage={roundTripTravelTimeErr}
           />
           <Button btnText="Default" halfWidthBtn onPress={loadDefaults} />
         </View>
