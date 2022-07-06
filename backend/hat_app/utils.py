@@ -192,8 +192,8 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
     #     'us': float(f'{us:.1f}'),
     #     'metric': float(f'{metric:.1f}')
     # }
-    print(f'{us:.8f}')
-    print(f'{metric:.8f}')
+    # print(f'{us:.8f}')
+    # print(f'{metric:.8f}')
     data = {
         # 'us': float(f'{round(us)}'),
         # 'metric': float(f'{round(metric)}'),
@@ -206,7 +206,7 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
     return data
 
 
-def get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load, load_size, haulage_per_hour_weight,
+def get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load, load_size,
                                 ld_number_of_trucks, unit):
     operator_efficiency = float(site_parameters.get('operator_efficiency'))
     truck_sport_time_sec = site_parameters.get('truck_sport_time_sec')
@@ -240,20 +240,15 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
     # ld_number_of_trucks_metric = math.ceil(ld_number_of_trucks.get('metric'))
     truck_haulage_first_us = get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load,
                                                          load_size,
-                                                         haulage_per_hour_weight,
                                                          ld_number_of_trucks_us, unit='us')
-    # truck_haulage_first_us_with_volume = get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load,
-    #                                                                  load_size,
-    #                                                                  haulage_per_hour,
-    #                                                                  ld_number_of_trucks_us, unit='us')
-    # print('truck_haulage_first_us_with_volume:', truck_haulage_first_us_with_volume)
 
     truck_haulage_first_metric = get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load,
                                                              load_size,
-                                                             haulage_per_hour_weight,
                                                              ld_number_of_trucks_us, unit='metric')
 
     truck_haulage_first_percentage = (100 / haulage_per_hour_weight.get('us')) * truck_haulage_first_us
+    is_volume_us = (truck_haulage_first_percentage / 100) * haulage_per_hour.get('us')
+    is_volume_metric = (truck_haulage_first_percentage / 100) * haulage_per_hour.get('metric')
     try:
         cost_per_ton = unit_cost_per_hour(
             loader_cost_per_hour=loading_tool.get('cost_per_hour'),
@@ -273,6 +268,10 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
         'name': f'{ld_number_of_trucks_us - 1} Trucks',
         'value_us': float(f'{truck_haulage_first_us:.1f}'),
         'value_metric': float(f'{truck_haulage_first_metric:.1f}'),
+        'is_volume': {
+            'us': round(float(f'{is_volume_us:.0f}')),
+            'metric': round(float(f'{is_volume_metric:.0f}')),
+        },
         'percentage': float(f'{truck_haulage_first_percentage:.0f}'),
         'cost_per_ton': cost_per_ton,
     })
@@ -287,7 +286,8 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
                 minus_number)
 
             percentage = (100 / haulage_per_hour_weight.get('us')) * truck_haulage_us
-
+            is_volume_us = (percentage / 100) * haulage_per_hour.get('us')
+            is_volume_metric = (percentage / 100) * haulage_per_hour.get('metric')
             try:
                 cost_per_ton = unit_cost_per_hour(
                     loader_cost_per_hour=loading_tool.get('cost_per_hour'),
@@ -306,6 +306,10 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
                 'name': f'{minus_number} Trucks',
                 'value_us': float(f'{truck_haulage_us:.1f}'),
                 'value_metric': float(f'{truck_haulage_metric:.1f}'),
+                'is_volume': {
+                    'us': round(float(f'{is_volume_us:.0f}')),
+                    'metric': round(float(f'{is_volume_metric:.0f}')),
+                },
                 'percentage': float(f'{percentage:.0f}'),
                 'cost_per_ton': cost_per_ton,
             })
