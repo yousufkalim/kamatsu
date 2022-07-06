@@ -266,8 +266,8 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
     us.append({
         'item': ld_number_of_trucks_us - 1,
         'name': f'{ld_number_of_trucks_us - 1} Trucks',
-        'value_us': float(f'{truck_haulage_first_us:.1f}'),
-        'value_metric': float(f'{truck_haulage_first_metric:.1f}'),
+        'us': float(f'{truck_haulage_first_us:.1f}'),
+        'metric': float(f'{truck_haulage_first_metric:.1f}'),
         'is_volume': {
             'us': round(float(f'{is_volume_us:.0f}')),
             'metric': round(float(f'{is_volume_metric:.0f}')),
@@ -304,8 +304,8 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
             us.append({
                 'item': minus_number,
                 'name': f'{minus_number} Trucks',
-                'value_us': float(f'{truck_haulage_us:.1f}'),
-                'value_metric': float(f'{truck_haulage_metric:.1f}'),
+                'us': float(f'{truck_haulage_us:.1f}'),
+                'metric': float(f'{truck_haulage_metric:.1f}'),
                 'is_volume': {
                     'us': round(float(f'{is_volume_us:.0f}')),
                     'metric': round(float(f'{is_volume_metric:.0f}')),
@@ -436,8 +436,23 @@ def get_result_preview(fleet_definition, site_parameters):
         'minutes_per_load': minutes_per_load,
         'load_size': load_size,
         'haulage_per_hour_weight': haulage_per_hour_weight,
-        'haulage_per_hour': haulage_per_hour,
-        'ld_unit_cost_per_hour': ld_unit_cost_per_hour,
+        # 'haulage_per_hour': haulage_per_hour,
+        'haulage_per_hour': {
+            'us': haulage_per_hour.get('us_without_volume'),
+            'metric': haulage_per_hour.get('metric_without_volume'),
+            'is_volume': {
+                'us': haulage_per_hour.get('us'),
+                'metric': haulage_per_hour.get('metric'),
+            }
+        },
+        'ld_unit_cost_per_hour': {
+            'us': ld_unit_cost_per_hour.get('cost_us_without_volume'),
+            'metric': ld_unit_cost_per_hour.get('cost_metric_without_volume'),
+            'is_volume': {
+                'us': ld_unit_cost_per_hour.get('cost_us_with_volume'),
+                'metric': ld_unit_cost_per_hour.get('cost_metric_with_volume'),
+            }
+        },
         'ld_number_of_trucks': ld_number_of_trucks,
         'trucks': minus_truck_list,
     }
