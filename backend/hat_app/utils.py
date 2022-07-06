@@ -161,7 +161,8 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
         # divided_by_us = (float(material_density) * float(1 + material_swell / 100) * haulage_per_hour_weight.get('us'))
         # print('divided_by_us', divided_by_us)
         us = 2000 / (float(material_density) * float(1 + material_swell / 100)) * haulage_per_hour_weight.get('us')
-        metric = 1000 / (material_density_metric * float(1 + material_swell / 100)) * haulage_per_hour_weight.get('metric')
+        metric = 1000 / (material_density_metric * float(1 + material_swell / 100)) * haulage_per_hour_weight.get(
+            'metric')
         # divided_by_metric = (
         #         material_density_metric * float(1 + material_swell / 100) * haulage_per_hour_weight.get('metric'))
         # if divided_by_us > 0:
@@ -179,7 +180,8 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
         #     metric = 1000 / divided_by_metric
 
         us = 2000 / (material_density_us * float(1 + material_swell / 100)) * haulage_per_hour_weight.get('us')
-        metric = 1000 / (float(material_density) * float(1 + material_swell / 100)) * haulage_per_hour_weight.get('metric')
+        metric = 1000 / (float(material_density) * float(1 + material_swell / 100)) * haulage_per_hour_weight.get(
+            'metric')
 
     # if round(us) == 0:
     #     # print('us 0')
@@ -190,8 +192,8 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
     #     'us': float(f'{us:.1f}'),
     #     'metric': float(f'{metric:.1f}')
     # }
-    print(f'{us:.8f}')
-    print(f'{metric:.8f}')
+    # print(f'{us:.8f}')
+    # print(f'{metric:.8f}')
     data = {
         # 'us': float(f'{round(us)}'),
         # 'metric': float(f'{round(metric)}'),
@@ -204,7 +206,7 @@ def get_haulage_per_hour(material_density, material_swell, haulage_per_hour_weig
     return data
 
 
-def get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load, load_size, haulage_per_hour_weight,
+def get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load, load_size,
                                 ld_number_of_trucks, unit):
     operator_efficiency = float(site_parameters.get('operator_efficiency'))
     truck_sport_time_sec = site_parameters.get('truck_sport_time_sec')
@@ -228,40 +230,68 @@ def get_minus_truck_haulage_from_one(minus_one_haulage, ld_number_of_trucks, ite
     return float(f'{minus_haulage:.2f}')
 
 
+def selected_number_of_trucks_ld_rttt(number_of_trucks, minutes_per_load, loading_tool, scoops_per_load, unit='us'):
+    cycle_time_second = loading_tool.get('cycle_time_second')
+
+    value = number_of_trucks * minutes_per_load.get('us') - (
+            float(cycle_time_second / 60) * (scoops_per_load.get('us') - 1)) - (6 / 60)
+    return value
+
+
 def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per_load, load_size,
-                         haulage_per_hour_weight, haulage_per_hour, ld_number_of_trucks, unit='us'):
+                         haulage_per_hour_weight, haulage_per_hour, ld_number_of_trucks,
+                         minutes_per_load, unit='us'):
     us = []
+    # print(haulage_per_hour_weight)
+    # print(haulage_per_hour)
     # metric = []
     ld_number_of_trucks_us = math.ceil(ld_number_of_trucks.get('us'))
     # ld_number_of_trucks_metric = math.ceil(ld_number_of_trucks.get('metric'))
     truck_haulage_first_us = get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load,
                                                          load_size,
-                                                         haulage_per_hour_weight,
                                                          ld_number_of_trucks_us, unit='us')
 
     truck_haulage_first_metric = get_truck_haulage_minus_one(loading_tool, site_parameters, scoops_per_load,
                                                              load_size,
-                                                             haulage_per_hour_weight,
                                                              ld_number_of_trucks_us, unit='metric')
 
     truck_haulage_first_percentage = (100 / haulage_per_hour_weight.get('us')) * truck_haulage_first_us
+    is_volume_us = (truck_haulage_first_percentage / 100) * haulage_per_hour.get('us')
+    is_volume_metric = (truck_haulage_first_percentage / 100) * haulage_per_hour.get('metric')
+
+    max_ld_rttt = selected_number_of_trucks_ld_rttt(
+        number_of_trucks=ld_number_of_trucks_us - 1,
+        minutes_per_load=minutes_per_load,
+        loading_tool=loading_tool,
+        scoops_per_load=scoops_per_load
+    )
+    print(round(max_ld_rttt, 1))
     try:
         cost_per_ton = unit_cost_per_hour(
             loader_cost_per_hour=loading_tool.get('cost_per_hour'),
             hauling_cost_per_hour=loading_tool.get('cost_per_hour'),
             number_of_trucks=ld_number_of_trucks_us - 1,
-            haulage_per_hour=truck_haulage_first_us
+            haulage_per_hour_us=truck_haulage_first_us,
+            haulage_per_hour_metric=truck_haulage_first_metric
         )
     except Exception:
-        cost_per_ton = 0
+        cost_per_ton = {
+            'us': 0,
+            'metric': 0,
+        }
 
     us.append({
         'item': ld_number_of_trucks_us - 1,
         'name': f'{ld_number_of_trucks_us - 1} Trucks',
-        'value_us': float(f'{truck_haulage_first_us:.1f}'),
-        'value_metric': float(f'{truck_haulage_first_metric:.1f}'),
+        'us': float(f'{truck_haulage_first_us:.1f}'),
+        'metric': float(f'{truck_haulage_first_metric:.1f}'),
+        'is_volume': {
+            'us': round(float(f'{is_volume_us:.0f}')),
+            'metric': round(float(f'{is_volume_metric:.0f}')),
+        },
         'percentage': float(f'{truck_haulage_first_percentage:.0f}'),
-        'cost_per_ton': float(f'{cost_per_ton:.2f}'),
+        'cost_per_ton': cost_per_ton,
+        'max_ld_rttt': float(f'{max_ld_rttt:.1f}'),
     })
     for item in range(1, ld_number_of_trucks_us - 1):
         # print(item, ld_number_of_trucks_us)
@@ -274,23 +304,42 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
                 minus_number)
 
             percentage = (100 / haulage_per_hour_weight.get('us')) * truck_haulage_us
+            is_volume_us = (percentage / 100) * haulage_per_hour.get('us')
+            is_volume_metric = (percentage / 100) * haulage_per_hour.get('metric')
 
+            max_ld_rttt = selected_number_of_trucks_ld_rttt(
+                number_of_trucks=minus_number,
+                minutes_per_load=minutes_per_load,
+                loading_tool=loading_tool,
+                scoops_per_load=scoops_per_load
+            )
+            print(max_ld_rttt)
+            print(math.ceil(max_ld_rttt))
             try:
                 cost_per_ton = unit_cost_per_hour(
                     loader_cost_per_hour=loading_tool.get('cost_per_hour'),
                     hauling_cost_per_hour=loading_tool.get('cost_per_hour'),
                     number_of_trucks=minus_number,
-                    haulage_per_hour=truck_haulage_us
+                    haulage_per_hour_us=truck_haulage_us,
+                    haulage_per_hour_metric=truck_haulage_metric
                 )
             except Exception:
-                cost_per_ton = 0
+                cost_per_ton = {
+                    'us': 0,
+                    'metric': 0,
+                }
             us.append({
                 'item': minus_number,
                 'name': f'{minus_number} Trucks',
-                'value_us': float(f'{truck_haulage_us:.1f}'),
-                'value_metric': float(f'{truck_haulage_metric:.1f}'),
+                'us': float(f'{truck_haulage_us:.1f}'),
+                'metric': float(f'{truck_haulage_metric:.1f}'),
+                'is_volume': {
+                    'us': round(float(f'{is_volume_us:.0f}')),
+                    'metric': round(float(f'{is_volume_metric:.0f}')),
+                },
                 'percentage': float(f'{percentage:.0f}'),
-                'cost_per_ton': float(f'{cost_per_ton:.2f}'),
+                'cost_per_ton': cost_per_ton,
+                'max_ld_rttt': float(f'{max_ld_rttt:.1f}'),
             })
         if item >= 3:
             print('break on:', item)
@@ -301,31 +350,46 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
     return us
 
 
-def unit_cost_per_hour(loader_cost_per_hour, hauling_cost_per_hour, number_of_trucks, haulage_per_hour):
-    return (float(loader_cost_per_hour) + (float(hauling_cost_per_hour) * number_of_trucks)) / haulage_per_hour
+def unit_cost_per_hour(loader_cost_per_hour, hauling_cost_per_hour, number_of_trucks, haulage_per_hour_us,
+                       haulage_per_hour_metric):
+    us = (float(loader_cost_per_hour) + (float(hauling_cost_per_hour) * number_of_trucks)) / haulage_per_hour_us
+    metric = (float(loader_cost_per_hour) + (float(hauling_cost_per_hour) * number_of_trucks)) / haulage_per_hour_metric
+    return {
+        'us': float(f'{us:.2f}'),
+        'metric': float(f'{metric:.2f}')
+    }
 
 
 def get_ld_unit_cost_per_hour(loading_tool, hauling_tool, ld_number_of_trucks, haulage_per_hour):
     loader_cost_per_hour = loading_tool.get('cost_per_hour')
     hauling_cost_per_hour = hauling_tool.get('cost_per_hour')
     try:
-        cost_with_volume = (float(loader_cost_per_hour) + (
+        cost_us_with_volume = (float(loader_cost_per_hour) + (
                 float(hauling_cost_per_hour) * ld_number_of_trucks.get('us'))) / haulage_per_hour.get('us')
+        cost_metric_with_volume = (float(loader_cost_per_hour) + (
+                float(hauling_cost_per_hour) * ld_number_of_trucks.get('us'))) / haulage_per_hour.get('metric')
     except Exception as err:
         print(err)
-        cost_with_volume = 0
+        cost_us_with_volume = 0
+        cost_metric_with_volume = 0
     try:
-        cost_without_volume = (float(loader_cost_per_hour) + (
+        cost_us_without_volume = (float(loader_cost_per_hour) + (
                 float(hauling_cost_per_hour) * ld_number_of_trucks.get('us'))) / haulage_per_hour.get(
             'us_without_volume')
+        cost_metric_without_volume = (float(loader_cost_per_hour) + (
+                float(hauling_cost_per_hour) * ld_number_of_trucks.get('us'))) / haulage_per_hour.get(
+            'metric_without_volume')
     except Exception as err:
         print(err)
-        cost_without_volume = 0
+        cost_us_without_volume = 0
+        cost_metric_without_volume = 0
 
-    print(cost_with_volume)
+    # print(cost_us_with_volume)
     data = {
-        'cost': float(f'{cost_with_volume:.2f}'),
-        'cost_without_volume': float(f'{cost_without_volume:.2f}'),
+        'cost_us_with_volume': float(f'{cost_us_with_volume:.2f}'),
+        'cost_metric_with_volume': float(f'{cost_metric_with_volume:.2f}'),
+        'cost_us_without_volume': float(f'{cost_us_without_volume:.2f}'),
+        'cost_metric_without_volume': float(f'{cost_metric_without_volume:.2f}'),
     }
     # print(data)
 
@@ -387,7 +451,8 @@ def get_result_preview(fleet_definition, site_parameters):
         load_size=load_size,
         haulage_per_hour_weight=haulage_per_hour_weight,
         haulage_per_hour=haulage_per_hour,
-        ld_number_of_trucks=ld_number_of_trucks
+        ld_number_of_trucks=ld_number_of_trucks,
+        minutes_per_load=minutes_per_load
     )
     ld_unit_cost_per_hour = get_ld_unit_cost_per_hour(loading_tool, hauling_tool, ld_number_of_trucks, haulage_per_hour)
 
@@ -400,13 +465,27 @@ def get_result_preview(fleet_definition, site_parameters):
         'minutes_per_load': minutes_per_load,
         'load_size': load_size,
         'haulage_per_hour_weight': haulage_per_hour_weight,
-        'haulage_per_hour': haulage_per_hour,
-        'ld_unit_cost_per_hour': ld_unit_cost_per_hour,
+        # 'haulage_per_hour': haulage_per_hour,
+        'haulage_per_hour': {
+            'us': haulage_per_hour.get('us_without_volume'),
+            'metric': haulage_per_hour.get('metric_without_volume'),
+            'is_volume': {
+                'us': haulage_per_hour.get('us'),
+                'metric': haulage_per_hour.get('metric'),
+            }
+        },
+        'ld_unit_cost_per_hour': {
+            'us': ld_unit_cost_per_hour.get('cost_us_without_volume'),
+            'metric': ld_unit_cost_per_hour.get('cost_metric_without_volume'),
+            'is_volume': {
+                'us': ld_unit_cost_per_hour.get('cost_us_with_volume'),
+                'metric': ld_unit_cost_per_hour.get('cost_metric_with_volume'),
+            }
+        },
         'ld_number_of_trucks': ld_number_of_trucks,
         'trucks': minus_truck_list,
     }
     return result
-
 
 # def haulagePerHour(isVolume, MaterialDensity, MaterialSwell, haulagePerHourWeight):
 #     if isVolume:
