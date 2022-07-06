@@ -265,7 +265,7 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
         loading_tool=loading_tool,
         scoops_per_load=scoops_per_load
     )
-    print(max_ld_rttt)
+    print(round(max_ld_rttt, 1))
     try:
         cost_per_ton = unit_cost_per_hour(
             loader_cost_per_hour=loading_tool.get('cost_per_hour'),
@@ -291,7 +291,7 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
         },
         'percentage': float(f'{truck_haulage_first_percentage:.0f}'),
         'cost_per_ton': cost_per_ton,
-        'max_ld_rttt': math.floor(max_ld_rttt),
+        'max_ld_rttt': float(f'{max_ld_rttt:.1f}'),
     })
     for item in range(1, ld_number_of_trucks_us - 1):
         # print(item, ld_number_of_trucks_us)
@@ -314,6 +314,7 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
                 scoops_per_load=scoops_per_load
             )
             print(max_ld_rttt)
+            print(math.ceil(max_ld_rttt))
             try:
                 cost_per_ton = unit_cost_per_hour(
                     loader_cost_per_hour=loading_tool.get('cost_per_hour'),
@@ -338,7 +339,7 @@ def get_minus_truck_list(loading_tool, hauling_tool, site_parameters, scoops_per
                 },
                 'percentage': float(f'{percentage:.0f}'),
                 'cost_per_ton': cost_per_ton,
-                'max_ld_rttt': math.floor(max_ld_rttt),
+                'max_ld_rttt': float(f'{max_ld_rttt:.1f}'),
             })
         if item >= 3:
             print('break on:', item)
