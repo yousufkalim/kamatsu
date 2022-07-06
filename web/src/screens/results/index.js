@@ -156,11 +156,15 @@ const Body = () => {
             <div>
               <Title title="Truck Dependent Fleet" />
               {trucks.map((item) => {
-                return metric ?
-                  <ResultValue label={item.name} value={`${item.value_metric} Tonnes/hr (${item.percentage}%)`} /> 
-                  : !metric ?
+                return metric && !volume ?
+                  <ResultValue label={item.name} value={`${item.value_metric} Tonnes/hr (${item.percentage}%)`} />
+                  : !metric && volume ?
+                    <ResultValue label={item.name} value={`${item.is_volume.us} bcy/hr (${item.percentage}%)`} />
+                    : !metric && !volume ?
                     <ResultValue label={item.name} value={`${item.value_us} Tons/hr (${item.percentage}%)`} />
-                    : ""
+                      : metric && volume ?
+                        <ResultValue label={item.name} value={`${item.is_volume.metric} bcm/hr (${item.percentage}%)`} /> 
+                        : "" 
               })}
             </div>
           </div>

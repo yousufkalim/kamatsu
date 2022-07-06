@@ -58,7 +58,6 @@ const Body = () => {
     }
   }
   useEffect(() => {
-
     let InMinute = []
     for (let i = 1; i <= estRoundTripTravel; i++) {
       InMinute.push(i)
@@ -74,7 +73,6 @@ const Body = () => {
         datasets: [
           {
             label: "",
-            // fill: false,
             data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
             backgroundColor: "transparent",
             borderColor: "#008000",
