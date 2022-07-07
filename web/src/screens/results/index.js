@@ -1,9 +1,9 @@
 import { DashboardButton } from "../../components/Button"
-import * as html2canvas from "html2canvas"
 import DashboardFrame from "../dashboard"
 import "./index.css"
 import { useState, useEffect } from "react"
 import logo from "../../assets/logo.png"
+import * as html2canvas from "html2canvas"
 import jsPdf from "jspdf"
 import { Store } from "../../StoreContext"
 
@@ -139,13 +139,13 @@ const Body = () => {
             <div className="w-1/2">
               <Title title="Loader Dependent Fleet" />
               {metric && !volume ?
-                <ResultValue label="Productivity" value={`${haulagePerhour?.metric_without_volume} Tonnes/hr`} />
+                <ResultValue label="Productivity" value={`${haulagePerhour?.metric} tonnes/hr`} />
                 : !metric && volume ?
-                  <ResultValue label="Productivity" value={`${haulagePerhour?.us} bcy/hr`} />
+                  <ResultValue label="Productivity" value={`${haulagePerhour?.is_volume?.us} bcy/hr`} />
                   : !metric && !volume ?
-                    <ResultValue label="Productivity" value={`${haulagePerhour?.us_without_volume} Tons/hr`} />
+                    <ResultValue label="Productivity" value={`${haulagePerhour?.us} tons/hr`} />
                     : metric && volume ?
-                      <ResultValue label="Productivity" value={`${haulagePerhour?.metric} bcm/hr`} />
+                      <ResultValue label="Productivity" value={`${haulagePerhour?.is_volume?.metric} bcm/hr`} />
                   : ""} 
               {metric ?
                 <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.metric} />
@@ -157,11 +157,11 @@ const Body = () => {
               <Title title="Truck Dependent Fleet" />
               {trucks.map((item) => {
                 return metric && !volume ?
-                  <ResultValue label={item.name} value={`${item.value_metric} Tonnes/hr (${item.percentage}%)`} />
+                  <ResultValue label={item.name} value={`${item.metric} tonnes/hr (${item.percentage}%)`} />
                   : !metric && volume ?
                     <ResultValue label={item.name} value={`${item.is_volume.us} bcy/hr (${item.percentage}%)`} />
                     : !metric && !volume ?
-                    <ResultValue label={item.name} value={`${item.value_us} Tons/hr (${item.percentage}%)`} />
+                      <ResultValue label={item.name} value={`${item.us} tons/hr (${item.percentage}%)`} />
                       : metric && volume ?
                         <ResultValue label={item.name} value={`${item.is_volume.metric} bcm/hr (${item.percentage}%)`} /> 
                         : "" 
