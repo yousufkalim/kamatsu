@@ -222,7 +222,6 @@ const Body = () => {
             backgroundColor="blue"
             textColor="white"
             url=""
-            onClick={printPDF}
           />
         </div>
       </div>
