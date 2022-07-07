@@ -228,7 +228,7 @@ const FleetDefinition = ({ navigation }) => {
           />
           <Input
             inputLabel={`Nom. Payload ${
-              unitStateValue?.value === "Metric" ? "(Tonnes)" : "(Tons)"
+              unitStateValue?.value === "Metric" ? "(tonnes)" : "(tons)"
             }`}
             value={payload}
             setValue={value => handleChangeInputFloat(value, setPayload)}

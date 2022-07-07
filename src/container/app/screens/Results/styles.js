@@ -78,13 +78,18 @@ export const styles = StyleSheet.create({
   checkbox: {
     height: 20,
     width: 20,
-    color: appStyles.primaryColor,
-
+    color: appStyles.primaryColor
+  },
+  checkboxAndroid: {
+    padding: 20
   },
   checkboxLabel: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
     fontSize: 14,
     paddingVertical: 7,
     marginLeft: 10
+  },
+  checkboxLabelAndroid: {
+    marginLeft: 0
   }
 })
