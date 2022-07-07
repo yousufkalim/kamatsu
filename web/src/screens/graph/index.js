@@ -4,11 +4,16 @@ import DashboardFrame from "../dashboard"
 import "./index.css"
 import { DashboardButton } from "../../components/Button"
 import { Store } from "../../StoreContext"
-import faker from 'faker';
+import logo from "../../assets/logo.png"
+import * as html2canvas from "html2canvas"
+import jsPdf from "jspdf"
 const Body = () => {
   const [metric, setMetric] = useState(false)
   const [volume, setVolume] = useState(false)
   const [loadingToolName, setLoadingToolName] = useState("")
+  const [maxRttt, setMaxRttt] = useState(0.7)
+  const [truckColor, setTruckColor] = useState("red")
+  console.log("----->truckColor", truckColor)
   const {
     estRoundTripTravel,
     haulagePerhour,
@@ -19,6 +24,7 @@ const Body = () => {
     trucks,
   } = Store()
   useEffect(() => {
+    handlemaxLdRttt()
     handleLoadingName()
     if (loadingToolName === "" && haulingTool === "") {
       window.location = "/fleet-definition"
@@ -57,51 +63,73 @@ const Body = () => {
       setVolume(false)
     }
   }
+  // func for  maxLdRttt 
+  const handlemaxLdRttt = () => {
+      trucks.map((item) => {
+        setMaxRttt(item.max_ld_rttt)
+      })
+  }
+
   useEffect(() => {
-    let InMinute = []
-    for (let i = 1; i <= estRoundTripTravel; i++) {
-      InMinute.push(i)
+    let color = "";
+    trucks.map((item) => {
+      if (item.length !== 0) {
+        color = `#${Math.floor(Math.random() * 16777215).toString(16)}`
+        setTruckColor(color);
+      }
+    })
+
+    let labels = [0]
+    let rtt = trucks.sort((a, b) => b.max_ld_rttt - a.max_ld_rttt)[0]?.max_ld_rttt
+    let haulage = metric && !volume ? haulagePerhour.metric
+      : !metric && volume ? haulagePerhour.is_volume.metric
+        : !metric && !volume ? haulagePerhour.us
+          : metric && volume && haulagePerhour.is_volume.us
+
+    // console.log("Sorted trucks --> ", rtt)
+
+    for (let i = 0; i <= (rtt * 10) + 4; i++) {
+      let label = labels[labels.length - 1] + 0.1
+
+      labels.push(parseFloat(label.toFixed(1)))
     }
 
+
+    let dataSet = trucks.map(truck => {
+      let data = []
+      let lastIndexOfTruth;
+      for (let i = 0; i < labels.length; i++) {
+        if (truck.max_ld_rttt >= labels[i]) {
+          data.push(haulage)
+          lastIndexOfTruth = i
+        } else {
+          let diff = labels.length - lastIndexOfTruth
+          data.push(data[i - 1] - haulage / diff)
+        }
+      }
+
+      return {
+        label: "",
+        data: data,
+        backgroundColor: "transparent",
+        borderColor: `${color}`,
+        borderWidth: 2,
+        pointRadius: 0,
+        hitRadius: 10,
+        hoverRadius: 10
+      }
+    })
+
+    console.log("---->", dataSet)
+
     const ctx = document.getElementById("graph").getContext("2d")
-    let labels = InMinute
+
     // Line Chart
     new Chart(ctx, {
       type: "line",
       data: {
         labels: labels,
-        datasets: [
-          {
-            label: "",
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
-            backgroundColor: "transparent",
-            borderColor: "#008000",
-            borderWidth: 2,
-            pointRadius: 0,
-            hitRadius: 10,
-            hoverRadius: 10
-          },
-          {
-            label: "",
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
-            backgroundColor: "transparent",
-            borderColor: "#0000FF",
-            borderWidth: 2,
-            pointRadius: 0,
-            hitRadius: 10,
-            hoverRadius: 10
-          },
-          {
-            label: "",
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
-            backgroundColor: "transparent",
-            borderColor: "#FF8C00",
-            hitRadius: 10,
-            borderWidth: 2,
-            pointRadius: 1,
-            hoverRadius: 10,
-          }
-        ]
+        datasets: dataSet
       },
 
       // Line Chart options
@@ -131,7 +159,7 @@ const Body = () => {
   }, [])
 
   return (
-    <div className="graph">
+    <div className="graph" >
       <div className="graph-checkboxes">
         <div className="graph-checkboxes-container">
           <div>
@@ -155,12 +183,11 @@ const Body = () => {
       <div className="chart-container">
         <div className="chart-header">
           <h2>{loadingToolName} x {haulingTool}</h2>
-          {trucks.map((item, index) => {
+          {trucks.map((item) => {
             return <ul>
             <li>
-                {index === 0 ? <span className="bullet orange" /> : ""}
-                {index === 1 ? <span className="bullet blue" /> : ""}
-                {index === 2 ? <span className="bullet green" /> : ""}
+                {/* <span style={{ color: `${truckColor}` }} />  */}
+                <div className="bullet" style={{ backgroundColor: `${truckColor}` }} /> 
                 {item.name}
             </li>
           </ul>
