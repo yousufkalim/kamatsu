@@ -183,7 +183,10 @@ const DashboardFrame = ({
           </div>
         </div>
       </div>
-      <div className="deepGray w-full md:h-screen" style={{ overflow: "hidden" }}>
+      <div
+        className="deepGray w-full md:h-screen"
+        style={{ overflow: "scroll" }}
+      >
         <div className="hidden md:flex bg-white top-bar items-center px-12 justify-between">
           <div>
             {!homePage && (
