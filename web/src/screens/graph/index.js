@@ -183,15 +183,15 @@ const Body = () => {
       <div className="chart-container">
         <div className="chart-header">
           <h2>{loadingToolName} x {haulingTool}</h2>
+          <ul>
           {trucks.map((item) => {
-            return <ul>
-            <li>
+            return <li>
                 {/* <span style={{ color: `${truckColor}` }} />  */}
                 <div className="bullet" style={{ backgroundColor: `${truckColor}` }} /> 
                 {item.name}
             </li>
-          </ul>
           })}
+          </ul>
 
         </div>
         <div className="chart-body">
