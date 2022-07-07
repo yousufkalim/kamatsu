@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     padding: 10
   },
   chart: {
-    flex: 1,
+    flex: 1
   },
   title: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
@@ -31,11 +31,17 @@ export const styles = StyleSheet.create({
     width: 20,
     color: appStyles.primaryColor
   },
+  checkboxAndroid: {
+    padding: 20
+  },
   checkboxLabel: {
     fontFamily: appStyles.FONT_FAMILY_REGULAR,
     fontSize: 14,
     paddingVertical: 7,
     marginLeft: 10
+  },
+  checkboxLabelAndroid: {
+    marginLeft: 0
   },
   checkboxContainer: {
     flexDirection: "row",

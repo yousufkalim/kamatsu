@@ -1,5 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native"
-import { WebView } from "react-native-webview"
+import { View, Text, Platform } from "react-native"
 import React, { useRef, useState } from "react"
 import CheckBox from "@react-native-community/checkbox"
 import { useSelector } from "react-redux"
@@ -17,9 +16,7 @@ import { Header } from "../../../../components/Header"
 import { Button } from "../../../../components/Button"
 import { styles } from "./styles"
 
-const GraphicalView = () => {
-  const webviewRef = useRef()
-
+const GraphicalView = () => {  
   const unitStateValue = useSelector(state => state.unitState.unitSite)
 
   const [isMetricChecked, setIsMetricChecked] = useState(
@@ -41,11 +38,23 @@ const GraphicalView = () => {
               boxType="square"
               onValueChange={newValue => setIsMetricChecked(newValue)}
               lineWidth={1}
-              style={styles.checkbox}
+              style={[
+                styles.checkbox,
+                Platform.OS == "android" && styles.checkboxAndroid
+              ]}
               onTintColor={appStyles.primaryColor}
+              tintColor={appStyles.primaryColor}
               onCheckColor={appStyles.primaryColor}
             />
-            <Text style={styles.checkboxLabel}>Metric</Text>
+
+            <Text
+              style={[
+                styles.checkboxLabel,
+                Platform.OS == "android" && styles.checkboxLabelAndroid
+              ]}
+            >
+              Metric
+            </Text>
           </View>
           <View style={styles.checkboxContainer}>
             <CheckBox
@@ -54,11 +63,23 @@ const GraphicalView = () => {
               boxType="square"
               onValueChange={newValue => setIsVolumeChecked(newValue)}
               lineWidth={1}
-              style={styles.checkbox}
+              style={[
+                styles.checkbox,
+                Platform.OS == "android" && styles.checkboxAndroid
+              ]}
               onTintColor={appStyles.primaryColor}
               onCheckColor={appStyles.primaryColor}
+              tintColor={appStyles.primaryColor}
             />
-            <Text style={styles.checkboxLabel}>Volume</Text>
+
+            <Text
+              style={[
+                styles.checkboxLabel,
+                Platform.OS == "android" && styles.checkboxLabelAndroid
+              ]}
+            >
+              Volume
+            </Text>
           </View>
         </View>
 
@@ -67,46 +88,56 @@ const GraphicalView = () => {
             theme={VictoryTheme.material}
             minDomain={{ y: 0, x: 0 }}
             domainPadding={{ x: 30 }}
+            style={{}}
           >
-            <VictoryLabel text={"LD= 250 bcm/hr"} x={60} y={40} />
-
-            <VictoryLine
-              style={{
-                data: { stroke: "#FF8C00" },
-                parent: { border: "1px solid #ccc" }
-              }}
-              data={[
-                { x: 10, y: 10 },
-                { x: 9, y: 20 },
-                { x: 8, y: 30 },
-                { x: 7, y: 40 },
-                { x: 6, y: 50 },
-                { x: 5, y: 60 },
-                { x: 0, y: 60 }
-              ]}
+            <VictoryLabel
+              text={`LD= 250 ${
+                isMetricChecked && !isVolumeChecked
+                  ? "Tonnes/hr"
+                  : !isMetricChecked && !isVolumeChecked
+                  ? "Tons/hr"
+                  : !isMetricChecked && isVolumeChecked
+                  ? "bcy/hr"
+                  : "bcm/hr"
+              }`}
+              x={60}
+              y={40}
             />
 
             <VictoryLine
-              style={{
-                data: { stroke: "#0000FF" },
-                parent: { border: "1px solid #ccc" }
-              }}
               data={[
-                { x: 12, y: 10 },
-                { x: 11, y: 20 },
-                { x: 10, y: 30 },
-                { x: 9, y: 40 },
-                { x: 8, y: 50 },
-                { x: 7, y: 60 },
-                { x: 5, y: 60 }
+                // { x: 10, y: 10 },
+                // { x: 9, y: 20 },
+                // { x: 8, y: 30 },
+                // { x: 7, y: 40 },
+                // { x: 6.5, y: 65 },
+                // { x: 7.5, y: 75 },
+                { x: 8.5, y: 85 }
+                // { x: 0, y: 60 }
               ]}
+              style={{
+                data: { stroke: "#FF8C00" }
+              }}
             />
 
             <VictoryLine
+              data={[
+                { x: 5.9, y: 59 },
+                { x: 4.9, y: 49 },
+                { x: 3.9, y: 39 }
+                // { x: 11, y: 20 },
+                // { x: 10, y: 30 },
+                // { x: 9, y: 40 },
+                // { x: 8, y: 50 },
+                // { x: 7, y: 60 },
+                // { x: 5, y: 60 }
+              ]}
               style={{
-                data: { stroke: "#008000" },
-                parent: { border: "1px solid #ccc" }
+                data: { stroke: "#0000FF" }
               }}
+            />
+
+            <VictoryLine
               data={[
                 { x: 14, y: 10 },
                 { x: 13, y: 20 },
@@ -116,6 +147,18 @@ const GraphicalView = () => {
                 { x: 9, y: 60 },
                 { x: 7, y: 60 }
               ]}
+              style={{
+                data: { stroke: "#008000" }
+              }}
+              labelComponent={
+                <VictoryLabel
+                  // text={"LD= 250 bcm/hr"}
+                  // x={10}
+                  // y={20}
+                  backgroundStyle={{ fill: "pink" }}
+                  backgroundPadding={3}
+                />
+              }
             />
 
             <VictoryAxis
@@ -124,7 +167,15 @@ const GraphicalView = () => {
             />
             <VictoryAxis
               dependentAxis
-              label="Fleet productivity (bcm/hr)"
+              label={`Fleet productivity (${
+                isMetricChecked && !isVolumeChecked
+                  ? "tonnes/hr"
+                  : !isMetricChecked && !isVolumeChecked
+                  ? "tons/hr"
+                  : !isMetricChecked && isVolumeChecked
+                  ? "bcy/hr"
+                  : "bcm/hr"
+              })`}
               style={{ axisLabel: { padding: 30 } }}
             />
           </VictoryChart>
