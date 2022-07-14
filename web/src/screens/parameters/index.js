@@ -165,7 +165,7 @@ const Form = () => {
           },
         },
         site_parameters: {
-          material_denstiy: materialDensity,
+          unit_selection: unit,
           material_density: materialDensity,
           truck_sport_time_sec: truckSpotTime,
           est_round_trip_travel_time: estRoundTripTravel,
