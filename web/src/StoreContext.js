@@ -22,6 +22,7 @@ export function StoreProvider({ children }) {
     cycleTime: "",
     bucketFill: "",
     bucketSize: "",
+    bucketSizeYd: "",
     haulingTool: "",
     nomPayload: "",
     unit: "metric",

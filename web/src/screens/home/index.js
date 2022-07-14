@@ -15,6 +15,7 @@ const Form = () => {
     cycleTime,
     bucketFill,
     bucketSize,
+    bucketSizeYd,
     haulingTool,
     nomPayload,
     unit,
@@ -74,10 +75,8 @@ const Form = () => {
           bucketFill: res.data.bucket_fill,
           cycleTime: res.data.cycle_time_second,
           loadingToolCostPerHour: parseFloat(res.data.cost_per_hour).toFixed(1),
-          bucketSize:
-            unit === "metric"
-              ? parseFloat(res.data.metric_standard.bucket_size_m3).toFixed(1)
-              : parseFloat(res.data.bucket_size_yd3).toFixed(1)
+          bucketSizeYd: parseFloat(res.data.bucket_size_yd3).toFixed(1),
+          bucketSize: parseFloat(res.data.metric_standard.bucket_size_m3).toFixed(1)
         })
 
         fetchHaulingTools(e)
@@ -184,30 +183,6 @@ const Form = () => {
     }
   ]
 
-  // const handleVerifySiteFleet = async () => {
-  //   await axios
-  //     .post(`${baseURL}hat/verify/fleet-definition/`, {
-  //       unit_selection: unit,
-  //       loading_tool: {
-  //         name: loadingTool,
-  //         cycle_time_second: cycleTime,
-  //         bucket_fill: bucketFill,
-  //         bucket_size: bucketSize,
-  //         cost_per_hour: loadingToolCostPerHour
-  //       },
-  //       hauling_tool: {
-  //         name: haulingTool,
-  //         capacity_ton: nomPayload,
-  //         cost_per_hour: haulingToolCostPerHour
-  //       }
-  //     })
-  //     .then(res => {
-  //       console.log("---> verification responce", res)
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
   return (
     <div>
       <div className="w-1/2 gap-8 md:w-1/4 mb-6">
@@ -261,8 +236,6 @@ const Form = () => {
               onChange={handleInput}
               name="bucketFill"
               type="text"
-              //placeholder="0.95"
-              // className="mb-6"
               value={bucketFill}
             />
           </div>
@@ -274,8 +247,7 @@ const Form = () => {
             <Input
               onChange={handleInput}
               name="bucketSize"
-              //placeholder="0.95"
-              value={bucketSize}
+              value={unit === "metric" ? bucketSize : bucketSizeYd}
               type="text"
             />
           </div>
@@ -315,8 +287,6 @@ const Form = () => {
               onChange={handleInput}
               type="text"
               name="nomPayload"
-              //placeholder="0.95"
-              // className="mb-6"
               value={nomPayload}
             />
           </div>
