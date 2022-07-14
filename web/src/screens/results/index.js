@@ -147,67 +147,33 @@ const Body = () => {
           <div className="flex">
             <div className="w-1/2">
               <Title title="Loader Dependent Fleet" />
-              {metric && !volume ? (
-                <ResultValue
-                  label="Productivity"
-                  value={`${haulagePerhour?.metric} tonnes/hr`}
-                />
-              ) : !metric && volume ? (
-                <ResultValue
-                  label="Productivity"
-                  value={`${haulagePerhour?.is_volume?.us} bcy/hr`}
-                />
-              ) : !metric && !volume ? (
-                <ResultValue
-                  label="Productivity"
-                  value={`${haulagePerhour?.us} tons/hr`}
-                />
-              ) : metric && volume ? (
-                <ResultValue
-                  label="Productivity"
-                  value={`${haulagePerhour?.is_volume?.metric} bcm/hr`}
-                />
-              ) : (
-                ""
-              )}
-              {metric ? (
-                <ResultValue
-                  label="Trucks Required"
-                  value={ldNumberOfTrucks?.metric}
-                />
-              ) : (
-                <ResultValue
-                  label="Trucks Required"
-                  value={ldNumberOfTrucks?.us}
-                />
-              )}
+              {metric && !volume ?
+                <ResultValue label="Productivity" value={`${parseFloat(haulagePerhour?.metric).toLocaleString("us")} tonnes/hr`} />
+                : !metric && volume ?
+                  <ResultValue label="Productivity" value={`${parseFloat(haulagePerhour?.is_volume?.us).toLocaleString("us")} bcy/hr`} />
+                  : !metric && !volume ?
+                    <ResultValue label="Productivity" value={`${parseFloat(haulagePerhour?.us).toLocaleString("us")} tons/hr`} />
+                    : metric && volume ?
+                      <ResultValue label="Productivity" value={`${parseFloat(haulagePerhour?.is_volume?.metric).toLocaleString("us")} bcm/hr`} />
+                  : ""} 
+              {metric ?
+                <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.metric} />
+                :
+                <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.us} />
+              }
             </div>
             <div>
               <Title title="Truck Dependent Fleet" />
-              {trucks.map(item => {
-                return metric && !volume ? (
-                  <ResultValue
-                    label={item.name}
-                    value={`${item.metric} tonnes/hr (${item.percentage}%)`}
-                  />
-                ) : !metric && volume ? (
-                  <ResultValue
-                    label={item.name}
-                    value={`${item.is_volume.us} bcy/hr (${item.percentage}%)`}
-                  />
-                ) : !metric && !volume ? (
-                  <ResultValue
-                    label={item.name}
-                    value={`${item.us} tons/hr (${item.percentage}%)`}
-                  />
-                ) : metric && volume ? (
-                  <ResultValue
-                    label={item.name}
-                    value={`${item.is_volume.metric} bcm/hr (${item.percentage}%)`}
-                  />
-                ) : (
-                  ""
-                )
+              {trucks.map((item) => {
+                return metric && !volume ?
+                  <ResultValue label={item.name} value={`${parseFloat(item.metric).toLocaleString("us")} tonnes/hr (${item.percentage}%)`} />
+                  : !metric && volume ?
+                    <ResultValue label={item.name} value={`${parseFloat(item.is_volume.us).toLocaleString("us")} bcy/hr (${item.percentage}%)`} />
+                    : !metric && !volume ?
+                      <ResultValue label={item.name} value={`${parseFloat(item.us).toLocaleString("us")} tons/hr (${item.percentage}%)`} />
+                      : metric && volume ?
+                        <ResultValue label={item.name} value={`${parseFloat(item.is_volume.metric).toLocaleString("us")} bcm/hr (${item.percentage}%)`} />
+                        : "N/A" 
               })}
             </div>
           </div>
@@ -218,19 +184,11 @@ const Body = () => {
         <div>
           <Title title="Key Fleet Performance Components" />
 
-          {metric ? (
-            <p className="checkbox_text">
-              {scopePerLoad.metric} passes @{" "}
-              {parseFloat(tonsPerScope.metric).toFixed(1)} tonnes/pass
-            </p>
-          ) : !metric ? (
-            <p className="checkbox_text">
-              {scopePerLoad.us} passes @{" "}
-              {parseFloat(tonsPerScope.us).toFixed(1)} tons/pass
-            </p>
-          ) : (
-            ""
-          )}
+          {metric ?
+            <p className="checkbox_text">{scopePerLoad.metric} passes @ {parseFloat(tonsPerScope.metric).toFixed(1)} tonnes/pass</p>
+            : !metric ?
+              <p className="checkbox_text">{scopePerLoad.us} passes @ {parseFloat(tonsPerScope.us).toFixed(1)} tons/pass</p>
+              : ""}
         </div>
       </div>
       <div className="flex justify-end gap-2 mt-8">

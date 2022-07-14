@@ -12,8 +12,7 @@ const Body = () => {
   const [volume, setVolume] = useState(false)
   const [loadingToolName, setLoadingToolName] = useState("")
   const [maxRttt, setMaxRttt] = useState(0.7)
-  const [truckColor, setTruckColor] = useState("red")
-  console.log("----->truckColor", truckColor)
+  const [truckColor, setTruckColor] = useState([])
   const {
     estRoundTripTravel,
     haulagePerhour,
@@ -71,13 +70,14 @@ const Body = () => {
   }
 
   useEffect(() => {
-    let color = "";
+    let color = [];
     trucks.map((item) => {
       if (item.length !== 0) {
-        color = `#${Math.floor(Math.random() * 16777215).toString(16)}`
-        setTruckColor(color);
+        color.push(`#${Math.floor(Math.random() * 16777215).toString(16)}`)
+
       }
     })
+    setTruckColor(color);
 
     let labels = [0]
     let rtt = trucks.sort((a, b) => b.max_ld_rttt - a.max_ld_rttt)[0]?.max_ld_rttt
@@ -95,7 +95,7 @@ const Body = () => {
     }
 
 
-    let dataSet = trucks.map(truck => {
+    let dataSet = trucks.map((truck, index) => {
       let data = []
       let lastIndexOfTruth;
       for (let i = 0; i < labels.length; i++) {
@@ -112,16 +112,13 @@ const Body = () => {
         label: "",
         data: data,
         backgroundColor: "transparent",
-        borderColor: `${color}`,
+        borderColor: `${color[index]}`,
         borderWidth: 2,
         pointRadius: 0,
         hitRadius: 10,
         hoverRadius: 10
       }
     })
-
-    console.log("---->", dataSet)
-
     const ctx = document.getElementById("graph").getContext("2d")
 
     // Line Chart
@@ -184,10 +181,9 @@ const Body = () => {
         <div className="chart-header">
           <h2>{loadingToolName} x {haulingTool}</h2>
           <ul>
-          {trucks.map((item) => {
+            {trucks.map((item, index) => {
             return <li>
-                {/* <span style={{ color: `${truckColor}` }} />  */}
-                <div className="bullet" style={{ backgroundColor: `${truckColor}` }} /> 
+              <div className="bullet" style={{ backgroundColor: `${truckColor[index]}` }} /> 
                 {item.name}
             </li>
           })}

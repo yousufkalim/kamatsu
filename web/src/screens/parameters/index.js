@@ -10,7 +10,6 @@ import CloseModal from "../../assets/close-modal.svg"
 import axios from "axios"
 import { baseURL } from "../../api"
 import { Store, UpdateStore } from "../../StoreContext"
-
 const customStyles = {
   content: {
     top: "50%",
@@ -52,6 +51,7 @@ const Form = () => {
     cycleTime,
     bucketFill,
     bucketSize,
+    bucketSizeYd,
     haulingTool,
     nomPayload,
     materialDensity,
@@ -155,7 +155,7 @@ const Form = () => {
             name: loadingToolName,
             cycle_time_second: cycleTime,
             bucket_fill: bucketFill,
-            bucket_size: bucketSize,
+            bucket_size: unit === "metric" ? bucketSize : unit === "us" ? bucketSizeYd : "",
             cost_per_hour: loadingToolCostPerHour
           },
           hauling_tool: {
@@ -174,7 +174,6 @@ const Form = () => {
         }
 
       }).then((res) => {
-        console.log("-->", res.data.result, "<--")
         updateStore({
           haulagePerhour: res.data.result.haulage_per_hour,
           haulagePerWeight: res.data.result.haulage_per_hour_weight,
@@ -270,12 +269,6 @@ const Form = () => {
       </div>
 
       <div className=" md:block">
-        <div className="w-1/2">
-          {/* <CustomSelect >
-
-                    
-                </CustomSelect> */}
-        </div>
         <div className="flex gap-8">
           <div className="w-1/2">
             <label className="block text-smaller mb-1 font-normal">
