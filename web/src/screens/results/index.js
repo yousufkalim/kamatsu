@@ -113,7 +113,7 @@ const Body = () => {
         </div>
         <div id="unit_selection">
           <div className="unit_selection_div">
-            <p className="label">Unit Selection : </p>
+            <p className="label">Unit Selection: </p>
             <div className="unit_selection_checkbox_div">
               <div
                 style={{
