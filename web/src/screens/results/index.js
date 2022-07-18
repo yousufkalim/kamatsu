@@ -148,13 +148,13 @@ const Body = () => {
             <div className="w-1/2">
               <Title title="Loader Dependent Fleet" />
               {metric && !volume ?
-                <ResultValue label="Productivity" value={`${parseFloat(haulagePerhour?.metric).toLocaleString("us")} tonnes/hr`} />
+                <ResultValue label="Productivity" value={`${parseFloat(Math.round(haulagePerhour?.metric)).toLocaleString("us")} tonnes/hr`} />
                 : !metric && volume ?
-                  <ResultValue label="Productivity" value={`${parseFloat(haulagePerhour?.is_volume?.us).toLocaleString("us")} bcy/hr`} />
+                  <ResultValue label="Productivity" value={`${parseFloat(Math.round(haulagePerhour?.is_volume?.us)).toLocaleString("us")} bcy/hr`} />
                   : !metric && !volume ?
-                    <ResultValue label="Productivity" value={`${parseFloat(haulagePerhour?.us).toLocaleString("us")} tons/hr`} />
+                    <ResultValue label="Productivity" value={`${parseFloat(Math.round(haulagePerhour?.us)).toLocaleString("us")} tons/hr`} />
                     : metric && volume ?
-                      <ResultValue label="Productivity" value={`${parseFloat(haulagePerhour?.is_volume?.metric).toLocaleString("us")} bcm/hr`} />
+                      <ResultValue label="Productivity" value={`${parseFloat(Math.round(haulagePerhour?.is_volume?.metric)).toLocaleString("us")} bcm/hr`} />
                   : ""} 
               {metric ?
                 <ResultValue label="Trucks Required" value={ldNumberOfTrucks?.metric} />
@@ -166,13 +166,13 @@ const Body = () => {
               <Title title="Truck Dependent Fleet" />
               {trucks.map((item) => {
                 return metric && !volume ?
-                  <ResultValue label={item.name} value={`${parseFloat(item.metric).toLocaleString("us")} tonnes/hr (${item.percentage}%)`} />
+                  <ResultValue label={item.name} value={`${parseFloat(Math.round(item.metric)).toLocaleString("us")} tonnes/hr (${item.percentage}%)`} />
                   : !metric && volume ?
-                    <ResultValue label={item.name} value={`${parseFloat(item.is_volume.us).toLocaleString("us")} bcy/hr (${item.percentage}%)`} />
+                    <ResultValue label={item.name} value={`${parseFloat(Math.round(item.is_volume.us)).toLocaleString("us")} bcy/hr (${item.percentage}%)`} />
                     : !metric && !volume ?
-                      <ResultValue label={item.name} value={`${parseFloat(item.us).toLocaleString("us")} tons/hr (${item.percentage}%)`} />
+                      <ResultValue label={item.name} value={`${parseFloat(Math.round(item.us)).toLocaleString("us")} tons/hr (${item.percentage}%)`} />
                       : metric && volume ?
-                        <ResultValue label={item.name} value={`${parseFloat(item.is_volume.metric).toLocaleString("us")} bcm/hr (${item.percentage}%)`} />
+                        <ResultValue label={item.name} value={`${parseFloat(Math.round(item.is_volume.metric)).toLocaleString("us")} bcm/hr (${item.percentage}%)`} />
                         : "N/A" 
               })}
             </div>

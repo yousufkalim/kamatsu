@@ -127,7 +127,7 @@ const Form = () => {
   const changeUnit = e => {
     updateStore({ unit: e, parameters_unit: e })
 
-    if (e === "customary") {
+    if (e === "us") {
       updateStore({
         bucketSize:
           bucketSize &&
@@ -222,7 +222,7 @@ const Form = () => {
             type="text"
             //placeholder="0.95"
             className="mb-6"
-            value={cycleTime}
+            value={Math.round(cycleTime)}
           />
         </div>
       </div>
@@ -236,7 +236,7 @@ const Form = () => {
               onChange={handleInput}
               name="bucketFill"
               type="text"
-              value={bucketFill}
+              value={Math.round(bucketFill)}
             />
           </div>
           <div className="w-1/2">
@@ -247,7 +247,7 @@ const Form = () => {
             <Input
               onChange={handleInput}
               name="bucketSize"
-              value={unit === "metric" ? bucketSize : bucketSizeYd}
+              value={unit === "metric" ? Math.round(bucketSize) : Math.round(bucketSizeYd)}
               type="text"
             />
           </div>
@@ -287,7 +287,7 @@ const Form = () => {
               onChange={handleInput}
               type="text"
               name="nomPayload"
-              value={nomPayload}
+              value={Math.round(nomPayload)}
             />
           </div>
         </div>
