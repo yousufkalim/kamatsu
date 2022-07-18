@@ -55,6 +55,8 @@ class FleetDefinitionLoadingToolSerializer(serializers.Serializer):
     cycle_time_second = serializers.DecimalField(max_digits=10, decimal_places=1)
     bucket_fill = serializers.DecimalField(max_digits=10, decimal_places=1)
     bucket_size = serializers.DecimalField(max_digits=10, decimal_places=1)
+    bucket_size_us = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
+    bucket_size_metric = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
 
     cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
 
@@ -75,6 +77,8 @@ class FleetDefinitionLoadingToolSerializer(serializers.Serializer):
 class FleetDefinitionHaulingToolSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=32)
     capacity_ton = serializers.DecimalField(max_digits=10, decimal_places=1)
+    capacity_ton_us = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
+    capacity_ton_metric = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
     cost_per_hour = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
 
     def validate_name(self, name):
@@ -149,10 +153,23 @@ class SiteParameterSerializerPreview(serializers.Serializer):
         ('metric', _('Metric')),
     ), default='us')
     material_density = serializers.DecimalField(decimal_places=2, max_digits=20)
+    material_density_us = serializers.DecimalField(decimal_places=2, max_digits=20, read_only=True)
+    material_density_metric = serializers.DecimalField(decimal_places=2, max_digits=20, read_only=True)
     truck_sport_time_sec = serializers.DecimalField(decimal_places=1, max_digits=20)
     operator_efficiency = serializers.DecimalField(decimal_places=1, max_digits=20)
     est_round_trip_travel_time = serializers.DecimalField(decimal_places=1, max_digits=20)
     material_swell = serializers.DecimalField(decimal_places=1, max_digits=20)
+
+    def validate(self, attrs):
+        unit_selection = attrs.get('unit_selection')
+        material_density = attrs.get('material_density')
+        if unit_selection == 'us':
+            material_density_metric = round(lbyd3_to_kgm3(material_density))
+            attrs[f'material_density_{unit_selection}'] = material_density_metric
+        elif unit_selection == 'metric':
+            material_density_us = round(kgm3_to_lbyd3(material_density))
+            attrs[f'material_density_{unit_selection}'] = material_density_us
+        return attrs
 
 
 class FleetDefinitionResultPreviewSerializer(serializers.Serializer):
@@ -163,6 +180,24 @@ class FleetDefinitionResultPreviewSerializer(serializers.Serializer):
 
     loading_tool = FleetDefinitionLoadingToolSerializer(required=True, many=False)
     hauling_tool = FleetDefinitionHaulingToolSerializer(required=True, many=False)
+
+    def validate(self, attrs):
+        unit_selection = attrs.get('unit_selection')
+        loading_tool = attrs.get('loading_tool')
+        hauling_tool = attrs.get('hauling_tool')
+        bucket_size = loading_tool.get('bucket_size')
+        capacity_ton = hauling_tool.get('capacity_ton')
+        if unit_selection == 'us':
+            bucket_size_metric = round(yd3_to_m3(bucket_size))
+            capacity_ton_metric = round(short_ton_to_tonne(capacity_ton))
+            attrs['loading_tool'][f'bucket_size_metric'] = bucket_size_metric
+            attrs['hauling_tool'][f'capacity_ton_metric'] = capacity_ton_metric
+        elif unit_selection == 'metric':
+            bucket_size_us = round(m3_to_yd3(bucket_size))
+            capacity_ton_us = round(tonne_to_short_ton(capacity_ton))
+            attrs['loading_tool'][f'bucket_size_us'] = bucket_size_us
+            attrs['hauling_tool'][f'capacity_ton_us'] = capacity_ton_us
+        return attrs
 
 
 class ResultPreviewSerialzer(serializers.Serializer):
@@ -177,6 +212,7 @@ class ResultPreviewSerialzer(serializers.Serializer):
     def create(self, validated_data):
         fleet_definition = validated_data.get('fleet_definition')
         site_parameters = validated_data.get('site_parameters')
+        # print(site_parameters)
         result = get_result_preview(fleet_definition, site_parameters)
         validated_data['result'] = result
         return validated_data
