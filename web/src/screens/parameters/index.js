@@ -156,12 +156,12 @@ const Form = () => {
             cycle_time_second: cycleTime,
             bucket_fill: bucketFill,
             bucket_size: unit === "metric" ? bucketSize : unit === "us" ? bucketSizeYd : "",
-            cost_per_hour: loadingToolCostPerHour
+            // cost_per_hour: loadingToolCostPerHour
           },
           hauling_tool: {
             name: haulingTool,
             capacity_ton: nomPayload,
-            cost_per_hour: haulingToolCostPerHour
+            // cost_per_hour: haulingToolCostPerHour
           },
         },
         site_parameters: {
@@ -174,6 +174,7 @@ const Form = () => {
         }
 
       }).then((res) => {
+        console.log("====>", res)
         updateStore({
           haulagePerhour: res.data.result.haulage_per_hour,
           haulagePerWeight: res.data.result.haulage_per_hour_weight,
@@ -282,7 +283,7 @@ const Form = () => {
               />
             </label>
             <Input
-              value={materialDensity}
+              value={Math.round(materialDensity)}
               onChange={handleInput}
               name="materialDensity"
               className="mb-6"
@@ -294,7 +295,7 @@ const Form = () => {
             </label>
             <Input
               className="mb-6"
-              value={truckSpotTime}
+              value={Math.round(truckSpotTime)}
               onChange={handleInput}
               name="truckSpotTime"
             />
@@ -307,7 +308,7 @@ const Form = () => {
             </label>
             <Input
               className="mb-6"
-              value={operatorEfficiency}
+              value={Math.round(operatorEfficiency)}
               onChange={handleInput}
               name="operatorEfficiency"
             />
@@ -318,7 +319,7 @@ const Form = () => {
             </label>
             <Input
               className="mb-6"
-              value={estRoundTripTravel}
+              value={Math.round(estRoundTripTravel)}
               onChange={handleInput}
               name="estRoundTripTravel"
             />
@@ -331,7 +332,7 @@ const Form = () => {
             </label>
             <Input
               className="mb-6"
-              value={materialSwell}
+              value={Math.round(materialSwell)}
               onChange={handleInput}
               name="materialSwell"
             />
