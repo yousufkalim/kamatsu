@@ -222,7 +222,7 @@ const Form = () => {
             type="text"
             //placeholder="0.95"
             className="mb-6"
-            value={Math.round(cycleTime)}
+            value={cycleTime}
           />
         </div>
       </div>
@@ -236,7 +236,7 @@ const Form = () => {
               onChange={handleInput}
               name="bucketFill"
               type="text"
-              value={Math.round(bucketFill)}
+              value={bucketFill}
             />
           </div>
           <div className="w-1/2">
@@ -247,7 +247,7 @@ const Form = () => {
             <Input
               onChange={handleInput}
               name="bucketSize"
-              value={unit === "metric" ? Math.round(bucketSize) : Math.round(bucketSizeYd)}
+              value={unit === "metric" ? bucketSize : bucketSizeYd}
               type="text"
             />
           </div>
@@ -287,7 +287,7 @@ const Form = () => {
               onChange={handleInput}
               type="text"
               name="nomPayload"
-              value={Math.round(nomPayload)}
+              value={nomPayload}
             />
           </div>
         </div>
