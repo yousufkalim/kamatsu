@@ -283,7 +283,7 @@ const Form = () => {
               />
             </label>
             <Input
-              value={Math.round(materialDensity)}
+              value={materialDensity}
               onChange={handleInput}
               name="materialDensity"
               className="mb-6"
@@ -295,7 +295,7 @@ const Form = () => {
             </label>
             <Input
               className="mb-6"
-              value={Math.round(truckSpotTime)}
+              value={truckSpotTime}
               onChange={handleInput}
               name="truckSpotTime"
             />
@@ -308,7 +308,7 @@ const Form = () => {
             </label>
             <Input
               className="mb-6"
-              value={Math.round(operatorEfficiency)}
+              value={operatorEfficiency}
               onChange={handleInput}
               name="operatorEfficiency"
             />
@@ -319,7 +319,7 @@ const Form = () => {
             </label>
             <Input
               className="mb-6"
-              value={Math.round(estRoundTripTravel)}
+              value={estRoundTripTravel}
               onChange={handleInput}
               name="estRoundTripTravel"
             />
@@ -332,7 +332,7 @@ const Form = () => {
             </label>
             <Input
               className="mb-6"
-              value={Math.round(materialSwell)}
+              value={materialSwell}
               onChange={handleInput}
               name="materialSwell"
             />
