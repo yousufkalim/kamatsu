@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
@@ -7,7 +7,10 @@ import {
   useGetMaterialDensities,
   useVerifySiteParameters
 } from "../../../../hooks/query/useSiteParameter"
-import { setSiteValuesAction } from "../../redux/site/actions"
+import {
+  setSiteValuesAction,
+  setMaterialDensityAction
+} from "../../redux/site/actions"
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
 import { Select } from "../../../../components/Select"
@@ -16,13 +19,16 @@ import { Button } from "../../../../components/Button"
 import Modal from "../../../../components/Modal"
 import { setUnitSiteAction } from "../../redux/unit/actions"
 import { MaterialDensity } from "../../../../components/MaterialDensity"
+import { useIsMount } from "../../../../hooks/useIsMount"
 import { validateInputNumber } from "../../../../utils/validateInput"
 import { styles } from "./styles"
 
 const SiteParameters = ({ navigation }) => {
   const dispatch = useDispatch()
+  const isMount = useIsMount()
 
   const unitStateValue = useSelector(state => state.unitState.unitSite)
+  const siteParameterState = useSelector(state => state.siteParameterState)
 
   const { materialDensities, isLoading } = useGetMaterialDensities()
   const { verifySiteParameters, isVerifying, isSuccess } =
@@ -30,7 +36,9 @@ const SiteParameters = ({ navigation }) => {
 
   const [unit, setUnit] = useState(unitStateValue)
   const [materialDensity, setMaterialDensity] = useState(
-    unitStateValue?.value === "Metric" ? "3000.00" : "1779.83"
+    unitStateValue?.value === "Metric"
+      ? siteParameterState.materialDensity.metric
+      : siteParameterState.materialDensity.us
   )
   const [materialSwell, setMaterialSwell] = useState("20")
   const [operatorEfficiency, setOperatorEfficiency] = useState("50")
@@ -107,22 +115,34 @@ const SiteParameters = ({ navigation }) => {
   }
 
   useEffect(() => {
-    if (materialDensity) {
+    if (materialDensity && !isMount) {
       convertLcmToLcy()
     }
-  }, [unitStateValue])
+  }, [unitStateValue?.value])
 
   const convertLcmToLcy = () => {
     // pound/cubic yard in 1 kg/m3 - 1.6855549391294.
-
     if (unitStateValue?.value === "Metric") {
       const convert = (parseFloat(materialDensity) / 1.6855549391294).toFixed(1)
       setMaterialDensity(convert.toString())
-      console.log(convert.toString())
+      console.log("Metric", convert.toString())
+
+      dispatch(
+        setMaterialDensityAction({
+          metric: convert.toString(),
+          us: materialDensity
+        })
+      )
     } else {
       const convert = (parseFloat(materialDensity) * 1.6855549391294).toFixed(1)
       setMaterialDensity(convert.toString())
-      console.log(convert.toString())
+      console.log("us", convert.toString())
+      dispatch(
+        setMaterialDensityAction({
+          us: convert.toString(),
+          metric: materialDensity
+        })
+      )
     }
   }
 

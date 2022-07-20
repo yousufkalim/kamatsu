@@ -16,11 +16,13 @@ import { Input } from "../../../../components/Input"
 import { Select } from "../../../../components/Select"
 import { Button } from "../../../../components/Button"
 import { validateInputNumber } from "../../../../utils/validateInput"
+import { useIsMount } from "../../../../hooks/useIsMount"
 
 import { styles } from "./styles"
 
 const FleetDefinition = ({ navigation }) => {
   const dispatch = useDispatch()
+  const isMount = useIsMount()
 
   const unitStateValue = useSelector(state => state?.unitState?.unitFleet)
 
@@ -30,8 +32,10 @@ const FleetDefinition = ({ navigation }) => {
   const [haulingTools, setHaulingTools] = useState([])
   const [cycleTime, setCycleTime] = useState("")
   const [bucketSize, setBucketSize] = useState("")
+  const [bucketSizeUSMetric, setBucketSizeUSMetric] = useState("")
   const [bucketFill, setBucketFill] = useState("")
   const [payload, setPayload] = useState("")
+  const [payloadUSMetric, setPayloadUSMetric] = useState({})
 
   const [cycleTimeErr, setCycleTimeErr] = useState("")
   const [bucketSizeErr, setBucketSizeErr] = useState("")
@@ -113,7 +117,7 @@ const FleetDefinition = ({ navigation }) => {
     if (selectedHaulingTool?.name) {
       handleHaulingToolsChange(selectedHaulingTool)
     }
-  }, [unitStateValue])
+  }, [unitStateValue?.value])
 
   const handleloadingToolsChange = (value, reset = false) => {
     setSelectedLoadingTool(value)
@@ -121,10 +125,28 @@ const FleetDefinition = ({ navigation }) => {
     setCycleTime(Number(value?.cycle_time_second).toFixed(1))
     setBucketFill(Number(value?.bucket_fill).toFixed(1))
 
-    unitStateValue?.value === "Metric"
-      ? setBucketSize(Number(value?.metric_standard?.bucket_size_m3).toFixed(1))
-      : setBucketSize(Number(value?.bucket_size_yd3).toFixed(1))
+    //check if user has manually inputed bucket size
+    if (
+      bucketSizeUSMetric?.metric &&
+      !reset &&
+      selectedLoadingTool?.name == bucketSizeUSMetric?.loadingTool //check if loadingTool has changed
+    ) {
+      // if true setBucketSize "bucketSizeUSMetric".metric or us
+      if (unitStateValue?.value === "Metric") {
+        setBucketSize(bucketSizeUSMetric.metric)
+      } else {
+        setBucketSize(bucketSizeUSMetric.us)
+      }
+    } else {
+      // else setBucketSize to default selected value
+      unitStateValue?.value === "Metric"
+        ? setBucketSize(
+            Number(value?.metric_standard?.bucket_size_m3).toFixed(1)
+          )
+        : setBucketSize(Number(value?.bucket_size_yd3).toFixed(1))
+    }
 
+    console.log("value", value)
     if (!reset) {
       setSelectedHaulingTool({})
       setPayload("")
@@ -133,9 +155,24 @@ const FleetDefinition = ({ navigation }) => {
 
   const handleHaulingToolsChange = value => {
     setSelectedHaulingTool(value)
-    unitStateValue?.value === "Metric"
-      ? setPayload(Number(value?.metric_standard?.capacity_tonne).toFixed(1))
-      : setPayload(Number(value?.capacity_ton).toFixed(1))
+
+    //check if user has manually inputed bucket size
+    if (
+      payloadUSMetric?.metric &&
+      selectedHaulingTool?.name == payloadUSMetric?.haulingTool //check if hauling tool has changed
+    ) {
+      // if true setPayload "bucketSizeUSMetric".metric or us
+      if (unitStateValue?.value === "Metric") {
+        setPayload(payloadUSMetric.metric)
+      } else {
+        setPayload(payloadUSMetric.us)
+      }
+    } else {
+      // else setBucketSize to default selected value
+      unitStateValue?.value === "Metric"
+        ? setPayload(Number(value?.metric_standard?.capacity_tonne).toFixed(1))
+        : setPayload(Number(value?.capacity_ton).toFixed(1))
+    }
   }
 
   const resetTruck = () => {
@@ -150,6 +187,57 @@ const FleetDefinition = ({ navigation }) => {
     }
   }
 
+  const handleChangeBucketSizeUSMetric = bucketSize => {
+    // Cubic Meters to Cubic Yards formula
+    //  Cubic Yards = Cubic Meters * 1.308
+
+    if (unitStateValue?.value === "Metric") {
+      console.log("bucketSize", bucketSize)
+
+      const cubicY3 = (parseFloat(bucketSize) * 1.308).toFixed(1)
+      console.log("cubicY3", cubicY3)
+
+      setBucketSizeUSMetric({
+        metric: bucketSize,
+        us: cubicY3.toString(),
+        loadingTool: selectedLoadingTool.name // to keep loadingTool changes
+      })
+    } else {
+      const cubicM3 = (parseFloat(bucketSize) / 1.308).toFixed(1)
+      console.log("cubicM3", cubicM3)
+
+      setBucketSizeUSMetric({
+        us: bucketSize,
+        metric: cubicM3.toString(),
+        loadingTool: selectedLoadingTool.name // to keep loadingTool changes
+      })
+    }
+  }
+
+  const handleChangeNumPayloadUSMetric = payload => {
+    // Metric Tons (Tonnes) to Tons Conversion formula
+    // tons = metric tons × 1.102311
+
+    if (unitStateValue?.value === "Metric") {
+      console.log("payload", payload)
+      const tons = (parseFloat(payload) * 1.102311).toFixed(1)
+      console.log("tons", tons)
+      setPayloadUSMetric({
+        metric: payload,
+        us: tons.toString(),
+        haulingTool: selectedHaulingTool.name // to keeploadingTool change
+      })
+    } else {
+      const metric_tons = (parseFloat(payload) / 1.102311).toFixed(1)
+      console.log("metric_tons", metric_tons)
+      setPayloadUSMetric({
+        us: payload,
+        metric: metric_tons.toString(),
+        haulingTool: selectedHaulingTool.name // to keep hauling tool change
+      })
+    }
+  }
+
   const handleChangeInputFloat = (value, setValue) => {
     var res = value.split(".")
 
@@ -157,6 +245,32 @@ const FleetDefinition = ({ navigation }) => {
       setValue(Number(value).toFixed(1))
     } else {
       setValue(value)
+    }
+  }
+
+  const handleChangeInputFloatBucketSize = (value, setValue) => {
+    var res = value.split(".")
+
+    if (res.length > 1 && res[1]) {
+      setValue(Number(value).toFixed(1))
+
+      handleChangeBucketSizeUSMetric(Number(value).toFixed(1))
+    } else {
+      setValue(value)
+      handleChangeBucketSizeUSMetric(value)
+    }
+  }
+
+  const handleChangeInputFloatNumPayload = (value, setValue) => {
+    var res = value.split(".")
+
+    if (res.length > 1 && res[1]) {
+      setValue(Number(value).toFixed(1))
+
+      handleChangeNumPayloadUSMetric(Number(value).toFixed(1))
+    } else {
+      setValue(value)
+      handleChangeNumPayloadUSMetric(value)
     }
   }
 
@@ -208,7 +322,9 @@ const FleetDefinition = ({ navigation }) => {
               unitStateValue?.value === "Metric" ? `(m\u00B3)` : `(yd\u00B3)`
             }`}
             value={bucketSize}
-            setValue={value => handleChangeInputFloat(value, setBucketSize)}
+            setValue={value =>
+              handleChangeInputFloatBucketSize(value, setBucketSize)
+            }
             errorMessage={bucketSizeErr}
           />
         </View>
@@ -231,14 +347,15 @@ const FleetDefinition = ({ navigation }) => {
               unitStateValue?.value === "Metric" ? "(tonnes)" : "(tons)"
             }`}
             value={payload}
-            setValue={value => handleChangeInputFloat(value, setPayload)}
+            setValue={value =>
+              handleChangeInputFloatNumPayload(value, setPayload)
+            }
             errorMessage={payloadErr}
           />
         </View>
         <View style={styles.btnSpacer}>
           <Button btnText="Reset Truck" onPress={resetTruck} />
         </View>
-
         <View style={styles.nextBtn} />
         <Button
           btnText="Next"

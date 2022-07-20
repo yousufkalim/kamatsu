@@ -1,17 +1,28 @@
 import { View, Text, SafeAreaView } from "react-native"
 import React from "react"
 
-export const Layout = ({ children }) => {
+export const Layout = ({ customStyle, children }) => {
   return (
     <>
       <SafeAreaView style={{ flex: 0, backgroundColor: "#fff" }} />
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#F6F6F6" }}>
-        <View
-          style={{
+      <SafeAreaView
+        style={[
+          {
             flex: 1,
-            flexDirection: "column",
             backgroundColor: "#F6F6F6"
-          }}
+          },
+          customStyle && customStyle
+        ]}
+      >
+        <View
+          style={[
+            {
+              flex: 1,
+              flexDirection: "column",
+              backgroundColor: "#F6F6F6"
+            },
+            customStyle && customStyle
+          ]}
         >
           {children}
         </View>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   View,
   Text,
@@ -11,7 +11,6 @@ import CheckBox from "@react-native-community/checkbox"
 import { useSelector } from "react-redux"
 import FileViewer from "react-native-file-viewer"
 
-import RNFS from "react-native-fs"
 import { captureScreen } from "react-native-view-shot"
 import * as Progress from "react-native-progress"
 import RNHTMLtoPDF from "react-native-html-to-pdf"
@@ -29,6 +28,7 @@ import { Button } from "../../../../components/Button"
 import LogoBlue from "../../../../assets/svg/logo-blue.svg"
 
 import { styles } from "./styles"
+import { toLocaleString } from "../../../../utils/helpers"
 
 const deviceWidth = Dimensions.get("window").width
 const deviceHeight = Dimensions.get("window").height
@@ -62,7 +62,9 @@ const Results = ({ navigation }) => {
   }
 
   const handleGraphicalView = () => {
-    navigation.navigate("GraphicalView")
+    navigation.navigate("GraphicalView", {
+      data: data
+    })
   }
 
   const permissionWriteExternalStorage = async () => {
@@ -98,33 +100,29 @@ const Results = ({ navigation }) => {
   }
 
   const genPDF = async uri => {
-    const html = `<img src=${uri} alt="alt" style="height:95vh;width:100vw;object-fit:contain;"/>`
+    const html = `<img src=${uri} alt="alt"  style="height:880px;width:520px;object-fit:contain;" />`
+    // const htmlIOS = `<div style=""height:95%;width:100%;"> <img src=${uri} alt="alt" style="max-width:100%;max-height:100%;"/> </div>`
+
+    // html: Platform.OS == "ios" ? htmlIOS : html,
+
     try {
       let options = {
         html: html,
         fileName: `Komatsu_HAT_${data?.fleet_definition?.loading_tool?.name}_${data?.fleet_definition?.hauling_tool?.name}`,
-        directory: "Documents",
+        directory: "Documents"
       }
 
       let file = await RNHTMLtoPDF.convert(options)
       console.log("file genPDF", file.filePath)
 
-      const path1 = FileViewer.open(file.filePath) // absolute-path-to-my-local-file.
-        .then(success => {
-          // success
-          console.log("success", success)
-        })
-        .catch(error => {
-          // error
-          console.log("error", error)
-        })
+      await FileViewer.open(file.filePath)
     } catch (error) {
       console.log("err", error)
     }
   }
 
   return (
-    <Layout>
+    <Layout customStyle={isPrintingPDF && { backgroundColor: "#fff" }}>
       {!isPrintingPDF && <Header showBack />}
       {isPrintingPDF && <LogoBlue height={hp(3)} width={wp(40)} />}
 
@@ -190,6 +188,10 @@ const Results = ({ navigation }) => {
                         onTintColor={appStyles.primaryColor}
                         onCheckColor={appStyles.primaryColor}
                         tintColor={appStyles.primaryColor}
+                        tintColors={{
+                          true: appStyles.primaryColor,
+                          false: appStyles.COLOR_GRAY_1
+                        }}
                       />
                       <Text
                         style={[
@@ -215,6 +217,10 @@ const Results = ({ navigation }) => {
                         onTintColor={appStyles.primaryColor}
                         onCheckColor={appStyles.primaryColor}
                         tintColor={appStyles.primaryColor}
+                        tintColors={{
+                          true: appStyles.primaryColor,
+                          false: appStyles.COLOR_GRAY_1
+                        }}
                       />
                       <Text
                         style={[
@@ -236,29 +242,31 @@ const Results = ({ navigation }) => {
                 <Text style={styles.value}>
                   {isMetricChecked &&
                     !isVolumeChecked &&
-                    `${Number(
-                      data?.result?.haulage_per_hour?.metric?.toFixed(0)
-                    ).toLocaleString()} tonnes/hr`}
+                    toLocaleString(
+                      data?.result?.haulage_per_hour?.metric,
+                      " tonnes/hr"
+                    )}
 
                   {!isMetricChecked &&
                     !isVolumeChecked &&
-                    `${Number(
-                      data?.result?.haulage_per_hour?.us?.toFixed(0)
-                    ).toLocaleString()} tons/hr`}
+                    toLocaleString(
+                      data?.result?.haulage_per_hour?.us,
+                      " tons/hr"
+                    )}
 
                   {!isMetricChecked &&
                     isVolumeChecked &&
-                    `${Number(
-                      data?.result?.haulage_per_hour?.is_volume?.us?.toFixed(0)
-                    ).toLocaleString()} bcy/hr`}
+                    toLocaleString(
+                      data?.result?.haulage_per_hour?.is_volume?.us,
+                      " bcy/hr"
+                    )}
 
                   {isMetricChecked &&
                     isVolumeChecked &&
-                    `${Number(
-                      data?.result?.haulage_per_hour?.is_volume?.metric?.toFixed(
-                        0
-                      )
-                    ).toLocaleString()} bcm/hr`}
+                    toLocaleString(
+                      data?.result?.haulage_per_hour?.is_volume?.metric,
+                      "  bcm/hr"
+                    )}
                 </Text>
               </View>
               <View style={styles.section}>
@@ -305,12 +313,12 @@ const Results = ({ navigation }) => {
               </Text>
 
               {isMetricChecked ? (
-                <Text style={styles.value}>
+                <Text style={{ ...styles.value, marginLeft: 0 }}>
                   {data?.result?.scoops_per_load?.metric} passes @{" "}
                   {data?.result?.tons_per_scoop?.metric} tonnes/pass
                 </Text>
               ) : (
-                <Text style={styles.value}>
+                <Text style={{ ...styles.value, marginLeft: 0 }}>
                   {data?.result?.scoops_per_load?.us} passes @{" "}
                   {data?.result?.tons_per_scoop?.us} tons/pass
                 </Text>
@@ -330,13 +338,6 @@ const Results = ({ navigation }) => {
                   customStyle={{ marginTop: 10 }}
                   onPress={handleSave}
                 />
-
-                {/* <Button
-                  btnText="handleDownloadFil e"
-                  isPrimary
-                  customStyle={{ marginTop: 10 }}
-                  onPress={checkPermission}
-                /> */}
               </>
             )}
           </View>
