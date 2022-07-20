@@ -356,8 +356,6 @@ const FleetDefinition = ({ navigation }) => {
         <View style={styles.btnSpacer}>
           <Button btnText="Reset Truck" onPress={resetTruck} />
         </View>
-
-        <Text>{JSON.stringify(payloadUSMetric)}</Text>
         <View style={styles.nextBtn} />
         <Button
           btnText="Next"
