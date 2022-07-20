@@ -36,7 +36,7 @@ const Form = () => {
   const fetchLoadingTools = () => {
     axios
       .get(`${baseURL}hat/loading-tools/`)
-      .then((res) => {
+      .then(res => {
         updateStore({
           loadingToolOptions: res.data?.map(a => ({
             value: a.id,
@@ -44,8 +44,7 @@ const Form = () => {
           })),
           loadingTools: res.data
         })
-      }
-      )
+      })
       .then(setLoadingToolsIsLoading(false))
   }
 
@@ -185,33 +184,6 @@ const Form = () => {
     }
   ]
 
-  const fetchSiteParameters = async () => {
-    const site_parameters = await axios.get(
-      `${baseURL}hat/defaults/screens/site-parameters/`
-    )
-
-    const density =
-      parameters_unit === "metric"
-        ? (parseFloat(site_parameters.data.material_density) / 1.6856).toFixed(
-            1
-          )
-        : parseFloat(site_parameters.data.material_density).toFixed(1)
-
-    updateStore({
-      materialDensity: density,
-      truckSpotTime: parseFloat(
-        site_parameters.data.truck_sport_time_sec
-      ).toFixed(1),
-      operatorEfficiency: parseFloat(
-        site_parameters.data.operator_efficiency
-      ).toFixed(1),
-      estRoundTripTravel: parseFloat(
-        site_parameters.data.est_round_trip_travel_time
-      ).toFixed(1),
-      materialSwell: parseFloat(site_parameters.data.material_swell).toFixed(1)
-    })
-  }
-
   return (
     <div>
       <div className="w-1/2 gap-8 md:w-1/4 mb-6">
@@ -341,7 +313,7 @@ const Form = () => {
               !nomPayload ||
               !haulingTool
             }
-            onClick={fetchSiteParameters}
+            // onClick={fetchSiteParameters}
             url="/parameters"
           />
         </div>
