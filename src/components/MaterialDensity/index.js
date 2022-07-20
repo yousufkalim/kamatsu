@@ -11,8 +11,8 @@ export const MaterialDensity = ({ materialDensities = [] }) => {
         Otherwise, verify density values directly with a customer.
       </Text>
 
-      {materialDensities.map(item => (
-        <View style={styles.itemContainer}>
+      {materialDensities.map((item, idx) => (
+        <View style={styles.itemContainer} key={idx}>
           <Text style={styles.title}>{item?.title}</Text>
           <Text style={styles.value}>Density</Text>
           <Text style={styles.value}>

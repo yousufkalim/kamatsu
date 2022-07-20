@@ -1,7 +1,8 @@
 import * as types from "./constants"
 
 const initialState = {
-  siteValues: {}
+  siteValues: {},
+  materialDensity: { us: "3000.0", metric: "1779.8" }
 }
 
 export default siteDefinitionReducer = (state = initialState, action) => {
@@ -10,6 +11,12 @@ export default siteDefinitionReducer = (state = initialState, action) => {
       return {
         ...state,
         siteValues: action.payload
+      }
+
+    case types.SET_MATERIAL_DENSITY:
+      return {
+        ...state,
+        materialDensity: action.payload
       }
     default:
       return state
