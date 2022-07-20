@@ -7,18 +7,25 @@ export const ParametersProvider = ({children})=>{
     const [truckSpotTime, setTruckSpotTime] = useState(15)
     const [operatorEfficiency, setOperatorEfficiency] = useState(50)
     const [estRoundTripTravel, setEstRoundTripTravel] = useState(10)
-    const [materialSwell, serMaterialSwell] = useState(20)
+    const [materialSwell, setMaterialSwell] = useState(20)
 
-    return(
-        <ParametersContext.Provider value = {{
-            materialDensity, setMaterialDensity,
-            truckSpotTime, setTruckSpotTime,
-            operatorEfficiency, setOperatorEfficiency,
-            estRoundTripTravel, setEstRoundTripTravel,
-            materialSwell, serMaterialSwell
-        }}>
-            {children}
-        </ParametersContext.Provider>
+    return (
+      <ParametersContext.Provider
+        value={{
+          materialDensity,
+          setMaterialDensity,
+          truckSpotTime,
+          setTruckSpotTime,
+          operatorEfficiency,
+          setOperatorEfficiency,
+          estRoundTripTravel,
+          setEstRoundTripTravel,
+          materialSwell,
+          setMaterialSwell
+        }}
+      >
+        {children}
+      </ParametersContext.Provider>
     )
 }
 
