@@ -112,7 +112,15 @@ const Form = () => {
 
   useEffect(() => {
     fetchSiteDensities()
-    // fetchSiteParameters()
+    if (
+      materialDensity === "" &&
+      truckSpotTime === "" &&
+      operatorEfficiency === "" &&
+      estRoundTripTravel === "" &&
+      materialSwell === ""
+    ) {
+      fetchSiteParameters()
+    }
   }, [])
 
   const handleInput = e => {
