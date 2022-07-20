@@ -22,10 +22,10 @@ const Form = () => {
     loadingTools,
     haulingTools,
     haulingToolOptions,
+    parameters_unit,
     loadingToolOptions,
     loadingToolCostPerHour,
     haulingToolCostPerHour
-
   } = Store()
   const updateStore = UpdateStore()
   const [loadingToolsIsLoading, setLoadingToolsIsLoading] = useState(true)
@@ -60,8 +60,8 @@ const Form = () => {
             value: tool.name,
             label: tool.name
           })),
-          haulingTool: "",
-          nomPayload: ""
+          haulingTool: haulingTool,
+          nomPayload: nomPayload
         })
         setHaulingToolsIsLoading(false)
       })
@@ -76,7 +76,9 @@ const Form = () => {
           cycleTime: res.data.cycle_time_second,
           loadingToolCostPerHour: parseFloat(res.data.cost_per_hour).toFixed(1),
           bucketSizeYd: parseFloat(res.data.bucket_size_yd3).toFixed(1),
-          bucketSize: parseFloat(res.data.metric_standard.bucket_size_m3).toFixed(1)
+          bucketSize: parseFloat(
+            res.data.metric_standard.bucket_size_m3
+          ).toFixed(1)
         })
 
         fetchHaulingTools(e)
@@ -183,6 +185,33 @@ const Form = () => {
     }
   ]
 
+  const fetchSiteParameters = async () => {
+    const site_parameters = await axios.get(
+      `${baseURL}hat/defaults/screens/site-parameters/`
+    )
+
+    const density =
+      parameters_unit === "metric"
+        ? (parseFloat(site_parameters.data.material_density) / 1.6856).toFixed(
+            1
+          )
+        : parseFloat(site_parameters.data.material_density).toFixed(1)
+
+    updateStore({
+      materialDensity: density,
+      truckSpotTime: parseFloat(
+        site_parameters.data.truck_sport_time_sec
+      ).toFixed(1),
+      operatorEfficiency: parseFloat(
+        site_parameters.data.operator_efficiency
+      ).toFixed(1),
+      estRoundTripTravel: parseFloat(
+        site_parameters.data.est_round_trip_travel_time
+      ).toFixed(1),
+      materialSwell: parseFloat(site_parameters.data.material_swell).toFixed(1)
+    })
+  }
+
   return (
     <div>
       <div className="w-1/2 gap-8 md:w-1/4 mb-6">
@@ -246,7 +275,7 @@ const Form = () => {
             </label>
             <Input
               onChange={handleInput}
-              name="bucketSize"
+              name={unit === "metric" ? "bucketSize" : "bucketSizeYd"}
               value={unit === "metric" ? bucketSize : bucketSizeYd}
               type="text"
             />
@@ -312,7 +341,7 @@ const Form = () => {
               !nomPayload ||
               !haulingTool
             }
-            // onClick={handleVerifySiteFleet}
+            onClick={fetchSiteParameters}
             url="/parameters"
           />
         </div>

@@ -112,7 +112,7 @@ const Form = () => {
 
   useEffect(() => {
     fetchSiteDensities()
-    fetchSiteParameters()
+    // fetchSiteParameters()
   }, [])
 
   const handleInput = e => {
@@ -148,46 +148,52 @@ const Form = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`${baseURL}hat/result-preview/`, {
-        fleet_definition: {
-          unit_selection: unit,
-          loading_tool: {
-            name: loadingToolName,
-            cycle_time_second: cycleTime,
-            bucket_fill: bucketFill,
-            bucket_size: unit === "metric" ? bucketSize : unit === "us" ? bucketSizeYd : "",
-            // cost_per_hour: loadingToolCostPerHour
+      const response = await axios
+        .post(`${baseURL}hat/result-preview/`, {
+          fleet_definition: {
+            unit_selection: unit,
+            loading_tool: {
+              name: loadingToolName,
+              cycle_time_second: cycleTime,
+              bucket_fill: bucketFill,
+              bucket_size:
+                unit === "metric"
+                  ? bucketSize
+                  : unit === "us"
+                  ? bucketSizeYd
+                  : ""
+              // cost_per_hour: loadingToolCostPerHour
+            },
+            hauling_tool: {
+              name: haulingTool,
+              capacity_ton: nomPayload
+              // cost_per_hour: haulingToolCostPerHour
+            }
           },
-          hauling_tool: {
-            name: haulingTool,
-            capacity_ton: nomPayload,
-            // cost_per_hour: haulingToolCostPerHour
-          },
-        },
-        site_parameters: {
-          unit_selection: unit,
-          material_density: materialDensity,
-          truck_sport_time_sec: truckSpotTime,
-          est_round_trip_travel_time: estRoundTripTravel,
-          operator_efficiency: operatorEfficiency,
-          material_swell: materialSwell
-        }
-
-      }).then((res) => {
-        console.log("====>", res)
-        updateStore({
-          haulagePerhour: res.data.result.haulage_per_hour,
-          haulagePerWeight: res.data.result.haulage_per_hour_weight,
-          ldNumberOfTrucks: res.data.result.ld_number_of_trucks,
-          ldUnitPerCostHour: res.data.result.ld_unit_cost_per_hour,
-          loadSize: res.data.result.load_size,
-          minutesPerLoad: res.data.result.minutes_per_load,
-          scopePerLoad: res.data.result.scoops_per_load,
-          tonsPerScope: res.data.result.tons_per_scoop,
-          unitsPerHours: res.data.result.units_per_hour,
-          trucks: res.data.result.trucks,
+          site_parameters: {
+            unit_selection: unit,
+            material_density: materialDensity,
+            truck_sport_time_sec: truckSpotTime,
+            est_round_trip_travel_time: estRoundTripTravel,
+            operator_efficiency: operatorEfficiency,
+            material_swell: materialSwell
+          }
         })
-      })
+        .then(res => {
+          console.log("====>", res)
+          updateStore({
+            haulagePerhour: res.data.result.haulage_per_hour,
+            haulagePerWeight: res.data.result.haulage_per_hour_weight,
+            ldNumberOfTrucks: res.data.result.ld_number_of_trucks,
+            ldUnitPerCostHour: res.data.result.ld_unit_cost_per_hour,
+            loadSize: res.data.result.load_size,
+            minutesPerLoad: res.data.result.minutes_per_load,
+            scopePerLoad: res.data.result.scoops_per_load,
+            tonsPerScope: res.data.result.tons_per_scoop,
+            unitsPerHours: res.data.result.units_per_hour,
+            trucks: res.data.result.trucks
+          })
+        })
     } catch (err) {
       console.log("Api error: ", err)
     }
@@ -231,12 +237,6 @@ const Form = () => {
                   </div>
                 )
               })}
-
-            {/* {
-                        apiDensities.map((test)=>{
-                            re
-                        })
-                    } */}
           </div>
         </div>
       </div>
