@@ -95,7 +95,7 @@ class MaterialDensity(BaseTimeStampModel):
         density_metric = density.item()
         return {
             'unit_text': 'kg/m3',
-            'density': float(f'{density_metric:.1f}')
+            'density': round(float(f'{density_metric:.1f}'))
         }
 
     class Meta:
