@@ -55,13 +55,13 @@ def get_tons_per_scoop(loading_tool, site_parameters, fleet_unit='us', site_unit
     material_density_metric = site_parameters.get('material_density')
 
     if site_unit == 'us':
-        material_density_metric = lbyd3_to_kgm3(material_density)
+        material_density_metric = round(lbyd3_to_kgm3(material_density))
 
     elif site_unit == 'metric':
         material_density_us = round(kgm3_to_lbyd3(material_density))
 
     cal_params = {
-        'material_density_us': round(material_density_us),
+        'material_density_us': material_density_us,
         'material_density_metric': material_density_metric,
     }
     if fleet_unit == 'us':
@@ -71,16 +71,16 @@ def get_tons_per_scoop(loading_tool, site_parameters, fleet_unit='us', site_unit
         cal_params['bucket_size_us'] = bucket_size_us
         cal_params['bucket_size_metric'] = bucket_size_metric
 
-        calc_value_us = (bucket_size_us * float(bucket_fill / 100) * float(material_density) / 2000)
+        calc_value_us = (bucket_size_us * float(bucket_fill / 100) * float(material_density_us) / 2000)
         calc_value_metric = (bucket_size_metric * float(
-            bucket_fill / 100) * material_density_metric / 1000)
+            bucket_fill / 100) * float(material_density_metric) / 1000)
 
     elif fleet_unit == 'metric':
         bucket_size_us = round(m3_to_yd3(bucket_size), 1)
         bucket_size_metric = float(bucket_size)
         # material_density_us = kgm3_to_lbyd3(material_density)
-        calc_value_us = (bucket_size_us * float(bucket_fill / 100) * round(material_density_us) / 2000)
-        calc_value_metric = (bucket_size_metric * float(bucket_fill / 100) * float(material_density) / 1000)
+        calc_value_us = (float(bucket_size_us) * float(bucket_fill / 100) * float(material_density_us) / 2000)
+        calc_value_metric = (bucket_size_metric * float(bucket_fill / 100) * float(material_density_metric) / 1000)
 
         cal_params['bucket_size_us'] = bucket_size_us
         cal_params['bucket_size_metric'] = bucket_size_metric
@@ -111,12 +111,12 @@ def get_scoops_per_load(capacity_ton, tons_per_scoop, fleet_unit='us'):
     if fleet_unit == 'us':
         capacity_ton_metric = short_ton_to_tonne(capacity_ton)
         scoops_per_load_us = float(capacity_ton) / float(tons_per_scoop.get(fleet_unit))
-        scoops_per_load_metric = round(capacity_ton_metric) / float(tons_per_scoop.get('metric'))
+        scoops_per_load_metric = float(round(capacity_ton_metric)) / float(tons_per_scoop.get('metric'))
         us_formula = f'{float(capacity_ton)} / {float(tons_per_scoop.get(fleet_unit))}'
         metric_formula = f'{round(capacity_ton_metric)} / {float(tons_per_scoop.get("metric"))}'
     elif fleet_unit == 'metric':
         capacity_ton_us = tonne_to_short_ton(capacity_ton)
-        scoops_per_load_us = round(capacity_ton_us) / float(tons_per_scoop.get('us'))
+        scoops_per_load_us = float(round(capacity_ton_us)) / float(tons_per_scoop.get('us'))
         scoops_per_load_metric = float(capacity_ton) / float(tons_per_scoop.get(fleet_unit))
         # print(capacity_ton_us)
         us_formula = f'round({round(capacity_ton_us)} / {float(tons_per_scoop.get("us"))})'
@@ -135,17 +135,15 @@ def get_scoops_per_load(capacity_ton, tons_per_scoop, fleet_unit='us'):
 
 
 def get_minutes_per_load(scoops_per_load, truck_sport_time_sec, cycle_time_sec):
-    # us = 0
-    # metric = 0
-
-    scoops_per_load_us = math.trunc(scoops_per_load.get('us'))
-    scoops_per_load_metric = math.trunc(scoops_per_load.get('metric'))
+    # scoops_per_load_us = math.trunc(scoops_per_load.get('us'))
+    # scoops_per_load_metric = math.trunc(scoops_per_load.get('metric'))
+    scoops_per_load_us = scoops_per_load.get('us')
+    scoops_per_load_metric = scoops_per_load.get('metric')
 
     us = (float(truck_sport_time_sec) + (scoops_per_load_us * float(cycle_time_sec))) / 60
     metric = (float(truck_sport_time_sec) + (scoops_per_load_metric * float(cycle_time_sec))) / 60
 
     # print(us)
-    print('minutes_per_load', round(metric, 1))
     return {
         'us': float(f'{us:.2f}'),
         'metric': float(f'{metric:.2f}'),
@@ -192,11 +190,10 @@ def get_haulage_per_hour_weight(operator_efficiency, minutes_per_load, load_size
     if minutes_per_load_metric > 0 and load_size_metric > 0:
         metric = float(operator_efficiency) / minutes_per_load_metric * load_size_metric
 
-    data = {
-        'us': us,
-        'metric': metric,
-    }
-    print(data)
+    # data = {
+    #     'us': us,
+    #     'metric': metric,
+    # }
     return {
         'us': round(us),
         'metric': round(metric),
