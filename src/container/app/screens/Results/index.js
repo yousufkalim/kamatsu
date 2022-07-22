@@ -146,8 +146,8 @@ const Results = ({ navigation }) => {
 
         {!isLoading && isError && (
           <>
-            {error?.message ? (
-              <Text>{error?.message} </Text>
+            {error?.message && error?.message === "Network Error" ? (
+              <Text>Please check your internet connection</Text>
             ) : (
               <Text>Something went wrong </Text>
             )}

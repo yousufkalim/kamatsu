@@ -9,7 +9,7 @@ import {
 } from "../../../../hooks/query/useSiteParameter"
 import {
   setSiteValuesAction,
-  setMaterialDensityAction
+  saveSiteInitialValues
 } from "../../redux/site/actions"
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
@@ -40,10 +40,19 @@ const SiteParameters = ({ navigation }) => {
       ? siteParameterState.materialDensity.metric
       : siteParameterState.materialDensity.us
   )
-  const [materialSwell, setMaterialSwell] = useState("20")
-  const [operatorEfficiency, setOperatorEfficiency] = useState("50")
-  const [truckSpotTime, setTruckSpotTime] = useState("15")
-  const [roundTripTravelTime, setRoundTripTravelTime] = useState("10")
+  const [materialDensityUSMetric, setMaterialDensityUSMetric] = useState({})
+  const [materialSwell, setMaterialSwell] = useState(
+    siteParameterState.materialSwell
+  )
+  const [operatorEfficiency, setOperatorEfficiency] = useState(
+    siteParameterState.operatorEfficiency
+  )
+  const [truckSpotTime, setTruckSpotTime] = useState(
+    siteParameterState.truckSpotTime
+  )
+  const [roundTripTravelTime, setRoundTripTravelTime] = useState(
+    siteParameterState.roundTripTravelTime
+  )
 
   const [materialDensityErr, setMaterialDensityErr] = useState("")
   const [materialSwellErr, setMaterialSwellErr] = useState("")
@@ -100,6 +109,7 @@ const SiteParameters = ({ navigation }) => {
 
     console.log("SiteParameters", values)
     dispatch(setSiteValuesAction(values))
+    handleSaveMaterialDensity()
 
     try {
       await verifySiteParameters(values)
@@ -109,6 +119,21 @@ const SiteParameters = ({ navigation }) => {
       console.log("err", error)
     }
   }
+
+  const handleSaveMaterialDensity = () => {
+    if (materialDensityUSMetric?.metric) {
+      dispatch(
+        saveSiteInitialValues({
+          materialDensity: materialDensityUSMetric,
+          operatorEfficiency: operatorEfficiency,
+          materialSwell: materialSwell,
+          truckSpotTime: truckSpotTime,
+          roundTripTravelTime: roundTripTravelTime
+        })
+      )
+    }
+  }
+
   const handleUnitChange = value => {
     dispatch(setUnitSiteAction(value))
     setUnit(value)
@@ -116,33 +141,42 @@ const SiteParameters = ({ navigation }) => {
 
   useEffect(() => {
     if (materialDensity && !isMount) {
-      convertLcmToLcy()
+      convertMaterialDensityUnitValues()
     }
   }, [unitStateValue?.value])
 
-  const convertLcmToLcy = () => {
-    // pound/cubic yard in 1 kg/m3 - 1.6855549391294.
-    if (unitStateValue?.value === "Metric") {
-      const convert = (parseFloat(materialDensity) / 1.6855549391294).toFixed(1)
-      setMaterialDensity(convert.toString())
-      console.log("Metric", convert.toString())
-
-      dispatch(
-        setMaterialDensityAction({
-          metric: convert.toString(),
-          us: materialDensity
-        })
+  const convertMaterialDensityUnitValues = () => {
+    if (materialDensityUSMetric?.metric) {
+      setMaterialDensity(
+        unitStateValue?.value === "Metric"
+          ? materialDensityUSMetric?.metric
+          : materialDensityUSMetric?.us
       )
     } else {
-      const convert = (parseFloat(materialDensity) * 1.6855549391294).toFixed(1)
-      setMaterialDensity(convert.toString())
-      console.log("us", convert.toString())
-      dispatch(
-        setMaterialDensityAction({
-          us: convert.toString(),
-          metric: materialDensity
-        })
+      setMaterialDensity(
+        unitStateValue?.value === "Metric" ? "1779.8" : "3000.0"
       )
+    }
+  }
+
+  const handleChangeMaterialDensityUSMetric = materialDensity => {
+    // pound/cubic yard in 1 kg/m3 - 1.6855549391294.
+    if (unitStateValue?.value === "Metric") {
+      const convert = (parseFloat(materialDensity) * 1.6855549391294).toFixed(1)
+      console.log("us", convert.toString())
+
+      setMaterialDensityUSMetric({
+        us: convert.toString(),
+        metric: materialDensity
+      })
+    } else {
+      const convert = (parseFloat(materialDensity) / 1.6855549391294).toFixed(1)
+      console.log("Metric", convert.toString())
+
+      setMaterialDensityUSMetric({
+        metric: convert.toString(),
+        us: materialDensity
+      })
     }
   }
 
@@ -152,6 +186,7 @@ const SiteParameters = ({ navigation }) => {
     setOperatorEfficiency("50")
     setTruckSpotTime("15")
     setRoundTripTravelTime("10")
+    setMaterialDensityUSMetric({})
   }
 
   const handleChangeInputFloat = (value, setValue) => {
@@ -161,6 +196,20 @@ const SiteParameters = ({ navigation }) => {
       setValue(Number(value).toFixed(1))
     } else {
       setValue(value)
+    }
+  }
+
+  const handleChangeInputFloatMaterialDensity = (value, setValue) => {
+    var res = value.split(".")
+
+    if (res.length > 1 && res[1]) {
+      setValue(Number(value).toFixed(1))
+
+      handleChangeMaterialDensityUSMetric(Number(value).toFixed(1))
+    } else {
+      setValue(value)
+      console.log("value", value)
+      handleChangeMaterialDensityUSMetric(value)
     }
   }
 
@@ -190,7 +239,7 @@ const SiteParameters = ({ navigation }) => {
             onPressIcon={() => setModalVisible(true)}
             value={materialDensity}
             setValue={value =>
-              handleChangeInputFloat(value, setMaterialDensity)
+              handleChangeInputFloatMaterialDensity(value, setMaterialDensity)
             }
             symbol={
               unitStateValue?.value === "Metric" ? "(kg/lcm)" : "(lbs/lcy)"

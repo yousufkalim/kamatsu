@@ -153,15 +153,16 @@ const FleetDefinition = ({ navigation }) => {
     }
   }
 
-  const handleHaulingToolsChange = value => {
+  const handleHaulingToolsChange = (value, reset = false) => {
     setSelectedHaulingTool(value)
 
-    //check if user has manually inputed bucket size
+    //check if user has manually inputed Num payload
     if (
       payloadUSMetric?.metric &&
+      !reset &&
       selectedHaulingTool?.name == payloadUSMetric?.haulingTool //check if hauling tool has changed
     ) {
-      // if true setPayload "bucketSizeUSMetric".metric or us
+      // if true setPayload "payloadUSMetric".metric or us
       if (unitStateValue?.value === "Metric") {
         setPayload(payloadUSMetric.metric)
       } else {
@@ -177,7 +178,7 @@ const FleetDefinition = ({ navigation }) => {
 
   const resetTruck = () => {
     if (selectedHaulingTool?.name) {
-      handleHaulingToolsChange(selectedHaulingTool)
+      handleHaulingToolsChange(selectedHaulingTool, true)
     }
   }
 
