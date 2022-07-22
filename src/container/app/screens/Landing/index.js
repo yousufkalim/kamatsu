@@ -1,6 +1,6 @@
 import { View, Text, Image, ScrollView } from "react-native"
 import Toast from "react-native-toast-message"
-import React from "react"
+import React, { useEffect } from "react"
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp
@@ -13,10 +13,18 @@ import DozePro from "../../../../assets/svg/dozePro.svg"
 import TrolleyFeasibillityTool from "../../../../assets/svg/trolley-feasibillity-tool.svg"
 import LogoWhite from "../../../../assets/svg/logo-white.svg"
 import { IconButton } from "../../../../components/IconButton"
+import { useDispatch } from "react-redux"
 
 import { styles } from "./styles"
+import { resetSiteInitialValues } from "../../redux/site/actions"
 
 const Landing = ({ navigation }) => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(resetSiteInitialValues())
+  }, [])
+
   const showMsg = () => {
     Toast.show({
       type: "info",

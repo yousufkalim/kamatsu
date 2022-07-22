@@ -5,8 +5,11 @@ export const setSiteValuesAction = data => ({
   payload: data
 })
 
-
-export const setMaterialDensityAction = data => ({
-  type: types.SET_MATERIAL_DENSITY,
+export const saveSiteInitialValues = data => ({
+  type: types.SAVE_SITE_INITIAL_VALUES,
   payload: data
+})
+
+export const resetSiteInitialValues = () => ({
+  type: types.RESET_SITE_INITIAL_VALUES
 })
