@@ -120,7 +120,6 @@ const FleetDefinition = ({ navigation }) => {
   }, [unitStateValue?.value])
 
   const handleloadingToolsChange = (value, reset = false) => {
-    setSelectedLoadingTool(value)
     setHaulingTools(value?.compatible_trucks)
     setCycleTime(Number(value?.cycle_time_second).toFixed(1))
     setBucketFill(Number(value?.bucket_fill).toFixed(1))
@@ -129,7 +128,7 @@ const FleetDefinition = ({ navigation }) => {
     if (
       bucketSizeUSMetric?.metric &&
       !reset &&
-      selectedLoadingTool?.name == bucketSizeUSMetric?.loadingTool //check if loadingTool has changed
+      value?.name == bucketSizeUSMetric?.loadingTool //check if loadingTool has changed
     ) {
       // if true setBucketSize "bucketSizeUSMetric".metric or us
       if (unitStateValue?.value === "Metric") {
@@ -151,17 +150,19 @@ const FleetDefinition = ({ navigation }) => {
       setSelectedHaulingTool({})
       setPayload("")
     }
+    setSelectedLoadingTool(value)
+    setBucketSizeUSMetric({})
   }
 
   const handleHaulingToolsChange = (value, reset = false) => {
-    setSelectedHaulingTool(value)
-
     //check if user has manually inputed Num payload
     if (
       payloadUSMetric?.metric &&
       !reset &&
-      selectedHaulingTool?.name == payloadUSMetric?.haulingTool //check if hauling tool has changed
+      value?.name === payloadUSMetric?.haulingTool //check if hauling tool has changed
     ) {
+      console.log("payloadUSMetric value ", value)
+
       // if true setPayload "payloadUSMetric".metric or us
       if (unitStateValue?.value === "Metric") {
         setPayload(payloadUSMetric.metric)
@@ -170,10 +171,16 @@ const FleetDefinition = ({ navigation }) => {
       }
     } else {
       // else setBucketSize to default selected value
+      console.log("default value ", value)
+
       unitStateValue?.value === "Metric"
         ? setPayload(Number(value?.metric_standard?.capacity_tonne).toFixed(1))
         : setPayload(Number(value?.capacity_ton).toFixed(1))
+
+      setPayloadUSMetric({})
     }
+
+    setSelectedHaulingTool(value)
   }
 
   const resetTruck = () => {
