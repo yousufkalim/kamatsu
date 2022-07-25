@@ -11,7 +11,10 @@ export const styles = StyleSheet.create({
     padding: 10
   },
   chart: {
-    flex: 1
+    backgroundColor: "#fff",
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    borderRadius: 10
   },
   title: {
     fontFamily: appStyles.FONT_FAMILY_MEDIUM,
@@ -47,5 +50,24 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: wp(40)
+  },
+  truckList: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  dot: {
+    height: 12,
+    width: 12,
+    borderRadius: 12,
+    margin: 8
+  },
+  dot01: {
+    backgroundColor: "#FF8C00"
+  },
+  dot02: {
+    backgroundColor: "#0000FF"
+  },
+  dot03: {
+    backgroundColor: "#008000"
   }
 })

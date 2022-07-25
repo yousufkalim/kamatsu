@@ -78,16 +78,11 @@ const Results = ({ navigation }) => {
     setIsPrintingPDF(true)
 
     setTimeout(() => {
-      // To capture Screenshot
       captureScreen({
-        // Either png or jpg (or webm Android Only), Defaults: png
         format: "jpg",
-        // Quality 0.0 - 1.0 (only available for jpg)
         quality: 1
       }).then(
-        //callback function to get the result URL of the screnshot
         uri => {
-          console.log("captureScreen uri", uri)
           setIsPrintingPDF(false)
 
           if (permissionWriteExternalStorage) {
@@ -101,9 +96,6 @@ const Results = ({ navigation }) => {
 
   const genPDF = async uri => {
     const html = `<img src=${uri} alt="alt"  style="height:880px;width:520px;object-fit:contain;" />`
-    // const htmlIOS = `<div style=""height:95%;width:100%;"> <img src=${uri} alt="alt" style="max-width:100%;max-height:100%;"/> </div>`
-
-    // html: Platform.OS == "ios" ? htmlIOS : html,
 
     try {
       let options = {
