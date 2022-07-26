@@ -45,6 +45,12 @@ def tonne_to_short_ton(tonne):
     return float(f'{short_ton:.6f}')
 
 
+def get_us_tons_per_scoop(loading_tool, site_parameters):
+    bucket_size = loading_tool.get('bucket_size')
+    bucket_fill = loading_tool.get('bucket_fill')
+    material_density = site_parameters.get('material_density')
+
+
 def get_tons_per_scoop(loading_tool, site_parameters, fleet_unit='us', site_unit='us'):
     calc_value_us = 0
     calc_value_metric = 0
@@ -201,11 +207,11 @@ def get_haulage_per_hour_weight(operator_efficiency, minutes_per_load, load_size
     load_size_metric = load_size.get('metric')
     if minutes_per_load_us > 0 and load_size_us > 0:
         us = float(operator_efficiency) / minutes_per_load_us * load_size_us
-        us_actual = float(operator_efficiency) / minutes_per_load.get('us_actual') * load_size.get('us_actual')
+        us_actual = float(operator_efficiency) / minutes_per_load.get('us_actual') * load_size.get('us')
     if minutes_per_load_metric > 0 and load_size_metric > 0:
         metric = float(operator_efficiency) / minutes_per_load_metric * load_size_metric
         metric_actual = float(operator_efficiency) / minutes_per_load.get('metric_actual') * load_size.get(
-            'metric_actual')
+            'metric')
 
     # data = {
     #     'us': us,
