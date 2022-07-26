@@ -195,8 +195,8 @@ def get_ld_number_of_trucks(cycle_time_sec, scoops_per_load, est_round_trip_trav
 
 
 def get_haulage_per_hour_weight(operator_efficiency, minutes_per_load, load_size):
-    # print(minutes_per_load)
-    # print(load_size)
+    print('minutes_per_load', float(f'{minutes_per_load.get("us_actual"):.1f}'))
+    print('load_size', load_size.get('us'))
     us = 0
     us_actual = 0
     metric = 0
@@ -207,11 +207,10 @@ def get_haulage_per_hour_weight(operator_efficiency, minutes_per_load, load_size
     load_size_metric = load_size.get('metric')
     if minutes_per_load_us > 0 and load_size_us > 0:
         us = float(operator_efficiency) / minutes_per_load_us * load_size_us
-        us_actual = float(operator_efficiency) / minutes_per_load.get('us_actual') * load_size.get('us')
+        us_actual = float(operator_efficiency) / minutes_per_load.get("us_actual") * load_size.get('us')
     if minutes_per_load_metric > 0 and load_size_metric > 0:
         metric = float(operator_efficiency) / minutes_per_load_metric * load_size_metric
-        metric_actual = float(operator_efficiency) / minutes_per_load.get('metric_actual') * load_size.get(
-            'metric')
+        metric_actual = float(operator_efficiency) / minutes_per_load.get("metric_actual") * load_size.get('metric')
 
     # data = {
     #     'us': us,
