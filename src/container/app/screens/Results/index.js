@@ -18,7 +18,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen"
-import RNFetchBlob from "rn-fetch-blob"
 
 import * as appStyles from "../../../../utils/appStyles"
 import { useResultPreview } from "../../../../hooks/query/useResults"
@@ -26,9 +25,9 @@ import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
 import { Button } from "../../../../components/Button"
 import LogoBlue from "../../../../assets/svg/logo-blue.svg"
+import { toLocaleString } from "../../../../utils/helpers"
 
 import { styles } from "./styles"
-import { toLocaleString } from "../../../../utils/helpers"
 
 const deviceWidth = Dimensions.get("window").width
 const deviceHeight = Dimensions.get("window").height
