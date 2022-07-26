@@ -156,11 +156,12 @@ const Body = () => {
   }, [])
 
   return (
-    <div className="graph" >
+    <div className="graph">
       <div className="graph-checkboxes">
         <div className="graph-checkboxes-container">
           <div>
-            <input type="checkbox"
+            <input
+              type="checkbox"
               checked={metric}
               onChange={HandleMetricChange}
               className="checkbox"
@@ -168,7 +169,8 @@ const Body = () => {
             <label htmlFor="">Metric</label>
           </div>
           <div>
-            <input type="checkbox"
+            <input
+              type="checkbox"
               checked={volume}
               onChange={HandleVolumeChange}
               className="checkbox"
@@ -179,32 +181,87 @@ const Body = () => {
       </div>
       <div className="chart-container">
         <div className="chart-header">
-          <h2>{loadingToolName} x {haulingTool}</h2>
+          <h2>
+            {loadingToolName} x {haulingTool}
+          </h2>
           <ul>
             {trucks.map((item, index) => {
-            return <li>
-              <div className="bullet" style={{ backgroundColor: `${truckColor[index]}` }} /> 
-                {item.name}
-            </li>
-          })}
+              return (
+                <li>
+                  <div
+                    className="bullet"
+                    style={{ backgroundColor: `${truckColor[index]}` }}
+                  />
+                  {item.name}
+                </li>
+              )
+            })}
           </ul>
-
         </div>
+        <div style={{ position: "relative" }}>
+          {metric && !volume ? (
+            <span className="chart_upper_text">
+              LD ={" "}
+              {parseFloat(Math.round(haulagePerhour?.metric)).toLocaleString(
+                "us"
+              )}{" "}
+              tonnes/hr{" "}
+            </span>
+          ) : !metric && volume ? (
+            <span className="chart_upper_text">
+              LD ={" "}
+              {parseFloat(
+                Math.round(haulagePerhour?.is_volume?.us)
+              ).toLocaleString("us")}{" "}
+              bcy/hr{" "}
+            </span>
+          ) : !metric && !volume ? (
+            <span className="chart_upper_text">
+              LD ={" "}
+              {parseFloat(Math.round(haulagePerhour?.us)).toLocaleString("us")}{" "}
+              tons/hr
+            </span>
+          ) : metric && volume ? (
+            <span className="chart_upper_text">
+              LD ={" "}
+              {parseFloat(
+                Math.round(haulagePerhour?.is_volume?.metric)
+              ).toLocaleString("us")}{" "}
+              bcm/hr
+            </span>
+          ) : (
+            ""
+          )}
+        </div>
+
+        {/* {metric && !volume ? (
+          <p>Fleet productivity (Tonnes/hr)</p>
+        ) : !metric && volume ? (
+          <p>Fleet productivity (bcy/hr)</p>
+        ) : !metric && !volume ? (
+          <p>Fleet productivity (Tons/hr)</p>
+        ) : metric && volume ? (
+          <p>Fleet productivity (bcm/hr)</p>
+        ) : (
+          ""
+        )} */}
+        {/* <p style={{ backgroundColor: "green" }}>qwertyui</p> */}
         <div className="chart-body">
           <div className="chart_left_text">
-            {metric && !volume ?
+            {metric && !volume ? (
               <p>Fleet productivity (Tonnes/hr)</p>
-              : !metric && volume ?
-                <p>Fleet productivity (bcy/hr)</p>
-                : !metric && !volume ?
-                  <p>Fleet productivity (Tons/hr)</p>
-                  : metric && volume ?
-                    <p>Fleet productivity (bcm/hr)</p>
-                    : ""}
-
+            ) : !metric && volume ? (
+              <p>Fleet productivity (bcy/hr)</p>
+            ) : !metric && !volume ? (
+              <p>Fleet productivity (Tons/hr)</p>
+            ) : metric && volume ? (
+              <p>Fleet productivity (bcm/hr)</p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="wrapper">
-            <canvas id="graph" height="350px" ></canvas>
+            <canvas id="graph" height="350px"></canvas>
           </div>
         </div>
         <div className="chart-footer">
