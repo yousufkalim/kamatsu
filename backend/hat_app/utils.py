@@ -85,16 +85,17 @@ def get_tons_per_scoop(loading_tool, site_parameters, fleet_unit='us', site_unit
         cal_params['bucket_size_us'] = bucket_size_us
         cal_params['bucket_size_metric'] = bucket_size_metric
 
-    print('cal_params: ', cal_params)
-    print('tons_per_scoop_metric: ', math.floor(calc_value_metric * 10) / 10)
-
     # data = {
     #     'us': float(f'{calc_value_us:.2f}'),
     #     'metric': float(f'{calc_value_metric:.2f}'),
     # }
     data = {
-        'us': math.floor(calc_value_us * 10) / 10,
-        'metric': math.floor(calc_value_metric * 10) / 10,
+        # 'us': math.floor(calc_value_us * 10) / 10,
+        # 'metric': math.floor(calc_value_metric * 10) / 10,
+        'us': float(f'{calc_value_us:.1f}'),
+        'metric': float(f'{calc_value_metric:.1f}'),
+        'us_actual': calc_value_us,
+        'metric_actual': calc_value_metric,
     }
     # data = {
     #     'us': round(calc_value_us, 1),
@@ -108,25 +109,28 @@ def get_scoops_per_load(capacity_ton, tons_per_scoop, fleet_unit='us'):
     scoops_per_load_metric = 0
     us_formula = ''
     metric_formula = ''
+    print('tons_per_scoop', tons_per_scoop)
     if fleet_unit == 'us':
         capacity_ton_metric = short_ton_to_tonne(capacity_ton)
-        scoops_per_load_us = float(capacity_ton) / float(tons_per_scoop.get(fleet_unit))
-        scoops_per_load_metric = float(round(capacity_ton_metric)) / float(tons_per_scoop.get('metric'))
-        us_formula = f'{float(capacity_ton)} / {float(tons_per_scoop.get(fleet_unit))}'
-        metric_formula = f'{round(capacity_ton_metric)} / {float(tons_per_scoop.get("metric"))}'
+        scoops_per_load_us = float(capacity_ton) / float(tons_per_scoop.get('us_actual'))
+        scoops_per_load_metric = float(round(capacity_ton_metric)) / float(tons_per_scoop.get('metric_actual'))
+        us_formula = f'{float(capacity_ton)} / {float(tons_per_scoop.get("us_actual"))}'
+        metric_formula = f'{round(capacity_ton_metric)} / {float(tons_per_scoop.get("metric_actual"))}'
     elif fleet_unit == 'metric':
         capacity_ton_us = tonne_to_short_ton(capacity_ton)
-        scoops_per_load_us = float(round(capacity_ton_us)) / float(tons_per_scoop.get('us'))
-        scoops_per_load_metric = float(capacity_ton) / float(tons_per_scoop.get(fleet_unit))
+        scoops_per_load_us = float(round(capacity_ton_us)) / float(tons_per_scoop.get('us_actual'))
+        scoops_per_load_metric = float(capacity_ton) / float(tons_per_scoop.get('metric_actual'))
         # print(capacity_ton_us)
-        us_formula = f'round({round(capacity_ton_us)} / {float(tons_per_scoop.get("us"))})'
-        metric_formula = f'round({float(capacity_ton)} / {float(tons_per_scoop.get(fleet_unit))})'
+        us_formula = f'round({round(capacity_ton_us)} / {float(tons_per_scoop.get("us_actual"))})'
+        metric_formula = f'round({float(capacity_ton)} / {float(tons_per_scoop.get("metric_actual"))})'
 
     # print(scoops_per_load_us)
     # print(scoops_per_load_metric)
     data = {
         'us': round(math.trunc(scoops_per_load_us)),
         'metric': round(math.trunc(scoops_per_load_metric)),
+        'us_actual': float(f'{scoops_per_load_us:.5f}'),
+        'metric_actual': float(f'{scoops_per_load_metric:.5f}'),
         'formula_text': 'capacity_ton / tons_per_scoop',
         'us_formula': us_formula,
         'metric_formula': metric_formula,
@@ -142,6 +146,8 @@ def get_minutes_per_load(scoops_per_load, truck_sport_time_sec, cycle_time_sec):
 
     us = (float(truck_sport_time_sec) + (scoops_per_load_us * float(cycle_time_sec))) / 60
     metric = (float(truck_sport_time_sec) + (scoops_per_load_metric * float(cycle_time_sec))) / 60
+    us_actual = (float(truck_sport_time_sec) + (scoops_per_load.get('us') * float(cycle_time_sec))) / 60
+    metric_actual = (float(truck_sport_time_sec) + (scoops_per_load.get('metric') * float(cycle_time_sec))) / 60
 
     # print(us)
     return {
@@ -149,17 +155,23 @@ def get_minutes_per_load(scoops_per_load, truck_sport_time_sec, cycle_time_sec):
         'metric': float(f'{metric:.2f}'),
         # 'us': round(us, 1),
         # 'metric': round(metric, 1),
+        'us_actual': us_actual,
+        'metric_actual': metric_actual,
     }
 
 
-def get_load_size(scoops_per_load, tons_per_load):
+def get_load_size(scoops_per_load, tons_per_scoop):
     scoops_per_load_us = scoops_per_load.get('us')
     scoops_per_load_metric = scoops_per_load.get('metric')
-    us = scoops_per_load_us * tons_per_load.get('us')
-    metric = scoops_per_load_metric * tons_per_load.get('metric')
+    us = scoops_per_load_us * tons_per_scoop.get('us_actual')
+    metric = scoops_per_load_metric * tons_per_scoop.get('metric_actual')
+    us_actual = scoops_per_load.get('us') * tons_per_scoop.get('us_actual')
+    metric_actual = scoops_per_load.get('metric') * tons_per_scoop.get('metric_actual')
     return {
         'us': float(f'{us:.1f}'),
         'metric': float(f'{metric:.1f}'),
+        'us_actual': us_actual,
+        'metric_actual': metric_actual,
     }
 
 
@@ -180,23 +192,32 @@ def get_haulage_per_hour_weight(operator_efficiency, minutes_per_load, load_size
     # print(minutes_per_load)
     # print(load_size)
     us = 0
+    us_actual = 0
     metric = 0
+    metric_actual = 0
     minutes_per_load_us = minutes_per_load.get('us')
     minutes_per_load_metric = minutes_per_load.get('metric')
     load_size_us = load_size.get('us')
     load_size_metric = load_size.get('metric')
     if minutes_per_load_us > 0 and load_size_us > 0:
         us = float(operator_efficiency) / minutes_per_load_us * load_size_us
+        us_actual = float(operator_efficiency) / minutes_per_load.get('us_actual') * load_size.get('us_actual')
     if minutes_per_load_metric > 0 and load_size_metric > 0:
         metric = float(operator_efficiency) / minutes_per_load_metric * load_size_metric
+        metric_actual = float(operator_efficiency) / minutes_per_load.get('metric_actual') * load_size.get(
+            'metric_actual')
 
     # data = {
     #     'us': us,
     #     'metric': metric,
     # }
     return {
-        'us': round(us),
-        'metric': round(metric),
+        # 'us': round(us),
+        # 'metric': round(metric),
+        'us': round(us_actual),
+        'metric': round(metric_actual),
+        'us_actual': us_actual,
+        'metric_actual': metric_actual,
     }
 
 
