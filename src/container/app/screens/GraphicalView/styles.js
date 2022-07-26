@@ -21,6 +21,13 @@ export const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 10
   },
+  name: {
+    fontFamily: appStyles.FONT_FAMILY_SEMI_BOLD,
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "center",
+    color: appStyles.primaryColor
+  },
   nextBtn: {
     flex: 1,
     alignSelf: "flex-end"

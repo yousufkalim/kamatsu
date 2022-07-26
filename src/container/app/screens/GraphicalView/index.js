@@ -7,7 +7,8 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryLabel,
-  VictoryAxis
+  VictoryAxis,
+  VictoryScatter
 } from "victory-native"
 import { captureScreen } from "react-native-view-shot"
 import RNHTMLtoPDF from "react-native-html-to-pdf"
@@ -17,6 +18,7 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen"
 
+import { toLocaleString } from "../../../../utils/helpers"
 import * as appStyles from "../../../../utils/appStyles"
 import { Layout } from "../../../../components/Layout"
 import { Header } from "../../../../components/Header"
@@ -35,6 +37,23 @@ const GraphicalView = ({ route, navigation }) => {
   )
   const [isVolumeChecked, setIsVolumeChecked] = useState(false)
   const [dataGraph, setDataGraph] = useState([])
+
+  const LDValue =
+    isMetricChecked && !isVolumeChecked
+      ? toLocaleString(data?.result?.haulage_per_hour?.metric, " tonnes/hr")
+      : !isMetricChecked && !isVolumeChecked
+      ? toLocaleString(data?.result?.haulage_per_hour?.us, " tons/hr")
+      : !isMetricChecked && isVolumeChecked
+      ? toLocaleString(data?.result?.haulage_per_hour?.is_volume?.us, " bcy/hr")
+      : isMetricChecked &&
+        isVolumeChecked &&
+        toLocaleString(
+          data?.result?.haulage_per_hour?.is_volume?.metric,
+          "  bcm/hr"
+        )
+
+  const trucks = data.result?.trucks
+  const fleet_definition = data.fleet_definition
 
   useEffect(() => {
     handleCalculation()
@@ -89,9 +108,8 @@ const GraphicalView = ({ route, navigation }) => {
 
   const handleCalculation = () => {
     let labels = [0]
-    let rtt = data?.result?.trucks?.sort(
-      (a, b) => b.max_ld_rttt - a.max_ld_rttt
-    )[0]?.max_ld_rttt
+    let rtt = trucks?.sort((a, b) => b.max_ld_rttt - a.max_ld_rttt)[0]
+      ?.max_ld_rttt
 
     let haulage =
       isMetricChecked && !isVolumeChecked
@@ -109,12 +127,14 @@ const GraphicalView = ({ route, navigation }) => {
       labels.push(parseFloat(label.toFixed(1)))
     }
 
-    let dataSet = data?.result?.trucks?.map((truck, index) => {
+    let dataSet = trucks?.map((truck, index) => {
       let data = []
       let lastIndexOfTruth
+      let previosValue
       for (let index = 0; index < labels.length; index++) {
         if (truck.max_ld_rttt >= labels[index]) {
           data.push(parseInt(haulage))
+          console.log("abbrNum")
           lastIndexOfTruth = index
         } else {
           let diff = labels.length - lastIndexOfTruth
@@ -201,31 +221,36 @@ const GraphicalView = ({ route, navigation }) => {
         </View>
 
         <View style={styles.chart}>
+          <Text style={styles.name}>
+            {fleet_definition?.loading_tool?.name} X{" "}
+            {fleet_definition?.hauling_tool?.name}
+          </Text>
           <VictoryChart
             theme={VictoryTheme.material}
             minDomain={{ y: 0, x: 0 }}
-            domainPadding={{ x: 30 }}
+            domainPadding={{ x: 10, y: 10 }}
             style={{}}
           >
-            <VictoryLabel
-              text={`LD= 250 ${
-                isMetricChecked && !isVolumeChecked
-                  ? "tonnes/hr"
-                  : !isMetricChecked && !isVolumeChecked
-                  ? "tons/hr"
-                  : !isMetricChecked && isVolumeChecked
-                  ? "bcy/hr"
-                  : "bcm/hr"
-              }`}
-              x={60}
-              y={40}
-            />
+            <VictoryLabel text={LDValue} x={60} y={40} />
 
             <VictoryLine
               data={dataGraph[0]}
               style={{
                 data: { stroke: "#FF8C00" }
               }}
+            />
+
+            <VictoryScatter
+              domain={[-10, 10]}
+              data={[{ x: trucks[0].max_ld_rttt, y: 0 }]}
+              labels={() => ["↑"]}
+              labelComponent={
+                <VictoryLabel
+                  backgroundStyle={[{ fill: "#fff" }]}
+                  backgroundPadding={3}
+                  style={[{ fill: "#FF8C00", fontSize: 25 }]}
+                />
+              }
             />
 
             {dataGraph.length > 1 && (
@@ -236,16 +261,41 @@ const GraphicalView = ({ route, navigation }) => {
                 }}
               />
             )}
+
+            {dataGraph.length > 1 && (
+              <VictoryScatter
+                domain={[-10, 10]}
+                data={[{ x: trucks[1].max_ld_rttt, y: 0 }]}
+                labels={() => ["↑"]}
+                labelComponent={
+                  <VictoryLabel
+                    backgroundStyle={[{ fill: "#fff" }]}
+                    backgroundPadding={3}
+                    style={[{ fill: "#0000FF", fontSize: 25 }]}
+                  />
+                }
+              />
+            )}
+
             {dataGraph.length > 2 && (
               <VictoryLine
                 data={dataGraph[2]}
                 style={{
                   data: { stroke: "#008000" }
                 }}
+              />
+            )}
+
+            {dataGraph.length > 2 && (
+              <VictoryScatter
+                domain={[-10, 10]}
+                data={[{ x: trucks[2].max_ld_rttt, y: 0 }]}
+                labels={() => ["↑"]}
                 labelComponent={
                   <VictoryLabel
-                    backgroundStyle={{ fill: "pink" }}
+                    backgroundStyle={[{ fill: "#fff" }]}
                     backgroundPadding={3}
+                    style={[{ fill: "#008000", fontSize: 25 }]}
                   />
                 }
               />
@@ -266,12 +316,12 @@ const GraphicalView = ({ route, navigation }) => {
                   ? "bcy/hr"
                   : "bcm/hr"
               })`}
-              style={{ axisLabel: { padding: 30 } }}
+              style={{ axisLabel: { padding: 40 } }}
             />
           </VictoryChart>
 
           <View>
-            {data?.result?.trucks?.map((truck, idx) => {
+            {trucks?.map((truck, idx) => {
               return (
                 <View key={truck?.name} style={styles.truckList}>
                   <View
