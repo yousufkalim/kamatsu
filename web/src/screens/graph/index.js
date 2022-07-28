@@ -233,19 +233,6 @@ const Body = () => {
             ""
           )}
         </div>
-
-        {/* {metric && !volume ? (
-          <p>Fleet productivity (Tonnes/hr)</p>
-        ) : !metric && volume ? (
-          <p>Fleet productivity (bcy/hr)</p>
-        ) : !metric && !volume ? (
-          <p>Fleet productivity (Tons/hr)</p>
-        ) : metric && volume ? (
-          <p>Fleet productivity (bcm/hr)</p>
-        ) : (
-          ""
-        )} */}
-        {/* <p style={{ backgroundColor: "green" }}>qwertyui</p> */}
         <div className="chart-body">
           <div className="chart_left_text">
             {metric && !volume ? (
