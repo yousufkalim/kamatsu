@@ -54,7 +54,7 @@ class FleetDefinitionLoadingToolSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=32)
     cycle_time_second = serializers.DecimalField(max_digits=10, decimal_places=1)
     bucket_fill = serializers.DecimalField(max_digits=10, decimal_places=1)
-    bucket_size = serializers.DecimalField(max_digits=10, decimal_places=1)
+    bucket_size = serializers.DecimalField(max_digits=10, decimal_places=2)
     bucket_size_us = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
     bucket_size_metric = serializers.DecimalField(max_digits=10, decimal_places=1, read_only=True)
 

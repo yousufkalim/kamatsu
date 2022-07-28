@@ -33,6 +33,7 @@ urlpatterns = [
     path("api/v1/", include("komatsu_demo_34942.api.v1.urls", namespace='api_v1')),
     path("admin/", admin.site.urls),
     path("users/", include("users.urls", namespace="users")),
+    path("hat/", include("hat_app.urls", namespace="hat_app")),
     # path("rest-auth/", include("rest_auth.urls")),
     # # Override email confirm to use allauth's HTML view instead of rest_auth's API view
     # path("rest-auth/registration/account-confirm-email/<str:key>/", confirm_email),
@@ -45,9 +46,9 @@ admin.site.index_title = "Komatsu Admin"
 
 # swagger
 api_info = openapi.Info(
-    title="Komatsu Demo API",
+    title="Komatsu API",
     default_version="v1",
-    description="API documentation for Komatsu Demo App",
+    description="API documentation for Komatsu App",
 )
 
 schema_view = get_schema_view(
