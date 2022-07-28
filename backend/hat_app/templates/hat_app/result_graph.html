@@ -1,0 +1,153 @@
+{% extends 'base_bs4.html' %}
+{% load hat_extras %}
+{% block content %}
+    <style>
+        table td {
+            font-size: 12px;
+        }
+    </style>
+    <div class="container">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Fleet Definition</h4>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <td style="width: 200px">Unit</td>
+                            <td>{{ fleet_definition.unit_selection }}</td>
+                        </tr>
+                        <tr>
+                            <td>Loading Tool</td>
+                            <td>
+                                {% with fleet_definition.loading_tool as loading_tool %}
+                                    <table class="table">
+                                        <tr>
+                                            <td style="width: 200px">Name</td>
+                                            <td>{{ loading_tool.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cycle Time</td>
+                                            <td>{{ loading_tool.cycle_time_second }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bucket Fill</td>
+                                            <td>{{ loading_tool.bucket_fill }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bucket Size</td>
+                                            <td>{{ loading_tool.bucket_size }}</td>
+                                        </tr>
+                                    </table>
+                                {% endwith %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Truck Spot Time</td>
+                            <td>
+                                {% with fleet_definition.hauling_tool as hauling_tool %}
+                                    <table class="table">
+                                        <tr>
+                                            <td style="width: 200px">Name</td>
+                                            <td>{{ hauling_tool.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Capacity</td>
+                                            <td>{{ hauling_tool.capacity_ton }}</td>
+                                        </tr>
+                                    </table>
+                                {% endwith %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <h4>Site Parameters</h4>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <td style="width: 200px">Unit</td>
+                            <td>{{ site_parameters.unit_selection }}</td>
+                        </tr>
+                        <tr>
+                            <td>Material Density</td>
+                            <td>{{ site_parameters.material_density }}</td>
+                        </tr>
+                        <tr>
+                            <td>Truck Spot Time</td>
+                            <td>{{ site_parameters.truck_sport_time_sec }}</td>
+                        </tr>
+                        <tr>
+                            <td>Operation Efficiency</td>
+                            <td>{{ site_parameters.operator_efficiency }}</td>
+                        </tr>
+                        <tr>
+                            <td>RTTT</td>
+                            <td>{{ site_parameters.est_round_trip_travel_time }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h4>Result</h4>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        {% for key, result_items in result.items %}
+                            {% if key != 'trucks' %}
+                                <tr>
+                                    <td>{{ key|remove_underscores }}</td>
+                                    <td>
+                                        <table class="table table-bordered table-sm">
+                                            {% for key, value in result_items.items %}
+
+                                                <tr>
+                                                    <td>{{ key|remove_underscores }}</td>
+                                                    <td>{{ value }}</td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>{{ key }}</td>
+                                    <td>
+                                        <table class="table table-sm">
+                                            {% for truck in result.trucks %}
+                                                <tr>
+                                                    <td>
+                                                        <table class="table table-bordered table-sm">
+                                                            {% for key, value in truck.items %}
+
+                                                                <tr>
+                                                                    <td>{{ key|remove_underscores }}</td>
+                                                                    <td>{{ value }}</td>
+
+                                                                </tr>
+
+                                                            {% endfor %}
+                                                        </table>
+                                                    </td>
+                                                    {#                                                    <td>{{ value }}</td>#}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+{% endblock %}

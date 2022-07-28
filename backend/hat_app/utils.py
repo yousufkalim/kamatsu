@@ -169,13 +169,17 @@ def get_minutes_per_load(scoops_per_load, truck_sport_time_sec, cycle_time_sec):
 def get_load_size(scoops_per_load, tons_per_scoop):
     scoops_per_load_us = scoops_per_load.get('us')
     scoops_per_load_metric = scoops_per_load.get('metric')
-    us = scoops_per_load_us * tons_per_scoop.get('us_actual')
-    metric = scoops_per_load_metric * tons_per_scoop.get('metric_actual')
+    us = scoops_per_load_us * tons_per_scoop.get("us_actual")
+    # us = scoops_per_load_us * tons_per_scoop.get("us")
+    metric = scoops_per_load_metric * tons_per_scoop.get("metric_actual")
+    # metric = scoops_per_load_metric * tons_per_scoop.get("metric")
     us_actual = scoops_per_load.get('us') * tons_per_scoop.get('us_actual')
     metric_actual = scoops_per_load.get('metric') * tons_per_scoop.get('metric_actual')
     return {
-        'us': float(f'{us:.1f}'),
-        'metric': float(f'{metric:.1f}'),
+        # 'us': float(f'{us:.1f}'),
+        # 'metric': float(f'{metric:.1f}'),
+        'us': float(round(us, 1)),
+        'metric': float(round(metric, 1)),
         'us_actual': us_actual,
         'metric_actual': metric_actual,
     }
@@ -195,8 +199,6 @@ def get_ld_number_of_trucks(cycle_time_sec, scoops_per_load, est_round_trip_trav
 
 
 def get_haulage_per_hour_weight(operator_efficiency, minutes_per_load, load_size):
-    print('minutes_per_load', float(f'{minutes_per_load.get("us_actual"):.1f}'))
-    print('load_size', load_size.get('us'))
     us = 0
     us_actual = 0
     metric = 0
@@ -584,7 +586,9 @@ def get_result_preview(fleet_definition, site_parameters):
     result = {
         'tons_per_scoop': {
             'us': float(f'{tons_per_scoop.get("us"):.1f}'),
-            'metric': float(f'{tons_per_scoop.get("metric"):.1f}')
+            'metric': float(f'{tons_per_scoop.get("metric"):.1f}'),
+            'us_actual': tons_per_scoop.get("us_actual"),
+            'metric_actual': tons_per_scoop.get("metric_actual")
         },
         'scoops_per_load': scoops_per_load,
         'minutes_per_load': minutes_per_load,
