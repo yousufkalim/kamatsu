@@ -154,7 +154,7 @@ const SiteParameters = ({ navigation }) => {
       )
     } else {
       setMaterialDensity(
-        unitStateValue?.value === "Metric" ? "1779.8" : "3000.0"
+        unitStateValue?.value === "Metric" ? "1780" : "3000"
       )
     }
   }
@@ -181,7 +181,7 @@ const SiteParameters = ({ navigation }) => {
   }
 
   const loadDefaults = () => {
-    setMaterialDensity(unitStateValue?.value === "Metric" ? "1779.8" : "3000.0")
+    setMaterialDensity(unitStateValue?.value === "Metric" ? "1780" : "3000")
     setMaterialSwell("20")
     setOperatorEfficiency("50")
     setTruckSpotTime("15")
