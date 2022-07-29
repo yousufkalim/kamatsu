@@ -74,10 +74,10 @@ const Form = () => {
           bucketFill: res.data.bucket_fill,
           cycleTime: res.data.cycle_time_second,
           loadingToolCostPerHour: parseFloat(res.data.cost_per_hour).toFixed(1),
-          bucketSizeYd: parseFloat(res.data.bucket_size_yd3).toFixed(1),
+          bucketSizeYd: parseFloat(res.data.bucket_size_yd3).toFixed(2),
           bucketSize: parseFloat(
             res.data.metric_standard.bucket_size_m3
-          ).toFixed(1)
+          ).toFixed(2)
         })
 
         fetchHaulingTools(e)

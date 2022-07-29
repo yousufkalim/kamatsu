@@ -74,8 +74,7 @@ input[type=checkbox]{
 .chart_upper_text{
     position: absolute;
     left: 15.5rem;
-    bottom: -1.5rem;
-
+    bottom: -0.8rem;
 }
 
 /* Chart body */
