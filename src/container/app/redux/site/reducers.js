@@ -2,7 +2,7 @@ import * as types from "./constants"
 
 const initialState = {
   siteValues: {},
-  materialDensity: { us: "3000.0", metric: "1779.8" },
+  materialDensity: { us: "3000", metric: "1780" },
   materialSwell: "20",
   operatorEfficiency: "50",
   truckSpotTime: "15",
@@ -30,7 +30,7 @@ export default siteDefinitionReducer = (state = initialState, action) => {
     case types.RESET_SITE_INITIAL_VALUES:
       return {
         ...state,
-        materialDensity: { us: "3000.0", metric: "1779.8" },
+        materialDensity: { us: "3000", metric: "1780" },
         materialSwell: "20",
         operatorEfficiency: "50",
         truckSpotTime: "15",

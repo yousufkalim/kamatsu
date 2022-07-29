@@ -57,7 +57,7 @@ const GraphicalView = ({ route, navigation }) => {
 
   useEffect(() => {
     handleCalculation()
-  }, [])
+  }, [isMetricChecked, isVolumeChecked])
 
   const permissionWriteExternalStorage = async () => {
     const granted = await PermissionsAndroid.request(
@@ -110,7 +110,7 @@ const GraphicalView = ({ route, navigation }) => {
     let labels = [0]
     let rtt = trucks?.sort((a, b) => b.max_ld_rttt - a.max_ld_rttt)[0]
       ?.max_ld_rttt
-
+      
     let haulage =
       isMetricChecked && !isVolumeChecked
         ? data?.result?.haulage_per_hour?.metric
@@ -127,14 +127,13 @@ const GraphicalView = ({ route, navigation }) => {
       labels.push(parseFloat(label.toFixed(1)))
     }
 
-    let dataSet = trucks?.map((truck, index) => {
+    let dataSet = trucks?.map((truck, idx) => {
       let data = []
       let lastIndexOfTruth
       let previosValue
       for (let index = 0; index < labels.length; index++) {
         if (truck.max_ld_rttt >= labels[index]) {
           data.push(parseInt(haulage))
-          console.log("abbrNum")
           lastIndexOfTruth = index
         } else {
           let diff = labels.length - lastIndexOfTruth
@@ -321,7 +320,7 @@ const GraphicalView = ({ route, navigation }) => {
           </VictoryChart>
 
           <View>
-            {trucks?.map((truck, idx) => {
+            {trucks?.reverse()?.map((truck, idx) => {
               return (
                 <View key={truck?.name} style={styles.truckList}>
                   <View

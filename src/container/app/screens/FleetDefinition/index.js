@@ -140,9 +140,14 @@ const FleetDefinition = ({ navigation }) => {
       // else setBucketSize to default selected value
       unitStateValue?.value === "Metric"
         ? setBucketSize(
-            Number(value?.metric_standard?.bucket_size_m3).toFixed(1)
+            Number(
+              Number(value?.metric_standard?.bucket_size_m3).toFixed(2)
+            ).toString()
           )
-        : setBucketSize(Number(value?.bucket_size_yd3).toFixed(1))
+        : setBucketSize(
+            Number(Number(value?.bucket_size_yd3).toFixed(2)).toString()
+          )
+      setBucketSizeUSMetric({})
     }
 
     console.log("value", value)
@@ -151,7 +156,6 @@ const FleetDefinition = ({ navigation }) => {
       setPayload("")
     }
     setSelectedLoadingTool(value)
-    setBucketSizeUSMetric({})
   }
 
   const handleHaulingToolsChange = (value, reset = false) => {
@@ -202,7 +206,7 @@ const FleetDefinition = ({ navigation }) => {
     if (unitStateValue?.value === "Metric") {
       console.log("bucketSize", bucketSize)
 
-      const cubicY3 = (parseFloat(bucketSize) * 1.308).toFixed(1)
+      const cubicY3 = (parseFloat(bucketSize) * 1.308).toFixed(2)
       console.log("cubicY3", cubicY3)
 
       setBucketSizeUSMetric({
@@ -211,7 +215,7 @@ const FleetDefinition = ({ navigation }) => {
         loadingTool: selectedLoadingTool.name // to keep loadingTool changes
       })
     } else {
-      const cubicM3 = (parseFloat(bucketSize) / 1.308).toFixed(1)
+      const cubicM3 = (parseFloat(bucketSize) / 1.308).toFixed(2)
       console.log("cubicM3", cubicM3)
 
       setBucketSizeUSMetric({
@@ -231,7 +235,7 @@ const FleetDefinition = ({ navigation }) => {
       const tons = (parseFloat(payload) * 1.102311).toFixed(1)
       console.log("tons", tons)
       setPayloadUSMetric({
-        metric: payload,
+        metric: payload.toString(),
         us: tons.toString(),
         haulingTool: selectedHaulingTool.name // to keeploadingTool change
       })
@@ -239,7 +243,7 @@ const FleetDefinition = ({ navigation }) => {
       const metric_tons = (parseFloat(payload) / 1.102311).toFixed(1)
       console.log("metric_tons", metric_tons)
       setPayloadUSMetric({
-        us: payload,
+        us: payload.toString(),
         metric: metric_tons.toString(),
         haulingTool: selectedHaulingTool.name // to keep hauling tool change
       })
@@ -260,9 +264,9 @@ const FleetDefinition = ({ navigation }) => {
     var res = value.split(".")
 
     if (res.length > 1 && res[1]) {
-      setValue(Number(value).toFixed(1))
+      setValue(Number(value).toFixed(2))
 
-      handleChangeBucketSizeUSMetric(Number(value).toFixed(1))
+      handleChangeBucketSizeUSMetric(Number(value).toFixed(2))
     } else {
       setValue(value)
       handleChangeBucketSizeUSMetric(value)
